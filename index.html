@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>符文戰場牌組工具</title>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1f;--mu:#6b6b70;--ac:#8a5cf6;--bd:#dedbd2;--ok:#1a7f4b;--no:#c62828;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161a;--card:#222126;--tx:#eeedf0;--mu:#9b9aa3;--ac:#a98bff;--bd:#38363f;--ok:#4cc38a;--no:#ff7b72;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17161a;--card:#222126;--tx:#eeedf0;--mu:#9b9aa3;--ac:#a98bff;--bd:#38363f;--ok:#4cc38a;--no:#ff7b72;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0 auto;background:var(--bg);color:var(--tx);font:15px/1.5 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;max-width:720px;padding:12px}
+h1{font-size:19px;margin:4px 0 10px}h3{margin:14px 0 6px}
+nav{display:flex;gap:6px;margin-bottom:10px}
+nav button,.btn{flex:1;padding:9px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;font:inherit;cursor:pointer}
+nav button.on,.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:8px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px}
+.c b{display:block}.m{color:var(--mu);font-size:13px}
+.t{white-space:pre-wrap;margin:6px 0;font-size:14px}
+.r{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.cd{display:flex;gap:10px}.cd img{width:64px;height:auto;border-radius:6px;align-self:flex-start;cursor:zoom-in}.cd img.big{width:100%;cursor:zoom-out}.cd>div{flex:1;min-width:0}
+.q{display:flex;align-items:center;gap:6px}
+.q button{width:32px;height:32px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;font-size:17px;cursor:pointer}
+.hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
+.ok{color:var(--ok)}.no{color:var(--no)}
+</style>
+</head>
+<body>
+<h1>符文戰場牌組工具</h1>
+<nav>
+<button id="n1" class="on" onclick="tab(1)">卡片</button>
+<button id="n2" onclick="tab(2)">牌組 (<span id="cnt">0</span>)</button>
+<button id="n3" onclick="tab(3)">資料</button>
+</nav>
+
+<section id="s1">
+<input id="q" placeholder="搜尋卡名或效果…" oninput="render()">
+<div class="row"><select id="ft" onchange="render()"></select>
+<select id="lg" onchange="setL(this.value)"><option value="zh">繁中優先</option><option value="en">English</option></select></div>
+<div id="list"></div>
+</section>
+
+<section id="s2" class="hide">
+<input id="dn" placeholder="牌組名稱">
+<div class="row"><button class="btn p" onclick="saveDeck()">儲存牌組</button><button class="btn" onclick="exportDeck()">匯出文字</button></div>
+<div id="chk" class="c" style="margin-top:8px"></div>
+<div id="deck"></div>
+<textarea id="ex" class="hide" rows="8" readonly></textarea>
+<h3>已儲存的牌組</h3>
+<div id="saved"></div>
+</section>
+
+<section id="s3" class="hide">
+<div class="c"><b>自動載入卡片（含卡圖）</b>
+<p class="m">從 Riftcodex 下載全部卡片。放到自己的網址（如 Vercel）後可直接使用；在這個預覽頁會被瀏覽器擋住，請改用下方手動匯入。</p>
+<button class="btn p" onclick="autoLoad()">自動載入全部卡片</button></div>
+<div class="c"><b>手動匯入卡片 JSON</b>
+<p class="m">開啟 https://api.riftcodex.com/cards?size=100&amp;page=1 ，複製全文貼上（page=2、3… 可繼續匯入，會自動合併）。</p>
+<textarea id="imp" rows="5" placeholder="貼上 JSON…"></textarea>
+<div class="row"><button class="btn p" onclick="doImport(imp.value)">匯入</button><input type="file" accept=".json,application/json" onchange="fromFile(this,doImport)"></div></div>
+<div class="c"><b>匯入繁體中文對照</b>
+<p class="m">格式：{"ogn-234-298":{"name":"中文卡名","text":"中文效果"}}，也可以用英文卡名小寫當 key。</p>
+<textarea id="zi" rows="4" placeholder="貼上中文對照 JSON…"></textarea>
+<div class="row"><button class="btn p" onclick="importZh(zi.value)">匯入對照</button><input type="file" accept=".json,application/json" onchange="fromFile(this,importZh)"></div></div>
+<p id="msg" class="m"></p>
+<button class="btn" onclick="clearData()">清除卡片與中文資料</button>
+<p class="m">資料與牌組只存在這台裝置的瀏覽器中；帳號與雲端儲存是下一階段。</p>
+</section>
+
+<script>
+var cards=[],deck={},saved=[],zh={},L='zh';
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){msg('儲存空間不足，資料可能無法保存。')}}
+cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_zh',{});L=ld('rb_lang','zh');
+function $(i){return document.getElementById(i)}
+function msg(s){$('msg').textContent=s}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pick(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(v!=null&&v!=='')return v}return ''}
+function arr(v){return Array.isArray(v)?v:(v?[v]:[])}
+function norm(c){var cl=c.classification||{},at=c.attributes||{},tx=c.text||{},md=c.media||{},me=c.metadata||{};
+return{id:pick(c.riftbound_id,c.public_code,c.id,c.name),name:pick(c.name),type:pick(cl.type,c.type),sup:pick(cl.supertype),
+dom:arr(cl.domain||c.domain),cost:pick(at.energy,c.cost),might:pick(at.might),
+text:pick(tx.plain,typeof c.text==='string'?c.text:''),img:pick(md.image_url),set:pick(c.set&&c.set.set_id),sig:!!me.signature}}
+function merge(a){var map={};cards.forEach(function(c){map[c.id]=c});a.forEach(function(x){var n=norm(x);if(n.name)map[n.id]=n});
+cards=Object.keys(map).map(function(k){return map[k]});sv('rb_cards',cards);fill();render()}
+function doImport(s){try{var j=JSON.parse(s),a=Array.isArray(j)?j:(j.items||[]);if(!a.length){msg('找不到卡片資料，請確認貼上完整 JSON。');return}
+merge(a);msg('匯入完成，目前共 '+cards.length+' 張卡。');$('imp').value=''}catch(e){msg('格式錯誤，無法讀取這段 JSON。')}}
+async function autoLoad(){try{var p=1,pg=1;while(p<=pg){msg('載入中… 第 '+p+' 頁');var r=await fetch('https://api.riftcodex.com/cards?size=100&page='+p);if(!r.ok)throw 0;var j=await r.json();pg=j.pages||1;merge(j.items||[]);p++}
+msg('完成，目前共 '+cards.length+' 張卡。')}catch(e){msg('自動載入失敗（預覽頁會被擋住，或網路／頁面大小限制有問題）。請改用手動匯入。')}}
+function importZh(s){try{var j=JSON.parse(s),n=0;if(Array.isArray(j)){var o={};j.forEach(function(x){var k=pick(x.id,String(x.name_en||'').toLowerCase());if(k)o[k]=x});j=o}
+for(var k in j){zh[k.toLowerCase()]=j[k];n++}sv('rb_zh',zh);msg('已匯入 '+n+' 筆中文對照。');$('zi').value='';render()}catch(e){msg('中文對照格式錯誤。')}}
+function fromFile(i,fn){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(){fn(r.result)};r.readAsText(f)}
+function clearData(){if(confirm('確定清除所有卡片與中文資料？牌組不會被刪除。')){cards=[];zh={};sv('rb_cards',cards);sv('rb_zh',zh);fill();render();msg('已清除。')}}
+function Z(c){return zh[c.id.toLowerCase()]||zh[c.name.toLowerCase()]||{}}
+function N(c){return L==='zh'&&Z(c).name?Z(c).name:c.name}
+function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
+function setL(v){L=v;sv('rb_lang',L);render();rdeck()}
+function tab(n){for(var i=1;i<=3;i++){$('s'+i).classList.toggle('hide',i!==n);$('n'+i).classList.toggle('on',i===n)}if(n===2)rdeck()}
+function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(c.type)t[c.type]=1});
+s.innerHTML='<option value="">所有類型</option>'+Object.keys(t).sort().map(function(k){return'<option>'+esc(k)+'</option>'}).join('');s.value=v;$('lg').value=L}
+function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');
+if(!cards.length){E.innerHTML='<div class="c m">還沒有卡片資料。請到「資料」分頁載入。</div>';return}
+var r=cards.filter(function(c){return(!f||c.type===f)&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
+E.innerHTML=(r.length>50?'<p class="m">共 '+r.length+' 筆，僅顯示前 50 筆，請縮小搜尋範圍。</p>':'')+r.slice(0,50).map(function(c){
+return'<div class="c cd">'+(c.img?'<img loading="lazy" src="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="this.remove()">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b><button class="btn p" style="flex:none;padding:6px 12px" onclick="add(\''+encodeURIComponent(c.id)+'\')">加入</button></div><div class="m">'+esc([c.type,c.dom.join('/'),c.cost!==''?'費用 '+c.cost:'',c.id].filter(Boolean).join(' · '))+'</div><div class="t">'+esc(X(c))+'</div></div></div>'}).join('')}
+function total(){var n=0;for(var k in deck)n+=deck[k];return n}
+function add(id){id=decodeURIComponent(id);deck[id]=(deck[id]||0)+1;sv('rb_deck',deck);cnt()}
+function chg(id,d){id=decodeURIComponent(id);deck[id]=(deck[id]||0)+d;if(deck[id]<=0)delete deck[id];sv('rb_deck',deck);rdeck()}
+function cnt(){$('cnt').textContent=total()}
+function nm(id){for(var i=0;i<cards.length;i++)if(cards[i].id===id)return cards[i];return{id:id,name:id,type:'',dom:[]}}
+function sec(c){var t=String(c.type).toLowerCase();return t.indexOf('legend')>-1?'L':t.indexOf('battlefield')>-1?'B':t.indexOf('rune')>-1?'R':'M'}
+function check(){var S={L:0,B:0,R:0,M:0},cp={},bad=[],leg=null,champ=0,out=[];
+Object.keys(deck).forEach(function(k){var c=nm(k),s=sec(c),n=deck[k];S[s]+=n;if(s==='L'&&!leg)leg=c;if(s==='M'){cp[c.name]=(cp[c.name]||0)+n;if(String(c.sup).toLowerCase().indexOf('champion')>-1)champ+=n}});
+function add2(ok,t){out.push({ok:ok,t:t})}
+add2(S.L===1,'傳奇 '+S.L+'/1');add2(S.M>=40,'主牌組 '+S.M+'/至少 40');add2(S.R===12,'符文 '+S.R+'/12');add2(S.B===3,'戰場 '+S.B+'/3');
+add2(champ>=1,'主牌組需包含 1 張與傳奇相符的英雄單位（目前找到 '+champ+' 張英雄單位）');
+var over=Object.keys(cp).filter(function(n){return cp[n]>3});add2(!over.length,over.length?'同名卡超過 3 張：'+over.join('、'):'同名卡皆不超過 3 張');
+if(leg&&leg.dom.length){Object.keys(deck).forEach(function(k){var c=nm(k),s=sec(c);if(s==='M'||s==='R'){var x=c.dom.filter(function(d){return d!=='Colorless'&&leg.dom.indexOf(d)<0});if(x.length)bad.push(N(c))}});
+add2(!bad.length,bad.length?'超出傳奇領域：'+bad.join('、'):'所有卡片都符合傳奇領域（'+leg.dom.join('/')+'）')}else add2(false,'尚未加入傳奇，無法檢查領域');
+return out}
+function rdeck(){cnt();var ks=Object.keys(deck),D=$('deck'),G={L:'傳奇',M:'主牌組',R:'符文',B:'戰場'};
+$('chk').innerHTML='<b>規則檢查</b>'+check().map(function(o){return'<div class="'+(o.ok?'ok':'no')+'">'+(o.ok?'✓ ':'✗ ')+esc(o.t)+'</div>'}).join('')+'<div class="m">依官方核心規則；傳奇與英雄的對應、專屬卡限制請自行確認。</div>';
+var h='';['L','M','R','B'].forEach(function(s){var a=ks.filter(function(k){return sec(nm(k))===s});if(!a.length)return;
+h+='<h3>'+G[s]+'</h3>'+a.map(function(k){var c=nm(k);return'<div class="c r"><div><b>'+esc(N(c))+'</b><span class="m">'+esc(c.type)+'</span></div><div class="q"><button onclick="chg(\''+encodeURIComponent(k)+'\',-1)">−</button><b>'+deck[k]+'</b><button onclick="chg(\''+encodeURIComponent(k)+'\',1)">＋</button></div></div>'}).join('')});
+D.innerHTML=h||'<div class="c m">牌組是空的，到「卡片」分頁加入卡片。</div>';$('ex').classList.add('hide');rsaved()}
+function saveDeck(){var n=$('dn').value.trim()||'未命名牌組';if(!total()){alert('牌組是空的');return}
+saved=saved.filter(function(d){return d.name!==n});saved.push({name:n,deck:JSON.parse(JSON.stringify(deck))});sv('rb_saved',saved);rsaved()}
+function rsaved(){$('saved').innerHTML=saved.length?saved.map(function(d,i){var n=0;for(var k in d.deck)n+=d.deck[k];
+return'<div class="c r"><div><b>'+esc(d.name)+'</b><span class="m">'+n+' 張</span></div><div class="q"><button style="width:auto;padding:0 10px" onclick="loadDeck('+i+')">載入</button><button onclick="delDeck('+i+')">✕</button></div></div>'}).join(''):'<div class="m">尚無儲存的牌組。</div>'}
+function loadDeck(i){deck=JSON.parse(JSON.stringify(saved[i].deck));$('dn').value=saved[i].name;sv('rb_deck',deck);rdeck()}
+function delDeck(i){if(confirm('刪除「'+saved[i].name+'」？')){saved.splice(i,1);sv('rb_saved',saved);rsaved()}}
+function exportDeck(){var t=Object.keys(deck).map(function(k){return deck[k]+' '+nm(k).name}).join('\n'),e=$('ex');e.value=t;e.classList.remove('hide');e.select()}
+fill();render();cnt();
+</script>
+</body>
+</html>
