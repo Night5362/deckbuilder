@@ -160,11 +160,13 @@ if(up.length)await sb.from('decks').upsert(up,{onConflict:'user_id,name'});am('�
 async function push(n){if(!sb||!user)return;var d=saved.filter(function(x){return x.name===n})[0];if(!d)return;
 var r=await sb.from('decks').upsert({user_id:user.id,name:n,deck:d.deck,updated_at:new Date().toISOString()},{onConflict:'user_id,name'});if(r.error)alert('雲端儲存失敗：'+r.error.message)}
 if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;uiAcc();if(user)setTimeout(sync,0)});
-function loadImg(u){return new Promise(function(res){var i=new Image();i.crossOrigin='anonymous';i.onload=function(){res(i)};i.onerror=function(){res(null)};i.src=u})}
+function loadOne(u){return new Promise(function(res){var i=new Image();i.crossOrigin='anonymous';i.onload=function(){res(i)};i.onerror=function(){res(null)};i.src=u})}
+async function loadImg(u){var i=await loadOne(u);if(!i)i=await loadOne('https://wsrv.nl/?url='+encodeURIComponent(u)+'&w=320');return i}
+var lastItems=[];
 function wrapT(g,t,w){var ln=[],cur='';for(var k=0;k<t.length;k++){var z=t[k];if(g.measureText(cur+z).width>w&&cur){ln.push(cur);cur=z}else cur+=z}if(cur)ln.push(cur);return ln}
 async function exportImg(){var ks=Object.keys(deck);if(!ks.length){alert('牌組是空的');return}
 var items=ks.map(function(k){return{c:nm(k),n:deck[k]}}),imgs={};
-await Promise.all(items.map(async function(it){if(it.c.img)imgs[it.c.id]=await loadImg(it.c.img)}));
+lastItems=items;await Promise.all(items.map(async function(it){if(it.c.img)imgs[it.c.id]=await loadImg(it.c.img)}));
 var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場']],W=1080,P=30,cw=160,chh=224,gp=12,cols=6,F='"PingFang TC","Noto Sans TC",sans-serif';
 var secs=G.map(function(g){var a=items.filter(function(it){return sec(it.c)===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0)}}).filter(function(x){return x.a.length});
 var H=P+96;secs.forEach(function(x){H+=50+Math.ceil(x.a.length/cols)*(chh+gp)});H+=50;
@@ -184,8 +186,8 @@ var noImg=items.some(function(it){return it.c.img&&!imgs[it.c.id]});
 try{cv.toBlob(function(b){showImg(b,noImg)},'image/png')}catch(e){alert('圖片產生失敗：'+e.message)}}
 function showImg(b,noImg){var u=URL.createObjectURL(b),o=document.createElement('div');
 o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.88);overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));z-index:9';
-o.innerHTML='<div style="max-width:720px;margin:auto"><div class="row" style="margin-bottom:8px"><button class="btn p" id="xs">分享／下載</button><button class="btn" id="xc">關閉</button></div>'+(noImg?'<p class="m" style="color:#ddd">部分卡圖無法載入，已改用卡名顯示。</p>':'')+'<p class="m" style="color:#ddd">也可以長按圖片選擇「儲存影像」。</p><img src="'+u+'" style="width:100%;border-radius:8px"></div>';
-document.body.appendChild(o);$('xc').onclick=function(){o.remove();URL.revokeObjectURL(u)};
+o.innerHTML='<div style="max-width:720px;margin:auto"><div class="row" style="margin-bottom:8px"><button class="btn p" id="xs">分享／下載</button><button class="btn" id="xc">關閉</button>'+(noImg?'<button class="btn" id="xv">截圖模式</button>':'')+'</div>'+(noImg?'<p class="m" style="color:#ddd">部分卡圖無法載入，已改用卡名顯示。</p>':'')+'<p class="m" style="color:#ddd">也可以長按圖片選擇「儲存影像」。</p><img src="'+u+'" style="width:100%;border-radius:8px"></div>';
+document.body.appendChild(o);$('xc').onclick=function(){o.remove();URL.revokeObjectURL(u)};if($('xv'))$('xv').onclick=function(){o.remove();shotView()};
 $('xs').onclick=function(){var f=new File([b],'riftbound-deck.png',{type:'image/png'});
 if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f]}).catch(function(){})}else{var a=document.createElement('a');a.href=u;a.download='riftbound-deck.png';document.body.appendChild(a);a.click();a.remove()}}}
 var ADMIN=location.hash==='#admin';
@@ -195,6 +197,12 @@ async function loadPublic(){if(ADMIN)return;
 try{var r=await fetch('cards.json',{cache:'no-cache'});if(r.ok){var j=await r.json();if(Array.isArray(j)&&j.length){cards=j;sv('rb_cards',cards)}}}catch(e){}
 try{var r2=await fetch('zh.json',{cache:'no-cache'});if(r2.ok){var z=await r2.json();if(z&&typeof z==='object'){zh=z;sv('rb_zh',zh)}}}catch(e){}
 if(!cards.length)await autoLoad();fill();render();rdeck()}
+function shotView(){var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:#1d1b22;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px 24px;z-index:9;color:#fff';
+var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場']],h='<div style="max-width:720px;margin:auto"><p style="color:#bbb;font-size:13px">請直接截圖保存。<button class="btn" id="xk" style="width:auto;padding:4px 12px;margin-left:8px;flex:none">關閉</button></p><h2 style="margin:6px 0">'+esc($('dn').value.trim()||'未命名牌組')+'</h2>';
+G.forEach(function(g){var a=lastItems.filter(function(it){return sec(it.c)===g[0]});if(!a.length)return;var n=a.reduce(function(x,it){return x+it.n},0);
+h+='<h3 style="color:#a98bff">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">'+a.map(function(it){
+return'<div style="position:relative;background:#2e2b38;border-radius:6px;min-height:60px">'+(it.c.img?'<img src="'+esc(it.c.img)+'" alt="'+esc(N(it.c))+'" style="width:100%;border-radius:6px;display:block;font-size:12px">':'<div style="padding:6px;font-size:12px">'+esc(N(it.c))+'</div>')+'<span style="position:absolute;right:4px;bottom:4px;background:#8a5cf6;border-radius:12px;padding:0 8px;font-weight:bold;font-size:14px">×'+it.n+'</span></div>'}).join('')+'</div>'});
+o.innerHTML=h+'</div>';document.body.appendChild(o);$('xk').onclick=function(){o.remove()}}
 fill();render();cnt();loadPublic();
 </script>
 </body>
