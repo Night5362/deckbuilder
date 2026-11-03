@@ -118,15 +118,19 @@ function clearData(){if(confirm('確定清除所有卡片與中文資料？牌�
 function Z(c){return zh[c.id.toLowerCase()]||zh[c.name.toLowerCase()]||{}}
 function N(c){return L==='zh'&&Z(c).name?Z(c).name:c.name}
 function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
-function setL(v){L=v;sv('rb_lang',L);fill2();render();rdeck()}
-function tab(n){for(var i=1;i<=4;i++){$('s'+i).classList.toggle('hide',i!==n);$('n'+i).classList.toggle('on',i===n)}if(n===2)rdeck()}
+function setL(v){L=v;sv('rb_lang',L);fill();render();rdeck()}
+function tab(n){for(var i=1;i<=4;i++){$('s'+i).classList.toggle('hide',i!==n);$('n'+i).classList.toggle('on',i===n)}if(n===1)render();if(n===2)rdeck()}
 function setOf(c){return(String(c.id).match(/^[A-Za-z]+/)||[''])[0].slice(0,3).toUpperCase()}
 function uq(a){var o={};a.forEach(function(x){if(x!==''&&x!=null)o[x]=1});return Object.keys(o)}
 var HIDE=/^(jdg|opp)/i;
 function isCL(c){return c.dom.some(function(d){return String(d).toLowerCase()==='colorless'})}
 function vis(c){return!HIDE.test(String(c.id))&&!(isCL(c)&&sec(c)!=='B')}
 var SETN={OGN:'起源',OGS:'起源：試煉之地',SFD:'鑄魂淬鍊',UNL:'破限',VEN:'化神爭鋒',PR:'特典卡',RP:'特典卡'},SETO=['OGN','OGS','SFD','UNL','VEN','PR','RP'],DOMN={Body:'軀體',Calm:'止靜',Chaos:'渾沌',Fury:'狂怒',Mind:'心智',Order:'秩序'};
-function lab(m,x){return L==='zh'&&m[x]?x+' '+m[x]:x}
+function lab(m,x){return L==='zh'&&m[x]?m[x]:x}
+var TYPEO=['legend','unit','spell','gear','battlefield','rune'],TYPEN={legend:'傳奇',unit:'單位',spell:'法術',gear:'裝備',battlefield:'戰場',rune:'符文'};
+function tlab(k){var n=TYPEN[String(k).toLowerCase()];return L==='zh'&&n?n:k}
+function typeCmp(a,b){var i=TYPEO.indexOf(String(a).toLowerCase()),j=TYPEO.indexOf(String(b).toLowerCase());i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
+function badge(c){var m=(deck[c.id]||0)+(champ===c.id?1:0),d=side[c.id]||0;if(!m&&!d)return'';return'<div class="m" style="color:var(--ac);font-weight:600">已加入：'+(m?'主牌 '+m:'')+(m&&d?'・':'')+(d?'備牌 '+d:'')+'</div>'}
 function setCmp(a,b){var i=SETO.indexOf(a),j=SETO.indexOf(b);i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
 var sel={fs:{},fd:{},fc:{}};
 function nk(o){return Object.keys(o).length}
@@ -139,19 +143,19 @@ function tg(id,v){if(sel[id][v])delete sel[id][v];else sel[id][v]=1;fill2();rend
 function toggleMore(){$('more').classList.toggle('hide');upBtn()}
 function clearMore(){sel={fs:{},fd:{},fc:{}};fill2();render();upBtn()}
 function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(vis(c)&&c.type)t[c.type]=1});
-s.innerHTML='<option value="">所有類型</option>'+Object.keys(t).sort().map(function(k){return'<option>'+esc(k)+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
+s.innerHTML='<option value="">所有類型</option>'+Object.keys(t).sort(typeCmp).map(function(k){return'<option value="'+esc(k)+'">'+esc(tlab(k))+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
 function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
 var r=cards.filter(function(c){return vis(c)&&(!f||c.type===f)&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 E.innerHTML=(r.length>50?'<p class="m">共 '+r.length+' 筆，僅顯示前 50 筆，請縮小搜尋範圍。</p>':'')+r.slice(0,50).map(function(c){
-return'<div class="c cd">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([c.type,c.dom.join('/'),c.cost!==''?'費用 '+c.cost:'',c.id].filter(Boolean).join(' · '))+'</div><div class="t">'+esc(X(c))+'</div></div></div>'}).join('')}
+return'<div class="c cd">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([c.type,c.dom.join('/'),c.cost!==''?'費用 '+c.cost:'',c.id].filter(Boolean).join(' · '))+'</div>'+badge(c)+'<div class="t">'+esc(X(c))+'</div></div></div>'}).join('')}
 var SIDEMAX=10;
 function btns(c){var e=encodeURIComponent(c.id);return sec(c)==='M'?'<span style="display:flex;gap:6px;flex:none"><button class="btn p" style="padding:6px 10px" onclick="add(\''+e+'\')">主牌</button><button class="btn" style="padding:6px 10px" onclick="addS(\''+e+'\')">備牌</button></span>':'<button class="btn p" style="flex:none;padding:6px 12px" onclick="add(\''+e+'\')">加入</button>'}
 function pref(n){return String(n).split(/,| - /)[0].trim().toLowerCase()}
 function sideN(){var n=0;for(var k in side)n+=side[k];return n}
 function total(){var n=champ?1:0,k;for(k in deck)n+=deck[k];for(k in side)n+=side[k];return n}
-function add(id){id=decodeURIComponent(id);deck[id]=(deck[id]||0)+1;sv('rb_deck',deck);cnt()}
-function addS(id){id=decodeURIComponent(id);if(sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+1;sv('rb_side',side);cnt()}
+function add(id){id=decodeURIComponent(id);deck[id]=(deck[id]||0)+1;sv('rb_deck',deck);cnt();render()}
+function addS(id){id=decodeURIComponent(id);if(sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+1;sv('rb_side',side);cnt();render()}
 function chg(id,d){id=decodeURIComponent(id);deck[id]=(deck[id]||0)+d;if(deck[id]<=0)delete deck[id];sv('rb_deck',deck);rdeck()}
 function chgS(id,d){id=decodeURIComponent(id);if(d>0&&sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+d;if(side[id]<=0)delete side[id];sv('rb_side',side);rdeck()}
 function cnt(){$('cnt').textContent=total()}
