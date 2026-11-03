@@ -219,7 +219,8 @@ o.innerHTML='<div style="max-width:720px;margin:auto"><div class="row" style="ma
 document.body.appendChild(o);$('xc').onclick=function(){o.remove();URL.revokeObjectURL(u)};if($('xv'))$('xv').onclick=function(){o.remove();shotView()};
 $('xs').onclick=function(){var f=new File([b],'riftbound-deck.png',{type:'image/png'});
 if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f]}).catch(function(){})}else{var a=document.createElement('a');a.href=u;a.download='riftbound-deck.png';document.body.appendChild(a);a.click();a.remove()}}}
-var ADMIN=location.hash==='#admin';
+var ADMIN=false;try{if(location.hash==='#admin')localStorage.setItem('rb_admin','1');if(location.hash==='#user')localStorage.removeItem('rb_admin');ADMIN=localStorage.getItem('rb_admin')==='1'||location.hash==='#admin'}catch(e){ADMIN=location.hash==='#admin'}
+window.addEventListener('hashchange',function(){location.reload()});
 if(ADMIN)$('n3').classList.remove('hide');
 function dl(n,o){var b=new Blob([JSON.stringify(o)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove()}
 async function loadPublic(){if(ADMIN)return;
