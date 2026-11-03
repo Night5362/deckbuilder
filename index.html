@@ -66,7 +66,8 @@ input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-r
 <section id="s3" class="hide">
 <div class="c"><b>開發者：發佈資料給所有使用者</b>
 <p class="m">匯入完成後，下載這兩個檔案，和 index.html 一起上傳到 GitHub，所有使用者就會自動看到卡片與中文。</p>
-<div class="row"><button class="btn p" onclick="dl('cards.json',cards)">下載 cards.json</button><button class="btn p" onclick="dl('zh.json',zh)">下載 zh.json</button></div></div>
+<div class="row"><button class="btn p" onclick="dl('cards.json',cards)">下載 cards.json</button><button class="btn p" onclick="dl('zh.json',zh)">下載 zh.json</button></div>
+<div class="row" style="margin-top:8px"><button class="btn" onclick="tplZh()">產生翻譯模板（方便編輯用）</button></div></div>
 <div class="c"><b>自動載入卡片（含卡圖）</b>
 <p class="m">從 Riftcodex 下載全部卡片。放到自己的網址（如 Vercel）後可直接使用；在這個預覽頁會被瀏覽器擋住，請改用下方手動匯入。</p>
 <button class="btn p" onclick="autoLoad()">自動載入全部卡片</button></div>
@@ -256,7 +257,14 @@ if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[
 var ADMIN=false;try{if(location.hash==='#admin')localStorage.setItem('rb_admin','1');if(location.hash==='#user')localStorage.removeItem('rb_admin');ADMIN=localStorage.getItem('rb_admin')==='1'||location.hash==='#admin'}catch(e){ADMIN=location.hash==='#admin'}
 window.addEventListener('hashchange',function(){location.reload()});
 if(ADMIN)$('n3').classList.remove('hide');
-function dl(n,o){var b=new Blob([JSON.stringify(o)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove()}
+function dl(n,o,pp){var b=new Blob([pp?JSON.stringify(o,null,2):JSON.stringify(o)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove()}
+function tplZh(){var o={_imgdir:zh._imgdir||'images/zh/',_imgext:zh._imgext||'.webp'},seen={},ids={};
+cards.forEach(function(c){ids[String(c.id).toLowerCase()]=1});
+cards.filter(vis).slice().sort(function(a,b){return setCmp(setOf(a),setOf(b))||(a.id<b.id?-1:a.id>b.id?1:0)}).forEach(function(c){var k=c.name.toLowerCase();if(seen[k]||!k)return;seen[k]=1;
+var ex=zh[k]||zh[String(c.id).toLowerCase()]||{},e={en:c.name,name:ex.name||'',en_text:c.text||'',text:ex.text||''};if(ex.img)e.img=ex.img;o[k]=e});
+for(var k in zh){if(!(k in o)&&!ids[k])o[k]=zh[k]}
+if(!cards.length){alert('尚未載入卡片資料，請先匯入卡片。');return}
+dl('zh-template.json',o,true)}
 async function loadPublic(){if(ADMIN)return;
 try{var r=await fetch('cards.json',{cache:'no-cache'});if(r.ok){var j=await r.json();if(Array.isArray(j)&&j.length){cards=j;sv('rb_cards',cards)}}}catch(e){}
 try{var r2=await fetch('zh.json',{cache:'no-cache'});if(r2.ok){var z=await r2.json();if(z&&typeof z==='object'){zh={};for(var kk in z)zh[kk.toLowerCase()]=z[kk];sv('rb_zh',zh)}}}catch(e){}
