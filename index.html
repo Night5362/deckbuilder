@@ -118,25 +118,31 @@ function clearData(){if(confirm('確定清除所有卡片與中文資料？牌�
 function Z(c){return zh[c.id.toLowerCase()]||zh[c.name.toLowerCase()]||{}}
 function N(c){return L==='zh'&&Z(c).name?Z(c).name:c.name}
 function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
-function setL(v){L=v;sv('rb_lang',L);render();rdeck()}
+function setL(v){L=v;sv('rb_lang',L);fill2();render();rdeck()}
 function tab(n){for(var i=1;i<=4;i++){$('s'+i).classList.toggle('hide',i!==n);$('n'+i).classList.toggle('on',i===n)}if(n===2)rdeck()}
 function setOf(c){return(String(c.id).match(/^[A-Za-z]+/)||[''])[0].slice(0,3).toUpperCase()}
 function uq(a){var o={};a.forEach(function(x){if(x!==''&&x!=null)o[x]=1});return Object.keys(o)}
+var HIDE=/^(jdg|opp)/i;
+function isCL(c){return c.dom.some(function(d){return String(d).toLowerCase()==='colorless'})}
+function vis(c){return!HIDE.test(String(c.id))&&!(isCL(c)&&sec(c)!=='B')}
+var SETN={OGN:'起源',OGS:'起源：試煉之地',SFD:'鑄魂淬鍊',UNL:'破限',VEN:'化神爭鋒',PR:'特典卡',RP:'特典卡'},SETO=['OGN','OGS','SFD','UNL','VEN','PR','RP'],DOMN={Body:'軀體',Calm:'止靜',Chaos:'渾沌',Fury:'狂怒',Mind:'心智',Order:'秩序'};
+function lab(m,x){return L==='zh'&&m[x]?x+' '+m[x]:x}
+function setCmp(a,b){var i=SETO.indexOf(a),j=SETO.indexOf(b);i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
 var sel={fs:{},fd:{},fc:{}};
 function nk(o){return Object.keys(o).length}
-function fo(id,a){$(id).innerHTML=a.map(function(x){return'<button class="chip'+(sel[id][x]?' on':'')+'" data-v="'+esc(x)+'" onclick="tg(\''+id+'\',this.dataset.v)">'+esc(x)+'</button>'}).join('')}
-function fill2(){fo('fs',uq(cards.map(setOf)).sort());
-fo('fd',uq([].concat.apply([],cards.map(function(c){return c.dom}))).sort());
-fo('fc',uq(cards.map(function(c){return c.cost==null?'':String(c.cost)})).sort(function(a,b){return a-b}))}
+function fo(id,a,f){$(id).innerHTML=a.map(function(x){return'<button class="chip'+(sel[id][x]?' on':'')+'" data-v="'+esc(x)+'" onclick="tg(\''+id+'\',this.dataset.v)">'+esc(f?f(x):x)+'</button>'}).join('')}
+function fill2(){fo('fs',uq(cards.filter(vis).map(setOf)).sort(setCmp),function(x){return lab(SETN,x)});
+fo('fd',uq([].concat.apply([],cards.filter(vis).map(function(c){return c.dom}))).filter(function(d){return String(d).toLowerCase()!=='colorless'}).sort(),function(x){return lab(DOMN,x)});
+fo('fc',uq(cards.filter(vis).map(function(c){return c.cost==null?'':String(c.cost)})).sort(function(a,b){return a-b}))}
 function upBtn(){var n=nk(sel.fs)+nk(sel.fd)+nk(sel.fc),o=!$('more').classList.contains('hide');$('mf').textContent='更多篩選'+(n?'（已選 '+n+'）':'')+(o?' ▴':' ▾')}
 function tg(id,v){if(sel[id][v])delete sel[id][v];else sel[id][v]=1;fill2();render();upBtn()}
 function toggleMore(){$('more').classList.toggle('hide');upBtn()}
 function clearMore(){sel={fs:{},fd:{},fc:{}};fill2();render();upBtn()}
-function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(c.type)t[c.type]=1});
+function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(vis(c)&&c.type)t[c.type]=1});
 s.innerHTML='<option value="">所有類型</option>'+Object.keys(t).sort().map(function(k){return'<option>'+esc(k)+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
 function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
-var r=cards.filter(function(c){return(!f||c.type===f)&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
+var r=cards.filter(function(c){return vis(c)&&(!f||c.type===f)&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 E.innerHTML=(r.length>50?'<p class="m">共 '+r.length+' 筆，僅顯示前 50 筆，請縮小搜尋範圍。</p>':'')+r.slice(0,50).map(function(c){
 return'<div class="c cd">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([c.type,c.dom.join('/'),c.cost!==''?'費用 '+c.cost:'',c.id].filter(Boolean).join(' · '))+'</div><div class="t">'+esc(X(c))+'</div></div></div>'}).join('')}
 var SIDEMAX=10;
@@ -152,7 +158,7 @@ function cnt(){$('cnt').textContent=total()}
 function nm(id){for(var i=0;i<cards.length;i++)if(cards[i].id===id)return cards[i];return{id:id,name:id,type:'',dom:[]}}
 function sec(c){var t=String(c.type).toLowerCase();return t.indexOf('legend')>-1?'L':t.indexOf('battlefield')>-1?'B':t.indexOf('rune')>-1?'R':'M'}
 function legOf(){for(var k in deck){var c=nm(k);if(sec(c)==='L')return c}return null}
-function cands(leg){var seen={},all=cards.filter(function(c){return sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&c.dom.every(function(d){return d==='Colorless'||leg.dom.indexOf(d)>-1})}).filter(function(c){if(seen[c.name])return false;seen[c.name]=1;return true});
+function cands(leg){var seen={},all=cards.filter(function(c){return vis(c)&&sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&c.dom.every(function(d){return d==='Colorless'||leg.dom.indexOf(d)>-1})}).filter(function(c){if(seen[c.name])return false;seen[c.name]=1;return true});
 var by=all.filter(function(c){return pref(c.name)===pref(leg.name)});return by.length?by:all}
 function setChamp(v){champ=v;sv('rb_champ',champ);rdeck()}
 function check(){var S={L:0,B:0,R:0,M:0},cp={},leg=null,cc=champ?nm(champ):null,out=[],k,c,bad=[],sd=0;
