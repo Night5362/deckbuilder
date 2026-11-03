@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>符文戰場牌組工具</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8a5cf6">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1f;--mu:#6b6b70;--ac:#8a5cf6;--bd:#dedbd2;--ok:#1a7f4b;--no:#c62828;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161a;--card:#222126;--tx:#eeedf0;--mu:#9b9aa3;--ac:#a98bff;--bd:#38363f;--ok:#4cc38a;--no:#ff7b72;color-scheme:dark}}
@@ -275,6 +280,13 @@ G.forEach(function(g){var a=lastItems.filter(function(it){return it.s===g[0]});i
 h+='<h3 style="color:#a98bff">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">'+a.map(function(it){
 return'<div style="position:relative;background:#2e2b38;border-radius:6px;min-height:60px">'+(pic(it.c)?'<img src="'+esc(pic(it.c))+'" alt="'+esc(N(it.c))+'" style="width:100%;border-radius:6px;display:block;font-size:12px">':'<div style="padding:6px;font-size:12px">'+esc(N(it.c))+'</div>')+'<span style="position:absolute;right:4px;bottom:4px;background:#8a5cf6;border-radius:12px;padding:0 8px;font-weight:bold;font-size:14px">×'+it.n+'</span></div>'}).join('')+'</div>'});
 o.innerHTML=h+'</div>';document.body.appendChild(o);$('xk').onclick=function(){o.remove()}}
+var SIG0=null,lastChk=0,updShown=false;
+async function sig(){try{var r=await fetch('index.html',{cache:'no-store'});var t=await r.text(),h=0;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return h}catch(e){return null}}
+function showUpd(){if(updShown)return;updShown=true;var b=document.createElement('div');b.style.cssText='position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));background:var(--ac);color:#fff;padding:10px 14px;border-radius:10px;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:10px';b.innerHTML='<span>有新版本可用</span><button class="btn" style="flex:none;padding:6px 12px" onclick="location.reload()">立即更新</button>';document.body.appendChild(b)}
+function chkUpdate(){var t=Date.now();if(t-lastChk<30000)return;lastChk=t;sig().then(function(v){if(v!==null&&SIG0!==null&&v!==SIG0)showUpd()});loadPublic();try{if(window.__reg)window.__reg.update()}catch(e){}}
+try{if('serviceWorker' in navigator){var had=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(r){window.__reg=r}).catch(function(){});navigator.serviceWorker.addEventListener('controllerchange',function(){if(had)showUpd()})}}catch(e){}
+sig().then(function(v){SIG0=v});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)chkUpdate()});setInterval(chkUpdate,300000);
 fill();render();cnt();loadPublic();
 </script>
 </body>
