@@ -1,5 +1,5 @@
-var VER='rb-v2',IMG='rb-img-v1',SHELL=['./','index.html','manifest.json','icon-192.png','icon-512.png','icon-maskable-512.png'];
-self.addEventListener('install',function(e){e.waitUntil(caches.open(VER).then(function(c){return c.addAll(SHELL)}).then(function(){return self.skipWaiting()}))});
+var VER='rb-v3',IMG='rb-img-v1',SHELL=['./','index.html','manifest.json','icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-512.png'];
+self.addEventListener('install',function(e){e.waitUntil(caches.open(VER).then(function(c){return Promise.all(SHELL.map(function(u){return c.add(u).catch(function(){})}))}).then(function(){return self.skipWaiting()}))});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==VER&&k!==IMG}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});
 self.addEventListener('message',function(e){if(e.data==='skip')self.skipWaiting()});
 function net(r){return new Promise(function(ok,no){var t=setTimeout(no,5000);fetch(r.url,{cache:'no-cache'}).then(function(x){clearTimeout(t);ok(x)},function(e){clearTimeout(t);no(e)})})}

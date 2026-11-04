@@ -7,8 +7,8 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#8a5cf6">
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="icon" type="image/png" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1f;--mu:#6b6b70;--ac:#8a5cf6;--bd:#dedbd2;--ok:#1a7f4b;--no:#c62828;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161a;--card:#222126;--tx:#eeedf0;--mu:#9b9aa3;--ac:#a98bff;--bd:#38363f;--ok:#4cc38a;--no:#ff7b72;color-scheme:dark}}
@@ -235,7 +235,7 @@ function wrapT(g,t,w){var ln=[],cur='';for(var k=0;k<t.length;k++){var z=t[k];if
 async function exportImg(){if(!total()){alert('牌組是空的');return}
 var ks=Object.keys(deck),items=ks.map(function(k){return{c:nm(k),n:deck[k],s:sec(nm(k))}}),imgs={};
 if(champ)items.push({c:nm(champ),n:1,s:'C'});Object.keys(side).forEach(function(k){items.push({c:nm(k),n:side[k],s:'S'})});
-lastItems=items;var ico=await loadOne('icon-192.png');await Promise.all(items.map(async function(it){if(pic(it.c))imgs[it.c.id]=await loadAny(it.c)}));
+lastItems=items;var ico=await loadOne('icons/icon-192.png')||await loadOne('icon-192.png');await Promise.all(items.map(async function(it){if(pic(it.c))imgs[it.c.id]=await loadAny(it.c)}));
 var G=[['L','傳奇'],['C','指定英雄'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1080,P=30,cw=160,chh=224,gp=12,cols=6,F='"PingFang TC","Noto Sans TC",sans-serif';
 var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0)+(g[0]==='M'&&champ?1:0),w:g[0]==='B'?chh:cw,h:g[0]==='B'?cw:chh,k:g[0]==='B'?4:cols}}).filter(function(x){return x.a.length});
 var H=P+96;secs.forEach(function(x){H+=50+Math.ceil(x.a.length/x.k)*(x.h+gp)});H+=20;
