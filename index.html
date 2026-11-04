@@ -237,19 +237,19 @@ var ks=Object.keys(deck),items=ks.map(function(k){return{c:nm(k),n:deck[k],s:sec
 if(champ)items.push({c:nm(champ),n:1,s:'C'});Object.keys(side).forEach(function(k){items.push({c:nm(k),n:side[k],s:'S'})});
 lastItems=items;await Promise.all(items.map(async function(it){if(pic(it.c))imgs[it.c.id]=await loadAny(it.c)}));
 var G=[['L','傳奇'],['C','指定英雄'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1080,P=30,cw=160,chh=224,gp=12,cols=6,F='"PingFang TC","Noto Sans TC",sans-serif';
-var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0)+(g[0]==='M'&&champ?1:0)}}).filter(function(x){return x.a.length});
-var H=P+96;secs.forEach(function(x){H+=50+Math.ceil(x.a.length/cols)*(chh+gp)});H+=50;
+var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0)+(g[0]==='M'&&champ?1:0),w:g[0]==='B'?chh:cw,h:g[0]==='B'?cw:chh,k:g[0]==='B'?4:cols}}).filter(function(x){return x.a.length});
+var H=P+96;secs.forEach(function(x){H+=50+Math.ceil(x.a.length/x.k)*(x.h+gp)});H+=50;
 var cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d');
 g.fillStyle='#1d1b22';g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
 g.fillStyle='#fff';g.font='bold 44px '+F;g.fillText($('dn').value.trim()||'未命名牌組',P,P+44);
 g.fillStyle='#a9a6b3';g.font='24px '+F;g.fillText(secs.map(function(x){return x.t+' '+x.n}).join('  ·  '),P,P+84);
 var y=P+96;
 secs.forEach(function(x){g.fillStyle='#a98bff';g.font='bold 28px '+F;g.fillText(x.t+'（'+x.n+'）',P,y+32);y+=50;
-x.a.forEach(function(it,i){var cx=P+(i%cols)*(cw+gp),cy=y+Math.floor(i/cols)*(chh+gp),im=imgs[it.c.id];
-if(im){g.drawImage(im,cx,cy,cw,chh)}else{g.fillStyle='#2e2b38';g.fillRect(cx,cy,cw,chh);g.fillStyle='#fff';g.font='bold 20px '+F;
+x.a.forEach(function(it,i){var cw=x.w,chh=x.h,cx=P+(i%x.k)*(cw+gp),cy=y+Math.floor(i/x.k)*(chh+gp),im=imgs[it.c.id];
+if(im){var ar=im.width/im.height,dw=cw,dh=cw/ar;if(dh>chh){dh=chh;dw=chh*ar}g.drawImage(im,cx+(cw-dw)/2,cy+(chh-dh)/2,dw,dh)}else{g.fillStyle='#2e2b38';g.fillRect(cx,cy,cw,chh);g.fillStyle='#fff';g.font='bold 20px '+F;
 wrapT(g,N(it.c),cw-20).slice(0,5).forEach(function(l,j){g.fillText(l,cx+10,cy+34+j*26)});g.fillStyle='#a9a6b3';g.font='16px '+F;g.fillText(String(it.c.type||''),cx+10,cy+chh-14)}
 if(it.n>0){g.fillStyle='#8a5cf6';g.beginPath();g.arc(cx+cw-28,cy+chh-28,24,0,6.2832);g.fill();g.fillStyle='#fff';g.font='bold 22px '+F;g.textAlign='center';g.fillText('×'+it.n,cx+cw-28,cy+chh-20);g.textAlign='left'}});
-y+=Math.ceil(x.a.length/cols)*(chh+gp)});
+y+=Math.ceil(x.a.length/x.k)*(x.h+gp)});
 g.fillStyle='#6f6c7a';g.font='20px '+F;g.fillText('符文戰場牌組工具',P,H-20);
 var noImg=items.some(function(it){return pic(it.c)&&!imgs[it.c.id]});
 try{cv.toBlob(function(b){showImg(b,noImg)},'image/png')}catch(e){alert('圖片產生失敗：'+e.message)}}
@@ -277,7 +277,7 @@ if(!cards.length)await autoLoad();fill();render();rdeck()}
 function shotView(){var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:#1d1b22;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px 24px;z-index:9;color:#fff';
 var G=[['L','傳奇'],['C','指定英雄'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],h='<div style="max-width:720px;margin:auto"><p style="color:#bbb;font-size:13px">請直接截圖保存。<button class="btn" id="xk" style="width:auto;padding:4px 12px;margin-left:8px;flex:none">關閉</button></p><h2 style="margin:6px 0">'+esc($('dn').value.trim()||'未命名牌組')+'</h2>';
 G.forEach(function(g){var a=lastItems.filter(function(it){return it.s===g[0]});if(!a.length)return;var n=a.reduce(function(x,it){return x+it.n},0)+(g[0]==='M'&&champ?1:0);
-h+='<h3 style="color:#a98bff">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">'+a.map(function(it){
+h+='<h3 style="color:#a98bff">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat('+(g[0]==='B'?3:4)+',1fr);gap:6px">'+a.map(function(it){
 return'<div style="position:relative;background:#2e2b38;border-radius:6px;min-height:60px">'+(pic(it.c)?'<img src="'+esc(pic(it.c))+'" alt="'+esc(N(it.c))+'" style="width:100%;border-radius:6px;display:block;font-size:12px">':'<div style="padding:6px;font-size:12px">'+esc(N(it.c))+'</div>')+'<span style="position:absolute;right:4px;bottom:4px;background:#8a5cf6;border-radius:12px;padding:0 8px;font-weight:bold;font-size:14px">×'+it.n+'</span></div>'}).join('')+'</div>'});
 o.innerHTML=h+'</div>';document.body.appendChild(o);$('xk').onclick=function(){o.remove()}}
 var SIG0=null,lastChk=0,updShown=false;
