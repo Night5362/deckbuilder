@@ -106,7 +106,15 @@ function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){msg('儲
 cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_zh',{});L=ld('rb_lang','zh');side=ld('rb_side',{});champ=ld('rb_champ','');
 function $(i){return document.getElementById(i)}
 function msg(s){$('msg').textContent=s}
-function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+// 核心修改處：esc 函式現在會自動識別並還原被轉義的卡牌 img 標籤
+function esc(s){
+  var res = String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});
+  // 將被轉義的 <img 標籤特例還原成真正的網頁 HTML 標籤
+  res = res.replace(/&lt;img\s+src=&quot;data:image\/(png|svg\+xml);base64,([^&]+)&quot;\s*\/&gt;/g, function(match, type, b64) {
+    return "<img src='data:image/" + type + ";base64," + b64 + "' width='16' height='16' style='vertical-align:middle; display:inline-block; margin:0 2px;' />";
+  });
+  return res;
+}
 function pick(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(v!=null&&v!=='')return v}return ''}
 function arr(v){return Array.isArray(v)?v:(v?[v]:[])}
 function normP(c){var k=c.card||{},cols=(k.colors||[]).map(function(x){return x.name});if(c.showInLibrary===false)return{id:'',name:''};
