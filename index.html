@@ -107,11 +107,18 @@ cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_
 function $(i){return document.getElementById(i)}
 function msg(s){$('msg').textContent=s}
 function esc(s){
-  var res = String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});
-  // 兼容單引號與雙引號的還原規則
-  return res.replace(/&lt;img\s+src=([&quot;&#39;])data:image\/(png|svg\+xml);base64,([^&]+)\1\s*\/&gt;/g, function(match, quote, type, b64) {
-    return "<img src='data:image/" + type + ";base64," + b64 + "' width='16' height='16' style='vertical-align:middle; display:inline-block; margin:0 2px;' />";
+  var res = String(s==null?'':s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
   });
+  
+  // 暴力還原法：直接把被轉義的 img 開頭與結尾還原，不論中間夾了什麼屬性
+  res = res.replace(/&lt;img\s+([^&]+)\s*\/&gt;/g, function(match, content) {
+    // 將中間被轉義的雙引號 &quot; 和單引號 還原回來
+    var rawContent = content.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    return "<img " + rawContent + " />";
+  });
+  
+  return res;
 }
 function pick(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(v!=null&&v!=='')return v}return ''}
 function arr(v){return Array.isArray(v)?v:(v?[v]:[])}
