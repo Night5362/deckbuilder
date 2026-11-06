@@ -30,6 +30,9 @@ input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-r
 .q button{width:32px;height:32px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;font-size:17px;cursor:pointer}
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
+.ic{height:1.2em;width:auto;vertical-align:-.25em;margin:0 1px}
+.kw{position:relative;display:inline-block;z-index:0;color:#fff;font-weight:700;font-style:italic;font-size:.95em;line-height:1.45;padding:0 .75em;margin:0 3px}
+.kw::before{content:"";position:absolute;inset:0;background:#127463;transform:skewX(-14deg);z-index:-1}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chip{padding:5px 12px;border:1px solid var(--bd);border-radius:16px;background:var(--bg);color:var(--tx);font:inherit;font-size:14px;cursor:pointer}.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
@@ -106,20 +109,7 @@ function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){msg('儲
 cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_zh',{});L=ld('rb_lang','zh');side=ld('rb_side',{});champ=ld('rb_champ','');
 function $(i){return document.getElementById(i)}
 function msg(s){$('msg').textContent=s}
-function esc(s){
-  var res = String(s==null?'':s).replace(/[&<>"]/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
-  });
-  
-  // 暴力還原法：直接把被轉義的 img 開頭與結尾還原，不論中間夾了什麼屬性
-  res = res.replace(/&lt;img\s+([^&]+)\s*\/&gt;/g, function(match, content) {
-    // 將中間被轉義的雙引號 &quot; 和單引號 還原回來
-    var rawContent = content.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
-    return "<img " + rawContent + " />";
-  });
-  
-  return res;
-}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function pick(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(v!=null&&v!=='')return v}return ''}
 function arr(v){return Array.isArray(v)?v:(v?[v]:[])}
 function normP(c){var k=c.card||{},cols=(k.colors||[]).map(function(x){return x.name});if(c.showInLibrary===false)return{id:'',name:''};
@@ -140,6 +130,8 @@ function replaceImport(t){cards=[];doImport(t)}
 function fromFile(i,fn){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(){fn(r.result)};r.readAsText(f)}
 function clearData(){if(confirm('確定清除所有卡片與中文資料？牌組不會被刪除。')){cards=[];zh={};sv('rb_cards',cards);sv('rb_zh',zh);fill();render();msg('已清除。')}}
 function Z(c){return zh[c.id.toLowerCase()]||zh[c.name.toLowerCase()]||{}}
+function icm(){var o={},m=zh._icons||{};for(var k in m)o[k.toLowerCase()]=m[k];return o}
+function rt(t){var m=icm();return esc(t).replace(/\[([^\[\]\n]{1,24})\]/g,function(a,k){var u=m[k.toLowerCase()];return u?'<img class="ic" src="'+esc(u)+'" alt="'+a+'" onerror="this.replaceWith(document.createTextNode(this.alt))">':(/^\d+$|^x$/i.test(k.trim())?a:'<span class="kw">'+esc(k.trim())+'</span>')})}
 function N(c){return L==='zh'&&Z(c).name?Z(c).name:c.name}
 function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
 function setL(v){L=v;sv('rb_lang',L);fill();render();rdeck()}
@@ -175,7 +167,7 @@ function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
 var r=cards.filter(function(c){return vis(c)&&(!f||c.type===f)&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!nk(sel.fv)||sel.fv[vOf(c)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 E.innerHTML=(r.length>50?'<p class="m">共 '+r.length+' 筆，僅顯示前 50 筆，請縮小搜尋範圍。</p>':'')+r.slice(0,50).map(function(c){
-return'<div class="c cd">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([c.type,c.dom.join('/'),c.cost!==''?'費用 '+c.cost:'',c.v&&c.v!=='Standard'?c.v:'',c.id].filter(Boolean).join(' · '))+'</div>'+badge(c)+'<div class="t">'+esc(X(c))+'</div></div></div>'}).join('')}
+return'<div class="c cd">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([c.type,c.dom.join('/'),c.cost!==''?'費用 '+c.cost:'',c.v&&c.v!=='Standard'?c.v:'',c.id].filter(Boolean).join(' · '))+'</div>'+badge(c)+'<div class="t">'+rt(X(c))+'</div></div></div>'}).join('')}
 var SIDEMAX=10;
 function btns(c){var e=encodeURIComponent(c.id);return sec(c)==='M'?'<span style="display:flex;gap:6px;flex:none"><button class="btn p" style="padding:6px 10px" onclick="add(\''+e+'\')">主牌</button><button class="btn" style="padding:6px 10px" onclick="addS(\''+e+'\')">備牌</button></span>':'<button class="btn p" style="flex:none;padding:6px 12px" onclick="add(\''+e+'\')">加入</button>'}
 function pref(n){return String(n).split(/,| - /)[0].trim().toLowerCase()}
@@ -284,7 +276,7 @@ var ADMIN=false;try{if(location.hash==='#admin')localStorage.setItem('rb_admin',
 window.addEventListener('hashchange',function(){location.reload()});
 if(ADMIN)$('n3').classList.remove('hide');
 function dl(n,o,pp){var b=new Blob([pp?JSON.stringify(o,null,2):JSON.stringify(o)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove()}
-function tplZh(){var o={_imgdir:zh._imgdir||'images/zh/',_imgext:zh._imgext||'.webp'},seen={},ids={};
+function tplZh(){var o={_imgdir:zh._imgdir||'images/zh/',_imgext:zh._imgext||'.webp',_icons:zh._icons||{fury:'images/icons/fury.webp',calm:'images/icons/calm.webp',chaos:'images/icons/chaos.webp',order:'images/icons/order.webp',mind:'images/icons/mind.webp',body:'images/icons/body.webp',rune:'images/icons/rune.webp','1':'images/icons/1.webp','2':'images/icons/2.webp'}},seen={},ids={};
 cards.forEach(function(c){ids[String(c.id).toLowerCase()]=1});
 cards.filter(vis).slice().sort(function(a,b){return setCmp(setOf(a),setOf(b))||(a.id<b.id?-1:a.id>b.id?1:0)}).forEach(function(c){var k=c.name.toLowerCase();if(seen[k]||!k)return;seen[k]=1;
 var ex=zh[k]||zh[String(c.id).toLowerCase()]||{},e={en:c.name,name:ex.name||'',en_text:c.text||'',text:ex.text||''};if(ex.img)e.img=ex.img;o[k]=e});
