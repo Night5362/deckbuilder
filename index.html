@@ -353,23 +353,34 @@ async function exportImg(){if(!anyCards()){alert('牌組是空的');return}
 var ks=Object.keys(deck),items=ks.map(function(k){return{c:nm(k),n:deck[k],s:sec(nm(k))}}),imgs={};
 Object.keys(side).forEach(function(k){items.push({c:nm(k),n:side[k],s:'S'})});
 lastItems=items;var ico=await loadOne('icons/icon-192.png')||await loadOne('icon-192.png');await Promise.all(items.map(async function(it){if(pic(it.c))imgs[it.c.id]=await loadAny(it.c)}));
-var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1920,P=36,gp=12,F='"PingFang TC","Noto Sans TC",sans-serif',LW=8*162,RX=P+LW+30;
-var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});var bf=g[0]==='B',lf=g[0]==='M';return{id:g[0],t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0),w:bf?160:150,h:bf?112:210,k:lf?8:3}}).filter(function(x){return x.a.length});
-function sh(x){return 50+Math.ceil(x.a.length/x.k)*(x.h+gp)}
-var left=secs.filter(function(x){return x.id==='M'}),right=secs.filter(function(x){return x.id!=='M'}),lh=0,rh=0;left.forEach(function(x){lh+=sh(x)});right.forEach(function(x){rh+=sh(x)});
-var top=P+104,H=Math.max(top+Math.max(lh,rh)+P,Math.round(W*0.5));
+var W=1920,P=48,F='"PingFang TC","Noto Sans TC",sans-serif',PW=340,top=118,CW=150,CH=210,gp=12,cols=8,mx=P+PW+44;
+function pick(t){return items.filter(function(it){return it.s===t})}
+var Ls=pick('L'),Ms=pick('M'),Rs=pick('R'),Bs=pick('B'),Ss=pick('S');
+function cnt2(a){return a.reduce(function(x,it){return x+it.n},0)}
+var rn=Rs.length,rtw=rn>3?64:84,rth=Math.round(rtw*1.4),panelH=20+(Ls.length?318:0)+(rn?rth+46:0)+Bs.length*152+20,mainRows=Math.ceil(Ms.length/cols),mainB=top+mainRows*(CH+gp),sideRows=Math.ceil(Ss.length/cols),sideB=Ss.length?mainB+60+sideRows*(CH+gp):mainB;
+var H=Math.max(1080,top+panelH+40,sideB+70);
 var cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d');
-g.fillStyle='#1d1b22';g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
-g.fillStyle='#fff';g.font='bold 48px '+F;var tt=$('dn').value.trim()||'未命名牌組',cut=false;while(g.measureText(tt).width>1100&&tt.length>1){tt=tt.slice(0,-1);cut=true}g.fillText(cut?tt+'…':tt,P,P+48);
-var lx=W-P;if(ico){g.drawImage(ico,W-P-64,P-4,64,64);lx=W-P-64-12}g.fillStyle='#d9d4ea';g.font='bold 26px '+F;g.textAlign='right';g.fillText('符文戰場牌組工具',lx,P+38);g.textAlign='left';
-g.fillStyle='#a9a6b3';g.font='26px '+F;g.fillText(secs.map(function(x){return x.t+' '+x.n}).join('  ·  '),P,P+92);
-function drawSec(x,ox,oy){var y=oy;g.fillStyle='#a98bff';g.font='bold 28px '+F;g.fillText(x.t+'（'+x.n+'）',ox,y+32);y+=50;
-x.a.forEach(function(it,i){var cw=x.w,chh=x.h,cx=ox+(i%x.k)*(cw+gp),cy=y+Math.floor(i/x.k)*(chh+gp),im=imgs[it.c.id];
-if(im&&x.id==='B'&&im.height>im.width){var sc=Math.min(cw/im.height,chh/im.width),rw=im.width*sc,rh2=im.height*sc;g.save();g.translate(cx+cw/2,cy+chh/2);g.rotate(bfAng()*Math.PI/180);g.drawImage(im,-rw/2,-rh2/2,rw,rh2);g.restore()}else if(im){var ar=im.width/im.height,dw=cw,dh=cw/ar;if(dh>chh){dh=chh;dw=chh*ar}g.drawImage(im,cx+(cw-dw)/2,cy+(chh-dh)/2,dw,dh)}else{g.fillStyle='#2e2b38';g.fillRect(cx,cy,cw,chh);g.fillStyle='#fff';g.font='bold 20px '+F;
-wrapT(g,N(it.c),cw-20).slice(0,5).forEach(function(l,j){g.fillText(l,cx+10,cy+34+j*26)});g.fillStyle='#a9a6b3';g.font='16px '+F;g.fillText(String(it.c.type||''),cx+10,cy+chh-14)}
-if(it.n>0){g.fillStyle='#8a5cf6';g.beginPath();g.arc(cx+cw-28,cy+chh-28,24,0,6.2832);g.fill();g.fillStyle='#fff';g.font='bold 22px '+F;g.textAlign='center';g.fillText('×'+it.n,cx+cw-28,cy+chh-20);g.textAlign='left'}});
-return sh(x)}
-var yy=top;left.forEach(function(x){yy+=drawSec(x,P,yy)});yy=top;right.forEach(function(x){yy+=drawSec(x,RX,yy)});
+var bgG=g.createRadialGradient(W*0.7,0,50,W*0.5,H*0.4,W*0.8);bgG.addColorStop(0,'#2a2240');bgG.addColorStop(1,'#141317');g.fillStyle=bgG;g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
+function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+function tl(x0,y0,x1,y1){var dx=x1-x0,dy=y1-y0,L=Math.sqrt(dx*dx+dy*dy),ux=dx/L,uy=dy/L,nx=-uy*0.9,ny=ux*0.9,r=Math.min(70,L/3);g.fillStyle='#8a5cf6';g.beginPath();g.moveTo(x0,y0);g.lineTo(x0+ux*r+nx,y0+uy*r+ny);g.lineTo(x1-ux*r+nx,y1-uy*r+ny);g.lineTo(x1,y1);g.lineTo(x1-ux*r-nx,y1-uy*r-ny);g.lineTo(x0+ux*r-nx,y0+uy*r-ny);g.closePath();g.fill()}
+function drawBox(it,x,y,w,h){var im=imgs[it.c.id];g.save();rr(x,y,w,h,8);g.clip();
+if(im&&it.s==='B'&&im.height>im.width){var sc=Math.min(w/im.height,h/im.width),rw=im.width*sc,rh2=im.height*sc;g.translate(x+w/2,y+h/2);g.rotate(bfAng()*Math.PI/180);g.drawImage(im,-rw/2,-rh2/2,rw,rh2)}
+else if(im){var ar=im.width/im.height,dw=w,dh=w/ar;if(dh>h){dh=h;dw=h*ar}g.drawImage(im,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
+else{g.fillStyle='#2e2b38';g.fillRect(x,y,w,h);g.fillStyle='#fff';g.font='bold 18px '+F;wrapT(g,N(it.c),w-16).slice(0,5).forEach(function(l,j){g.fillText(l,x+8,y+28+j*24)});g.fillStyle='#a9a6b3';g.font='14px '+F;g.fillText(String(it.c.type||''),x+8,y+h-10)}
+g.restore()}
+function pill(txt,cx,cy,font,pad){g.font=font;var w=g.measureText(txt).width+pad*2,h=30;g.fillStyle='rgba(0,0,0,.78)';rr(cx-w/2,cy-h/2,w,h,15);g.fill();g.fillStyle='#fff';g.textAlign='center';g.fillText(txt,cx,cy+8);g.textAlign='left'}
+g.fillStyle='#fff';g.font='bold 46px '+F;var tt=$('dn').value.trim()||'未命名牌組',cut=false;while(g.measureText(tt).width>900&&tt.length>1){tt=tt.slice(0,-1);cut=true}tt=cut?tt+'…':tt;g.fillText(tt,P,P+46);var tw=g.measureText(tt).width;
+g.fillStyle='#a98bff';g.font='30px '+F;g.fillText('· 符文戰場牌組工具',P+tw+16,P+44);
+g.fillStyle='#a9a6b3';g.font='26px '+F;g.textAlign='right';g.fillText('主牌組 '+cnt2(Ms)+'  ·  符文 '+cnt2(Rs)+'  ·  戰場 '+cnt2(Bs)+(Ss.length?'  ·  備牌 '+cnt2(Ss):''),W-P,P+44);g.textAlign='left';
+g.fillStyle='rgba(255,255,255,.05)';rr(P,top,PW,panelH,18);g.fill();g.strokeStyle='rgba(138,92,246,.55)';g.lineWidth=1.5;rr(P,top,PW,panelH,18);g.stroke();
+var py=top+20,pcx=P+PW/2;
+if(Ls.length){drawBox(Ls[0],pcx-107,py,214,300);py+=318}
+if(rn){var gw=rn*rtw+(rn-1)*14,rx=pcx-gw/2;Rs.forEach(function(it,i){var x=rx+i*(rtw+14);drawBox(it,x,py,rtw,rth);g.fillStyle='#fff';g.font='bold 24px '+F;g.textAlign='center';g.fillText('×'+it.n,x+rtw/2,py+rth+30);g.textAlign='left'});py+=rth+46}
+Bs.forEach(function(it){drawBox(it,pcx-98,py,196,140);py+=152});
+function grid(a,y0){a.forEach(function(it,i){var x=mx+(i%cols)*(CW+gp),y=y0+Math.floor(i/cols)*(CH+gp);drawBox(it,x,y,CW,CH);if(it.n>1)pill('×'+it.n,x+CW/2,y+CH-26,'bold 20px '+F,12)})}
+grid(Ms,top);
+if(Ss.length){var ly=mainB+22,lx0=mx,lx1=mx+cols*(CW+gp)-gp;tl(lx0,ly,lx1,ly);g.font='bold 22px '+F;var lw=g.measureText('備牌').width+36;g.fillStyle='#17161a';rr((lx0+lx1)/2-lw/2,ly-17,lw,34,17);g.fill();g.strokeStyle='#8a5cf6';g.lineWidth=1.5;rr((lx0+lx1)/2-lw/2,ly-17,lw,34,17);g.stroke();g.fillStyle='#d9d4ea';g.textAlign='center';g.fillText('備牌',(lx0+lx1)/2,ly+8);g.textAlign='left';grid(Ss,mainB+60)}
+var bx=W-P;g.fillStyle='#d9d4ea';g.font='bold 26px '+F;g.textAlign='right';g.fillText('符文戰場牌組工具',ico?bx-70:bx,H-P-4);g.textAlign='left';if(ico)g.drawImage(ico,bx-56,H-P-44,56,56);
 var noImg=items.some(function(it){return pic(it.c)&&!imgs[it.c.id]});
 try{cv.toBlob(function(b){showImg(b,noImg)},'image/png')}catch(e){alert('圖片產生失敗：'+e.message)}}
 function showImg(b,noImg){var u=URL.createObjectURL(b),o=document.createElement('div');
