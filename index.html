@@ -193,7 +193,7 @@ function uq(a){var o={};a.forEach(function(x){if(x!==''&&x!=null)o[x]=1});return
 var HIDE=/^(jdg|opp)/i;
 function isCL(c){return c.dom.some(function(d){return String(d).toLowerCase()==='colorless'})}
 function vis(c){return!HIDE.test(String(c.id))&&!(isCL(c)&&sec(c)!=='B')}
-var SETN={OGN:'起源',OGS:'起源：試煉之地',SFD:'鑄魂淬鍊',UNL:'破限',VEN:'化神爭鋒',RAD:'熠耀光彩',PR:'特典卡',RP:'特典卡'},SETO=['OGN','OGS','SFD','UNL','VEN','RAD','PR','RP'],DOMN={Body:'軀體',Calm:'止靜',Chaos:'渾沌',Fury:'狂怒',Mind:'心智',Order:'秩序',Colorless:'無色'};
+var SETN={OGN:'起源',OGS:'起源：試煉之地',ARC:'奧術',SFD:'鑄魂淬鍊',UNL:'潛能怒放',VEN:'血海深仇',RAD:'熠耀光彩',PR:'特典卡',RP:'特典卡'},SETO=['OGN','OGS','SFD','UNL','VEN','RAD','PR','RP','ARC'],DOMN={Body:'身軀',Calm:'止靜',Chaos:'渾沌',Fury:'狂怒',Mind:'心智',Order:'秩序',Colorless:'無色'};
 function lab(m,x){return L==='zh'&&m[x]?m[x]:x}
 var TYPEO=['legend','unit','spell','gear','battlefield','rune'],TYPEN={legend:'傳奇',unit:'單位',spell:'法術',gear:'裝備',battlefield:'戰場',rune:'符文'};
 function tlab(k){var n=TYPEN[String(k).toLowerCase()];return L==='zh'&&n?n:k}
@@ -217,6 +217,7 @@ if(o!==n){{var m=w==='s'?side:deck,q=m[o]||0;delete m[o];m[n]=(m[n]||0)+q;if(w==
 sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ)}
 closeCard();rdeck();render()}
 function badge(c){var K=c.name.toLowerCase(),m=0,d=0,k;for(k in deck)if(nm(k).name.toLowerCase()===K)m+=deck[k];for(k in side)if(nm(k).name.toLowerCase()===K)d+=side[k];if(!m&&!d)return'';return'<div class="m" style="color:var(--ac);font-weight:600">已加入：'+(m?'主牌 '+m:'')+(m&&d?'・':'')+(d?'備牌 '+d:'')+'</div>'}
+var DOMO=['fury','calm','mind','body','chaos','order'];function domCmp(a,b){var i=DOMO.indexOf(String(a).toLowerCase()),j=DOMO.indexOf(String(b).toLowerCase());i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
 function setCmp(a,b){var i=SETO.indexOf(a),j=SETO.indexOf(b);i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
 var VARN={Standard:'標準','Alt Art':'異畫',Overnumbered:'超編',Promo:'特典',Signed:'簽名'},VARO=['Standard','Alt Art','Overnumbered','Promo','Signed'];
 function vOf(c){return c.v||'Standard'}
@@ -225,7 +226,7 @@ var sel={fs:{},fd:{},fc:{}};
 function nk(o){return Object.keys(o).length}
 function fo(id,a,f){$(id).innerHTML=a.map(function(x){return'<button class="chip'+(sel[id][x]?' on':'')+'" data-v="'+esc(x)+'" onclick="tg(\''+id+'\',this.dataset.v)">'+esc(f?f(x):x)+'</button>'}).join('')}
 function fill2(){fo('fs',uq(cards.filter(vis).map(setOf)).sort(setCmp),function(x){return lab(SETN,x)});
-fo('fd',uq([].concat.apply([],cards.filter(vis).map(function(c){return c.dom}))).filter(function(d){return String(d).toLowerCase()!=='colorless'}).sort(),function(x){return lab(DOMN,x)});
+fo('fd',uq([].concat.apply([],cards.filter(vis).map(function(c){return c.dom}))).filter(function(d){return String(d).toLowerCase()!=='colorless'}).sort(domCmp),function(x){return lab(DOMN,x)});
 fo('fc',uq(cards.filter(vis).map(function(c){return c.cost==null?'':String(c.cost)})).sort(function(a,b){return a-b}))}
 function upBtn(){var n=nk(sel.fs)+nk(sel.fd)+nk(sel.fc),o=!$('more').classList.contains('hide');$('mf').textContent='更多篩選'+(n?'（已選 '+n+'）':'')+(o?' ▴':' ▾')}
 function tg(id,v){if(sel[id][v])delete sel[id][v];else sel[id][v]=1;fill2();rr();upBtn()}
@@ -253,7 +254,7 @@ if(sc==='L')return !legOf()
 if(sc==='R'){for(k in deck)if(sec(nm(k))==='R')n+=deck[k];return n<12}
 if(sc==='B'){for(k in deck)if(sec(nm(k))==='B'){n+=deck[k];if(nm(k).name===c.name)return false}return n<3}
 var K=c.name.toLowerCase();for(k in deck)if(nm(k).name.toLowerCase()===K)n+=deck[k];for(k in side)if(nm(k).name.toLowerCase()===K)n+=side[k];
-if(n>=3)return false;if(w==='s'&&sideN()>=SIDEMAX)return false;return true}
+if(n>=3)return false;if(w==='s'&&sideN()>=SIDEMAX)return false;if(w==='m'&&mainN()>=40)return false;return true}
 function updBtns(){var bs=document.querySelectorAll('button.ab');for(var i=0;i<bs.length;i++){var c=nm(decodeURIComponent(bs[i].dataset.k));bs[i].disabled=!(c&&canAdd(c,bs[i].dataset.w))}}
 function btns(c){var e=encodeURIComponent(c.id),a=function(w){return' class="btn'+(w==='m'?' p':'')+' ab" data-k="'+e+'" data-w="'+w+'"'+(canAdd(c,w)?'':' disabled')};return sec(c)==='M'?'<span style="display:flex;gap:6px;flex:none"><button'+a('m')+' style="padding:6px 10px" onclick="event.stopPropagation();add(\''+e+'\')">主牌</button><button'+a('s')+' style="padding:6px 10px" onclick="event.stopPropagation();addS(\''+e+'\')">備牌</button></span>':'<button'+a('m')+' style="flex:none;padding:6px 12px" onclick="event.stopPropagation();add(\''+e+'\')">加入</button>'}
 function pref(n){return String(n).split(/,| - /)[0].trim().toLowerCase()}
@@ -274,7 +275,8 @@ var ok=rs.length&&tot===12&&rs.every(function(k){return nm(k).dom.some(function(
 if(!ok)setRunes(c)}
 function add(id){id=decodeURIComponent(id);var c=nm(id);if(!canAdd(c,'m'))return;if(sec(c)==='L')addLegend(c);else deck[id]=(deck[id]||0)+1;sv('rb_deck',deck);cnt();updBadges();updBtns()}
 function addS(id){id=decodeURIComponent(id);if(!canAdd(nm(id),'s'))return;if(sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+1;sv('rb_side',side);cnt();updBadges();updBtns()}
-function chg(id,d){id=decodeURIComponent(id);var c=nm(id),sc=sec(c);if(sc==='L'&&d>0)return;
+function mainN(){var k,n=0;for(k in deck)if(sec(nm(k))==='M')n+=deck[k];return n}
+function chg(id,d){id=decodeURIComponent(id);var c=nm(id),sc=sec(c);if(sc==='L'&&d>0)return;if(sc==='M'&&d>0&&mainN()>=40)return;
 if(sc==='R'){var ks=runeIds(),tot=0,nms={};ks.forEach(function(k){tot+=deck[k];nms[nm(k).name.toLowerCase()]=1});
 if(Object.keys(nms).length===2&&tot===12){var me=c.name.toLowerCase(),oth=ks.filter(function(k){return nm(k).name.toLowerCase()!==me}),ot=0;oth.forEach(function(k){ot+=deck[k]});
 if(tot-ot+d<1||ot-d<1)return;deck[id]=(deck[id]||0)+d;
@@ -301,7 +303,7 @@ var mn=S.M;
 a2(S.L===1,'傳奇 '+S.L+'/1');
 a2(!!cc,cc?'指定英雄：'+N(cc):'尚未從主牌組指定英雄');
 if(cc&&leg)a2(cands(leg).some(function(x){return x.name===cc.name}),'指定英雄與傳奇相符');
-a2(mn>=40,'主牌組 '+mn+'/至少 40');a2(S.R===12,'符文 '+S.R+'/12');a2(S.B===3,'戰場 '+S.B+'/3');
+a2(mn===40,'主牌組 '+mn+'/40');a2(S.R===12,'符文 '+S.R+'/12');a2(S.B===3,'戰場 '+S.B+'/3');
 a2(sd<=SIDEMAX,'備牌 '+sd+'/'+SIDEMAX);
 var over=Object.keys(cp).filter(function(n){return cp[n]>3});a2(!over.length,over.length?'同名卡超過 3 張（含備牌）：'+over.join('、'):'同名卡皆不超過 3 張（含備牌）');
 if(leg&&leg.dom.length){for(k in deck){c=nm(k);if(sec(c)==='M'||sec(c)==='R')chk(c)}for(k in side)chk(nm(k));
