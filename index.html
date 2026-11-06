@@ -21,6 +21,8 @@ h1{font-size:19px;margin:4px 0 10px}h3{margin:14px 0 6px}
 nav{display:flex;gap:6px;margin-bottom:10px}
 nav button,.btn{flex:1;padding:9px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;font:inherit;cursor:pointer}
 nav button.on,.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.cw{position:relative;margin-bottom:8px}.cw input,.cw textarea{margin-bottom:0;padding-right:38px}
+.cx{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:28px;height:28px;padding:0;border:0;border-radius:50%;background:transparent;color:#e5484d;font-size:20px;line-height:28px;cursor:pointer;display:none}.cw.tx .cx{top:6px;transform:none}.cx.on{display:block}.cx:hover{background:rgba(229,72,77,.14)}
 input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:8px}
 .c{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px}
 .c b{display:block}.m{color:var(--mu);font-size:13px}
@@ -131,6 +133,10 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 var cards=[],deck={},saved=[],zh={},L='zh',side={},champ='';
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){msg('儲存空間不足，資料可能無法保存。')}}
+(function(){var els=document.querySelectorAll('input,textarea'),L2=[];for(var i=0;i<els.length;i++){var e=els[i],t=(e.getAttribute('type')||'text').toLowerCase();if(e.tagName==='INPUT'&&['text','search'].indexOf(t)<0)continue;if(e.readOnly||e.id==='em'||e.id==='pw')continue;
+(function(e){var w=document.createElement('div');w.className='cw'+(e.tagName==='TEXTAREA'?' tx':'');if(e.classList.contains('hide'))w.className+=' hide';e.parentNode.insertBefore(w,e);w.appendChild(e);var b=document.createElement('button');b.type='button';b.className='cx';b.setAttribute('aria-label','清除輸入內容');b.textContent='✕';w.appendChild(b);
+function up(){b.className='cx'+(e.value?' on':'')}b.onmousedown=function(ev){ev.preventDefault()};b.onclick=function(){e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));up();e.focus()};e.addEventListener('input',up);L2.push(up);up()})(e)}
+setInterval(function(){L2.forEach(function(f){f()})},400)})();
 initTheme();cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_zh',{});L=ld('rb_lang','zh');side=ld('rb_side',{});champ=ld('rb_champ','');if(champ&&!deck[champ]){deck[champ]=1;sv('rb_deck',deck)}
 function $(i){return document.getElementById(i)}
 function msg(s){$('msg').textContent=s}
