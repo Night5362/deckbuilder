@@ -45,7 +45,7 @@
     "en": "Brazen Buccaneer",
     "name": "無懼海盜",
     "en_text": "As you play me, you may discard a card as an additional cost. If you do, reduce my cost by [2].",
-    "text": "你打出我的同時，你可以棄置1張卡牌作為額外費用。若你這麼做，我的費用減2 <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC1klEQVRIS5WVXYiVVRSGnzc1QijSGcgLLwItUExKDKNsEgcRHQkSHLJQEmQc6UbQCPxBZ2CGKBC8CVS0qJu8UAQVA/8lKrMoChosjdCLLGEgxqw0fGWds/fm63Dmx+dqrXd9Z7/f3vtb64gxYnsRcAQYBOZIul6KI6ASjYLtqcAPwE9Am6R/S3EE7sfgAeAO8IWk+aUwCvdjMCvt4Kakh0thFIpBnLGkEznP2H4F6AGeKiIY+AzolvRjURO2H5f0a8RVg7OxfWCzpFgg6zeA1pw3cEDSqzmx/QiwF7gsaUtainsRcAQYBOZIul6KI6ASjYLtqcAPwE9Am6R/S3EE7sfgAeAO8IWk+aUwCvdjMCvt4Kakh0thFIpBnLGkEznP2H4F6AGeKiIY+AzolvRjURO2H5f0a8RVg7OxfWCzpFgg6zeA1pw3cEDSqzmx/QiwF7gsaUtainsRcAQYBOZIul6KI6ASjYLtqcAPwE9Am6R/S3EE7sfgAeAO8IWk+aUwCvdjMCvt4Kakh0thFIpBnLGkEznP2H4F6AGeKiIY+AzolvRjURO2H5f0a8RVg7OxfWCzpFgg6zeA1pw3cEDSqzmx/QiwF7gsaUtainsRcAQYBOZIul6KI6ASjYLtqcAPwE9Am6R/S3EE7sfgAeAO8IWk+aUwCvdjMCvt4Kakh0thFIpBnLGkEznP2H4F6AGeKiIY+AzolvRjURO2H5f0a8RVg7OxfWCzpFgg6zeA1pw3cEDSqzmx/QiwF7gsaUtainsRcAQYBOZIul6KI6ASjYLtqcAPwE9Am6R/S3EE7sfgAeAO8IWk+aUwCvdjMCvt4Kakh0thFIpBnLGkEznP2H4F6AGeKiIY+AzolvRjURO2H5f0a8RVg7OxfWCzpFgg6zeA1pw3cEDSqzmx/QiwF7gsaUTAINSg==' style='width:14px; height:14px; vertical-align:-3px; display:inline-block; margin:0 2px;' /> 。"
+    "text": "你打出我的同時，你可以棄置1張卡牌作為額外費用。若你這麼做，我的費用減[2]。"
   },
   "chemtech enforcer": {
     "en": "Chemtech Enforcer",
