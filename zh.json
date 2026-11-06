@@ -22,6 +22,7 @@
     "might": "images/icons/might.svg",
 	"M": "images/icons/might.svg"
   },
+  "_iconflip": ["1", "2", "might", "M"],
   "_kwcolors": {
     "急速": "#127463",
     "ACCELERATE": "#127463",
