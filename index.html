@@ -65,6 +65,7 @@ input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-r
 </section>
 
 <section id="s2" class="hide">
+<div id="lgm"></div>
 <input id="dn" placeholder="牌組名稱">
 <div class="row"><button class="btn p" onclick="saveDeck()">儲存牌組</button><button class="btn" onclick="exportDeck()">匯出文字</button><button class="btn" onclick="exportImg()">匯出圖片</button></div>
 <div class="row" style="margin-top:8px"><button class="btn" onclick="clearDeck()" style="color:var(--no)">清除牌組</button></div>
@@ -110,7 +111,7 @@ input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-r
 var cards=[],deck={},saved=[],zh={},L='zh',side={},champ='';
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){msg('儲存空間不足，資料可能無法保存。')}}
-cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_zh',{});L=ld('rb_lang','zh');side=ld('rb_side',{});champ=ld('rb_champ','');
+cards=ld('rb_cards',[]);deck=ld('rb_deck',{});saved=ld('rb_saved',[]);zh=ld('rb_zh',{});L=ld('rb_lang','zh');side=ld('rb_side',{});champ=ld('rb_champ','');if(champ&&!deck[champ]){deck[champ]=1;sv('rb_deck',deck)}
 function $(i){return document.getElementById(i)}
 function msg(s){$('msg').textContent=s}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -177,10 +178,10 @@ if(!o){o=document.createElement('div');o.id='cm';o.style.cssText='position:fixed
 o.onclick=function(ev){if(ev.target===o)closeCard()};document.body.appendChild(o);document.body.style.overflow='hidden';try{history.pushState({rbm:1},'')}catch(x){}}
 o.innerHTML=h}
 function pickVer(oe,ne,w){var o=decodeURIComponent(oe),n=decodeURIComponent(ne);
-if(o!==n){if(w==='c')champ=n;else{var m=w==='s'?side:deck,q=m[o]||0;delete m[o];m[n]=(m[n]||0)+q}
+if(o!==n){{var m=w==='s'?side:deck,q=m[o]||0;delete m[o];m[n]=(m[n]||0)+q;if(w==='m'&&champ===o)champ=n}
 sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ)}
 closeCard();rdeck();render()}
-function badge(c){var K=c.name.toLowerCase(),m=0,d=0,k;for(k in deck)if(nm(k).name.toLowerCase()===K)m+=deck[k];for(k in side)if(nm(k).name.toLowerCase()===K)d+=side[k];if(champ&&nm(champ).name.toLowerCase()===K)m++;if(!m&&!d)return'';return'<div class="m" style="color:var(--ac);font-weight:600">已加入：'+(m?'主牌 '+m:'')+(m&&d?'・':'')+(d?'備牌 '+d:'')+'</div>'}
+function badge(c){var K=c.name.toLowerCase(),m=0,d=0,k;for(k in deck)if(nm(k).name.toLowerCase()===K)m+=deck[k];for(k in side)if(nm(k).name.toLowerCase()===K)d+=side[k];if(!m&&!d)return'';return'<div class="m" style="color:var(--ac);font-weight:600">已加入：'+(m?'主牌 '+m:'')+(m&&d?'・':'')+(d?'備牌 '+d:'')+'</div>'}
 function setCmp(a,b){var i=SETO.indexOf(a),j=SETO.indexOf(b);i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
 var VARN={Standard:'標準','Alt Art':'異畫',Overnumbered:'超編',Promo:'特典',Signed:'簽名'},VARO=['Standard','Alt Art','Overnumbered','Promo','Signed'];
 function vOf(c){return c.v||'Standard'}
@@ -215,7 +216,8 @@ var SIDEMAX=10;
 function btns(c){var e=encodeURIComponent(c.id);return sec(c)==='M'?'<span style="display:flex;gap:6px;flex:none"><button class="btn p" style="padding:6px 10px" onclick="event.stopPropagation();add(\''+e+'\')">主牌</button><button class="btn" style="padding:6px 10px" onclick="event.stopPropagation();addS(\''+e+'\')">備牌</button></span>':'<button class="btn p" style="flex:none;padding:6px 12px" onclick="event.stopPropagation();add(\''+e+'\')">加入</button>'}
 function pref(n){return String(n).split(/,| - /)[0].trim().toLowerCase()}
 function sideN(){var n=0;for(var k in side)n+=side[k];return n}
-function total(){var n=champ?1:0,k;for(k in deck)n+=deck[k];for(k in side)n+=side[k];return n}
+function total(){var n=0,k;for(k in deck)if(sec(nm(k))!=='L')n+=deck[k];for(k in side)n+=side[k];return n}
+function anyCards(){return Object.keys(deck).length>0||sideN()>0}
 function updBadges(){var bs=$('list').querySelectorAll?$('list').querySelectorAll('.bd'):[];for(var i=0;i<bs.length;i++)bs[i].innerHTML=badge({name:bs[i].dataset.k})}
 function runeIds(){return Object.keys(deck).filter(function(k){return sec(nm(k))==='R'})}
 function runeFor(d){var l=String(d).toLowerCase(),a=cards.filter(function(c){return vis(c)&&sec(c)==='R'&&c.dom.some(function(x){return String(x).toLowerCase()===l})});
@@ -244,49 +246,51 @@ function sec(c){var t=String(c.type).toLowerCase();return t.indexOf('legend')>-1
 function legOf(){for(var k in deck){var c=nm(k);if(sec(c)==='L')return c}return null}
 function cands(leg){var seen={},all=cards.filter(function(c){return vis(c)&&sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&c.dom.every(function(d){return d==='Colorless'||leg.dom.indexOf(d)>-1})}).filter(function(c){if(seen[c.name])return false;seen[c.name]=1;return true});
 var by=all.filter(function(c){return pref(c.name)===pref(leg.name)});return by.length?by:all}
-function setChamp(v){champ=v;sv('rb_champ',champ);rdeck()}
+function setChamp(v){v=decodeURIComponent(v);if(!deck[v])return;champ=champ===v?'':v;sv('rb_champ',champ);rdeck()}
+function fixChamp(){if(champ&&!deck[champ]){champ='';sv('rb_champ',champ)}}
+function pickLegend(){tab(1);var t=cards.filter(function(c){return sec(c)==='L'})[0];if(t){$('ft').value=t.type}rr()}
 function check(){var S={L:0,B:0,R:0,M:0},cp={},leg=null,cc=champ?nm(champ):null,out=[],k,c,bad=[],sd=0;
 function a2(ok,t){out.push({ok:ok,t:t})}
 function chk(c){var x=c.dom.filter(function(d){return d!=='Colorless'&&leg.dom.indexOf(d)<0});if(x.length&&bad.indexOf(N(c))<0)bad.push(N(c))}
 for(k in deck){c=nm(k);S[sec(c)]+=deck[k];if(sec(c)==='L'&&!leg)leg=c;if(sec(c)==='M')cp[c.name]=(cp[c.name]||0)+deck[k]}
-if(cc)cp[cc.name]=(cp[cc.name]||0)+1;
 for(k in side){c=nm(k);sd+=side[k];cp[c.name]=(cp[c.name]||0)+side[k]}
-var mn=S.M+(cc?1:0);
+var mn=S.M;
 a2(S.L===1,'傳奇 '+S.L+'/1');
-a2(!!cc,cc?'指定英雄：'+N(cc):'尚未指定英雄');
+a2(!!cc,cc?'指定英雄：'+N(cc):'尚未從主牌組指定英雄');
 if(cc&&leg)a2(cands(leg).some(function(x){return x.name===cc.name}),'指定英雄與傳奇相符');
-a2(mn>=40,'主牌組 '+mn+'/至少 40（含指定英雄）');a2(S.R===12,'符文 '+S.R+'/12');a2(S.B===3,'戰場 '+S.B+'/3');
+a2(mn>=40,'主牌組 '+mn+'/至少 40');a2(S.R===12,'符文 '+S.R+'/12');a2(S.B===3,'戰場 '+S.B+'/3');
 a2(sd<=SIDEMAX,'備牌 '+sd+'/'+SIDEMAX);
-var over=Object.keys(cp).filter(function(n){return cp[n]>3});a2(!over.length,over.length?'同名卡超過 3 張（含備牌與指定英雄）：'+over.join('、'):'同名卡皆不超過 3 張（含備牌）');
-if(leg&&leg.dom.length){for(k in deck){c=nm(k);if(sec(c)==='M'||sec(c)==='R')chk(c)}if(cc)chk(cc);for(k in side)chk(nm(k));
+var over=Object.keys(cp).filter(function(n){return cp[n]>3});a2(!over.length,over.length?'同名卡超過 3 張（含備牌）：'+over.join('、'):'同名卡皆不超過 3 張（含備牌）');
+if(leg&&leg.dom.length){for(k in deck){c=nm(k);if(sec(c)==='M'||sec(c)==='R')chk(c)}for(k in side)chk(nm(k));
 a2(!bad.length,bad.length?'超出傳奇領域：'+bad.join('、'):'所有卡片都符合傳奇領域（'+leg.dom.join('/')+'）')}else a2(false,'尚未加入傳奇，無法檢查領域');
 return out}
 function row(k,o,f){var c=nm(k);return'<div class="c r"><div style="display:flex;gap:10px;align-items:center;min-width:0;cursor:pointer" onclick="openVer(\''+encodeURIComponent(k)+'\',\''+(f==='chg'?'m':'s')+'\')">'+thumb(c)+'<div><b>'+esc(N(c))+'</b><span class="m">'+esc(tlab(c.type))+'</span></div></div><div class="q"><button onclick="'+f+'(\''+encodeURIComponent(k)+'\',-1)">−</button><b>'+o[k]+'</b><button onclick="'+f+'(\''+encodeURIComponent(k)+'\',1)">＋</button></div></div>'}
 function rdeck(){var y=window.pageYOffset||0;rdeck0();if(!$('s2').classList.contains('hide'))window.scrollTo(0,y)}
-function rdeck0(){cnt();var ks=Object.keys(deck),leg=legOf(),cs=leg?cands(leg):[],sk=Object.keys(side),cc=champ?nm(champ):null;
-var sel='<select id="chs" onchange="setChamp(this.value)"'+(leg?'':' disabled')+'><option value="">'+(leg?'未指定':'請先加入傳奇')+'</option>'+cs.map(function(c){return'<option value="'+esc(c.id)+'"'+(cc&&cc.name===c.name?' selected':'')+'>'+esc(N(c))+'</option>'}).join('')+(cc&&!cs.some(function(c){return c.name===cc.name})?'<option value="'+esc(cc.id)+'" selected>⚠ '+esc(N(cc))+'</option>':'')+'</select>';
-$('chbox').innerHTML='<b>指定英雄</b>'+sel+'<div class="m">依傳奇名稱列出可選的英雄單位；指定英雄計入主牌組 40 張。</div>';
+function rdeck0(){fixChamp();cnt();var ks=Object.keys(deck),leg=legOf(),sk=Object.keys(side),cc=champ?nm(champ):null;
+$('lgm').innerHTML=leg?'':'<div class="c" style="border:2px solid var(--ac);text-align:center;padding:16px"><b style="font-size:18px;color:var(--ac)">請選擇你的傳奇</b><div class="m" style="margin:6px 0 10px">傳奇是組牌的必要條件，選好後會自動配置符文。</div><button class="btn p" onclick="pickLegend()">前往選擇傳奇</button></div>';
+var ops=ks.filter(function(k){var c=nm(k);return sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1});
+$('chbox').innerHTML='<b>指定英雄</b>'+(!leg?'<div class="m">請先選擇傳奇。</div>':!ops.length?'<div class="m">主牌組中還沒有英雄單位，請先到「卡片」分頁加入。</div>':'<div class="m" style="margin-bottom:8px">從主牌組的英雄單位中點選一張；再點一次可取消。</div><div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">'+ops.map(function(k){var c=nm(k),u=pic(c),on=k===champ;
+return'<div style="cursor:pointer;min-width:0" onclick="setChamp(\''+encodeURIComponent(k)+'\')"><div style="aspect-ratio:5/7;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:8px;border:3px solid '+(on?'var(--ac)':'transparent')+';overflow:hidden">'+(u?'<img loading="lazy" src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" style="max-width:100%;max-height:100%" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</div><div class="m" style="font-size:12px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'+(on?'color:var(--ac);font-weight:700':'')+'">'+esc(N(c))+'</div></div>'}).join('')+'</div>');
 $('chk').innerHTML='<b>規則檢查</b>'+check().map(function(o){return'<div class="'+(o.ok?'ok':'no')+'">'+(o.ok?'✓ ':'✗ ')+esc(o.t)+'</div>'}).join('')+'<div class="m">依官方核心規則；英雄與傳奇的對應依名稱判斷，專屬卡限制請自行確認。</div>';
-var G={L:'傳奇',M:'主牌組',R:'符文',B:'戰場'},h='',mk=ks.filter(function(k){return sec(nm(k))==='M'}),mn=(cc?1:0);mk.forEach(function(k){mn+=deck[k]});
+var G={L:'傳奇',M:'主牌組',R:'符文',B:'戰場'},h='',mk=ks.filter(function(k){return sec(nm(k))==='M'}),mn=0;mk.forEach(function(k){mn+=deck[k]});
 ['L','M','R','B'].forEach(function(s){var a=ks.filter(function(k){return sec(nm(k))===s});
-if(s==='M'&&cc)h+='<h3>指定英雄</h3><div class="c r"><div style="display:flex;gap:10px;align-items:center;min-width:0;cursor:pointer" onclick="openVer(\''+encodeURIComponent(cc.id)+'\',\'c\')">'+thumb(cc)+'<div><b>'+esc(N(cc))+'</b><span class="m">'+esc(tlab(cc.type))+'</span></div></div><b>1</b></div>';
-if(!a.length)return;h+='<h3>'+G[s]+(s==='M'?'（含指定英雄 '+mn+'）':'')+'</h3>'+a.map(function(k){return row(k,deck,'chg')}).join('')});
+if(!a.length)return;h+='<h3>'+G[s]+(s==='M'?'（'+mn+'）':'')+'</h3>'+a.map(function(k){return row(k,deck,'chg')}).join('')});
 if(sk.length)h+='<h3>備牌（'+sideN()+'/'+SIDEMAX+'）</h3>'+sk.map(function(k){return row(k,side,'chgS')}).join('');
 $('deck').innerHTML=h||'<div class="c m">牌組是空的，到「卡片」分頁加入卡片。</div>';$('ex').classList.add('hide');rsaved()}
 function pack(){return{v:2,main:deck,side:side,champ:champ}}
 function unpack(x){if(x&&x.v===2)return{main:x.main||{},side:x.side||{},champ:x.champ||''};return{main:x||{},side:{},champ:''}}
-function clearDeck(){if(!total()){alert('目前的牌組已經是空的');return}
+function clearDeck(){if(!anyCards()){alert('目前的牌組已經是空的');return}
 if(!confirm('確定要清除目前的牌組嗎？\n主牌組、符文、戰場、備牌與指定英雄都會被移除，已儲存的牌組不會受影響。'))return;
 if(!confirm('再確認一次：清除後無法復原，要繼續嗎？'))return;
 deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();rdeck();updBadges()}
-function saveDeck(){var n=$('dn').value.trim()||'未命名牌組';if(!total()){alert('牌組是空的');return}
+function saveDeck(){var n=$('dn').value.trim()||'未命名牌組';if(!anyCards()){alert('牌組是空的');return}
 saved=saved.filter(function(d){return d.name!==n});saved.push({name:n,deck:JSON.parse(JSON.stringify(pack()))});sv('rb_saved',saved);rsaved();push(n)}
-function rsaved(){$('saved').innerHTML=saved.length?saved.map(function(d,i){var u=unpack(d.deck),n=u.champ?1:0,k;for(k in u.main)n+=u.main[k];for(k in u.side)n+=u.side[k];
+function rsaved(){$('saved').innerHTML=saved.length?saved.map(function(d,i){var u=unpack(d.deck),n=0,k;for(k in u.main)if(sec(nm(k))!=='L')n+=u.main[k];for(k in u.side)n+=u.side[k];
 return'<div class="c r"><div><b>'+esc(d.name)+'</b><span class="m">'+n+' 張</span></div><div class="q"><button style="width:auto;padding:0 10px" onclick="loadDeck('+i+')">載入</button><button onclick="delDeck('+i+')">✕</button></div></div>'}).join(''):'<div class="m">尚無儲存的牌組。</div>'}
-function loadDeck(i){var u=JSON.parse(JSON.stringify(unpack(saved[i].deck)));deck=u.main;side=u.side;champ=u.champ;$('dn').value=saved[i].name;sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);rdeck()}
+function loadDeck(i){var u=JSON.parse(JSON.stringify(unpack(saved[i].deck)));deck=u.main;side=u.side;champ=u.champ;if(champ&&!deck[champ])deck[champ]=1;$('dn').value=saved[i].name;sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);rdeck()}
 function delDeck(i){var n=saved[i].name;if(confirm('刪除「'+n+'」？')){saved.splice(i,1);sv('rb_saved',saved);rsaved();if(sb&&user)sb.from('decks').delete().eq('name',n).then(function(r){if(r.error)alert('雲端刪除失敗：'+r.error.message)})}}
 function exportDeck(){function ls(o,f){return Object.keys(o).filter(function(k){return!f||sec(nm(k))===f}).map(function(k){return o[k]+' '+nm(k).name})}
-var P=[['傳奇',ls(deck,'L')],['指定英雄',champ?['1 '+nm(champ).name]:[]],['主牌組',ls(deck,'M')],['符文',ls(deck,'R')],['戰場',ls(deck,'B')],['備牌',ls(side)]],
+var P=[['傳奇',ls(deck,'L')],['指定英雄',champ?[nm(champ).name]:[]],['主牌組',ls(deck,'M')],['符文',ls(deck,'R')],['戰場',ls(deck,'B')],['備牌',ls(side)]],
 t=P.filter(function(x){return x[1].length}).map(function(x){return x[0]+'：\n'+x[1].join('\n')}).join('\n\n'),e=$('ex');e.value=t;e.classList.remove('hide');e.select()}
 var SB_URL='https://mibivznenhauezbjotjm.supabase.co',SB_KEY='sb_publishable_5sMXvITqcu55oqQbrEIo1w_LJe09-1Y',sb=null,user=null;
 try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}
@@ -311,12 +315,12 @@ function pic(c){return zi(c)||c.img}
 function thumb(c){var u=pic(c);return'<span class="th">'+(u?'<img loading="lazy"'+(sec(c)==='B'?' onload="bfFix(this,1)"':'')+' src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" style="max-width:100%;max-height:100%;width:auto;height:auto;border-radius:4px" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</span>'}
 async function loadAny(c){var u=zi(c),i=null;if(u)i=await loadOne(u);if(!i&&c.img)i=await loadImg(c.img);return i}
 function wrapT(g,t,w){var ln=[],cur='';for(var k=0;k<t.length;k++){var z=t[k];if(g.measureText(cur+z).width>w&&cur){ln.push(cur);cur=z}else cur+=z}if(cur)ln.push(cur);return ln}
-async function exportImg(){if(!total()){alert('牌組是空的');return}
+async function exportImg(){if(!anyCards()){alert('牌組是空的');return}
 var ks=Object.keys(deck),items=ks.map(function(k){return{c:nm(k),n:deck[k],s:sec(nm(k))}}),imgs={};
-if(champ)items.push({c:nm(champ),n:1,s:'C'});Object.keys(side).forEach(function(k){items.push({c:nm(k),n:side[k],s:'S'})});
+Object.keys(side).forEach(function(k){items.push({c:nm(k),n:side[k],s:'S'})});
 lastItems=items;var ico=await loadOne('icons/icon-192.png')||await loadOne('icon-192.png');await Promise.all(items.map(async function(it){if(pic(it.c))imgs[it.c.id]=await loadAny(it.c)}));
-var G=[['L','傳奇'],['C','指定英雄'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1080,P=30,cw=160,chh=224,gp=12,cols=6,F='"PingFang TC","Noto Sans TC",sans-serif';
-var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0)+(g[0]==='M'&&champ?1:0),w:g[0]==='B'?chh:cw,h:g[0]==='B'?cw:chh,k:g[0]==='B'?4:cols}}).filter(function(x){return x.a.length});
+var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1080,P=30,cw=160,chh=224,gp=12,cols=6,F='"PingFang TC","Noto Sans TC",sans-serif';
+var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0),w:g[0]==='B'?chh:cw,h:g[0]==='B'?cw:chh,k:g[0]==='B'?4:cols}}).filter(function(x){return x.a.length});
 var H=P+96;secs.forEach(function(x){H+=50+Math.ceil(x.a.length/x.k)*(x.h+gp)});H+=20;
 var cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d');
 g.fillStyle='#1d1b22';g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
@@ -355,8 +359,8 @@ try{var r=await fetch('cards.json',{cache:'no-cache'});if(r.ok){var j=await r.js
 try{var r2=await fetch('zh.json',{cache:'no-cache'});if(r2.ok){var z=await r2.json();if(z&&typeof z==='object'){zh={};for(var kk in z)zh[kk.toLowerCase()]=z[kk];sv('rb_zh',zh)}}}catch(e){}
 await loadExtra();if(!cards.length)await autoLoad();fill();render();rdeck()}
 function shotView(){var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:#1d1b22;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px 24px;z-index:9;color:#fff';
-var G=[['L','傳奇'],['C','指定英雄'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],h='<div style="max-width:720px;margin:auto"><p style="color:#bbb;font-size:13px">請直接截圖保存。<button class="btn" id="xk" style="width:auto;padding:4px 12px;margin-left:8px;flex:none">關閉</button></p><h2 style="margin:6px 0">'+esc($('dn').value.trim()||'未命名牌組')+'</h2>';
-G.forEach(function(g){var a=lastItems.filter(function(it){return it.s===g[0]});if(!a.length)return;var n=a.reduce(function(x,it){return x+it.n},0)+(g[0]==='M'&&champ?1:0);
+var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],h='<div style="max-width:720px;margin:auto"><p style="color:#bbb;font-size:13px">請直接截圖保存。<button class="btn" id="xk" style="width:auto;padding:4px 12px;margin-left:8px;flex:none">關閉</button></p><h2 style="margin:6px 0">'+esc($('dn').value.trim()||'未命名牌組')+'</h2>';
+G.forEach(function(g){var a=lastItems.filter(function(it){return it.s===g[0]});if(!a.length)return;var n=a.reduce(function(x,it){return x+it.n},0);
 h+='<h3 style="color:#a98bff">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat('+(g[0]==='B'?3:4)+',1fr);gap:6px">'+a.map(function(it){
 return'<div style="position:relative;background:#2e2b38;border-radius:6px;min-height:60px">'+(pic(it.c)?'<img'+(it.s==='B'?' onload="bfFix(this)"':'')+' src="'+esc(pic(it.c))+'" alt="'+esc(N(it.c))+'" style="width:100%;border-radius:6px;display:block;font-size:12px">':'<div style="padding:6px;font-size:12px">'+esc(N(it.c))+'</div>')+'<span style="position:absolute;right:4px;bottom:4px;background:#8a5cf6;border-radius:12px;padding:0 8px;font-weight:bold;font-size:14px">×'+it.n+'</span></div>'}).join('')+'</div>'});
 o.innerHTML=h+'</div>';document.body.appendChild(o);$('xk').onclick=function(){o.remove()}}
