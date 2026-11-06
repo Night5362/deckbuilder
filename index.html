@@ -132,6 +132,20 @@ function Z(c){return zh[c.id.toLowerCase()]||zh[c.name.toLowerCase()]||{}}
 function icm(){var o={},m=zh._icons||{};for(var k in m)o[k.toLowerCase()]=m[k];return o}
 function kwc(k){var m=zh._kwcolors||{},b=k.replace(/\s*\d+$/,'');for(var x in m){var l=x.toLowerCase();if(l===k.toLowerCase()||l===b.toLowerCase())return' style="--kc:'+esc(m[x])+'"'}return''}
 function rt(t){var m=icm();return esc(t).replace(/\[([^\[\]\n]{1,24})\]/g,function(a,k){var u=m[k.toLowerCase()];return u?'<img class="ic" src="'+esc(u)+'" alt="'+a+'" onerror="this.replaceWith(document.createTextNode(this.alt))">':(/^\d+$|^x$/i.test(k.trim())?a:'<span class="kw"'+kwc(k.trim())+'>'+esc(k.trim())+'</span>')})}
+function mAdd(e,sd){if(sd)addS(e);else add(e);if(!$('s2').classList.contains('hide'))rdeck();openCard(e,1)}
+function closeCard(pop){var o=$('cm');if(!o)return;o.remove();document.body.style.overflow='';if(!pop&&history.state&&history.state.rbm)history.back()}
+function openCard(e,re){var c=nm(decodeURIComponent(e)),o=$('cm'),u=pic(c);
+var R=[['類型',tlab(c.type)],['領域',c.dom.map(function(d){return lab(DOMN,d)}).join(' / ')],['法力費用',c.cost],['力量',c.might],['彈數',lab(SETN,setOf(c))],['版本',lab(VARN,vOf(c))],['編號',c.id]].filter(function(r){return r[1]!==''&&r[1]!=null&&r[1]!=='undefined'});
+var h='<div style="max-width:520px;margin:auto;background:var(--card);color:var(--tx);border-radius:14px;padding:14px"><div class="r" style="align-items:flex-start;margin-bottom:10px"><div><b style="font-size:18px">'+esc(N(c))+'</b>'+(L==='zh'&&N(c)!==c.name?'<div class="m">'+esc(c.name)+'</div>':'')+badge(c)+'</div><button class="btn" style="flex:none;width:40px;padding:6px" onclick="closeCard()">✕</button></div>'
++(u?'<img src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}" style="width:100%;max-width:380px;display:block;margin:0 auto 12px;border-radius:10px">':'')
++'<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin-bottom:8px">'+R.map(function(r){return'<span class="m">'+r[0]+'</span><span>'+esc(r[1])+'</span>'}).join('')+'</div>'
++(X(c)?'<div class="t">'+rt(X(c))+'</div>':'')
++'<div class="row" style="margin-top:12px">'+(sec(c)==='M'?'<button class="btn p" onclick="mAdd(\''+e+'\')">加入主牌</button><button class="btn" onclick="mAdd(\''+e+'\',1)">加入備牌</button>':'<button class="btn p" onclick="mAdd(\''+e+'\')">加入牌組</button>')+'</div></div>';
+if(!o){o=document.createElement('div');o.id='cm';o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.72);overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));z-index:15';
+o.onclick=function(ev){if(ev.target===o)closeCard()};document.body.appendChild(o);document.body.style.overflow='hidden';if(!re){try{history.pushState({rbm:1},'')}catch(x){}}}
+o.innerHTML=h}
+window.addEventListener('popstate',function(){closeCard(true)});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeCard()});
 function N(c){return L==='zh'&&Z(c).name?Z(c).name:c.name}
 function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
 function setL(v){L=v;sv('rb_lang',L);fill();render();rdeck()}
@@ -167,9 +181,9 @@ function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
 var r=cards.filter(function(c){return vis(c)&&(!f||c.type===f)&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!nk(sel.fv)||sel.fv[vOf(c)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 E.innerHTML=(r.length>50?'<p class="m">共 '+r.length+' 筆，僅顯示前 50 筆，請縮小搜尋範圍。</p>':'')+r.slice(0,50).map(function(c){
-return'<div class="c cd">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onclick="this.classList.toggle(\'big\')" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([tlab(c.type),c.dom.map(function(d){return lab(DOMN,d)}).join('/'),c.cost!==''?'費用 '+c.cost:'',c.v&&c.v!=='Standard'?lab(VARN,c.v):'',c.id].filter(Boolean).join(' · '))+'</div>'+badge(c)+'<div class="t">'+rt(X(c))+'</div></div></div>'}).join('')}
+return'<div class="c cd" style="cursor:pointer" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(pic(c)?'<img loading="lazy" src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([tlab(c.type),c.dom.map(function(d){return lab(DOMN,d)}).join('/'),c.cost!==''?'費用 '+c.cost:'',c.v&&c.v!=='Standard'?lab(VARN,c.v):'',c.id].filter(Boolean).join(' · '))+'</div>'+badge(c)+'<div class="t">'+rt(X(c))+'</div></div></div>'}).join('')}
 var SIDEMAX=10;
-function btns(c){var e=encodeURIComponent(c.id);return sec(c)==='M'?'<span style="display:flex;gap:6px;flex:none"><button class="btn p" style="padding:6px 10px" onclick="add(\''+e+'\')">主牌</button><button class="btn" style="padding:6px 10px" onclick="addS(\''+e+'\')">備牌</button></span>':'<button class="btn p" style="flex:none;padding:6px 12px" onclick="add(\''+e+'\')">加入</button>'}
+function btns(c){var e=encodeURIComponent(c.id);return sec(c)==='M'?'<span style="display:flex;gap:6px;flex:none"><button class="btn p" style="padding:6px 10px" onclick="event.stopPropagation();add(\''+e+'\')">主牌</button><button class="btn" style="padding:6px 10px" onclick="event.stopPropagation();addS(\''+e+'\')">備牌</button></span>':'<button class="btn p" style="flex:none;padding:6px 12px" onclick="event.stopPropagation();add(\''+e+'\')">加入</button>'}
 function pref(n){return String(n).split(/,| - /)[0].trim().toLowerCase()}
 function sideN(){var n=0;for(var k in side)n+=side[k];return n}
 function total(){var n=champ?1:0,k;for(k in deck)n+=deck[k];for(k in side)n+=side[k];return n}
@@ -200,14 +214,14 @@ var over=Object.keys(cp).filter(function(n){return cp[n]>3});a2(!over.length,ove
 if(leg&&leg.dom.length){for(k in deck){c=nm(k);if(sec(c)==='M'||sec(c)==='R')chk(c)}if(cc)chk(cc);for(k in side)chk(nm(k));
 a2(!bad.length,bad.length?'超出傳奇領域：'+bad.join('、'):'所有卡片都符合傳奇領域（'+leg.dom.join('/')+'）')}else a2(false,'尚未加入傳奇，無法檢查領域');
 return out}
-function row(k,o,f){var c=nm(k);return'<div class="c r"><div style="display:flex;gap:10px;align-items:center;min-width:0">'+thumb(c)+'<div><b>'+esc(N(c))+'</b><span class="m">'+esc(tlab(c.type))+'</span></div></div><div class="q"><button onclick="'+f+'(\''+encodeURIComponent(k)+'\',-1)">−</button><b>'+o[k]+'</b><button onclick="'+f+'(\''+encodeURIComponent(k)+'\',1)">＋</button></div></div>'}
+function row(k,o,f){var c=nm(k);return'<div class="c r"><div style="display:flex;gap:10px;align-items:center;min-width:0;cursor:pointer" onclick="openCard(\''+encodeURIComponent(k)+'\')">'+thumb(c)+'<div><b>'+esc(N(c))+'</b><span class="m">'+esc(tlab(c.type))+'</span></div></div><div class="q"><button onclick="'+f+'(\''+encodeURIComponent(k)+'\',-1)">−</button><b>'+o[k]+'</b><button onclick="'+f+'(\''+encodeURIComponent(k)+'\',1)">＋</button></div></div>'}
 function rdeck(){cnt();var ks=Object.keys(deck),leg=legOf(),cs=leg?cands(leg):[],sk=Object.keys(side),cc=champ?nm(champ):null;
 var sel='<select id="chs" onchange="setChamp(this.value)"'+(leg?'':' disabled')+'><option value="">'+(leg?'未指定':'請先加入傳奇')+'</option>'+cs.map(function(c){return'<option value="'+esc(c.id)+'"'+(cc&&cc.name===c.name?' selected':'')+'>'+esc(N(c))+'</option>'}).join('')+(cc&&!cs.some(function(c){return c.name===cc.name})?'<option value="'+esc(cc.id)+'" selected>⚠ '+esc(N(cc))+'</option>':'')+'</select>';
 $('chbox').innerHTML='<b>指定英雄</b>'+sel+'<div class="m">依傳奇名稱列出可選的英雄單位；指定英雄計入主牌組 40 張。</div>';
 $('chk').innerHTML='<b>規則檢查</b>'+check().map(function(o){return'<div class="'+(o.ok?'ok':'no')+'">'+(o.ok?'✓ ':'✗ ')+esc(o.t)+'</div>'}).join('')+'<div class="m">依官方核心規則；英雄與傳奇的對應依名稱判斷，專屬卡限制請自行確認。</div>';
 var G={L:'傳奇',M:'主牌組',R:'符文',B:'戰場'},h='',mk=ks.filter(function(k){return sec(nm(k))==='M'}),mn=(cc?1:0);mk.forEach(function(k){mn+=deck[k]});
 ['L','M','R','B'].forEach(function(s){var a=ks.filter(function(k){return sec(nm(k))===s});
-if(s==='M'&&cc)h+='<h3>指定英雄</h3><div class="c r"><div style="display:flex;gap:10px;align-items:center;min-width:0">'+thumb(cc)+'<div><b>'+esc(N(cc))+'</b><span class="m">'+esc(tlab(cc.type))+'</span></div></div><b>1</b></div>';
+if(s==='M'&&cc)h+='<h3>指定英雄</h3><div class="c r"><div style="display:flex;gap:10px;align-items:center;min-width:0;cursor:pointer" onclick="openCard(\''+encodeURIComponent(cc.id)+'\')">'+thumb(cc)+'<div><b>'+esc(N(cc))+'</b><span class="m">'+esc(tlab(cc.type))+'</span></div></div><b>1</b></div>';
 if(!a.length)return;h+='<h3>'+G[s]+(s==='M'?'（含指定英雄 '+mn+'）':'')+'</h3>'+a.map(function(k){return row(k,deck,'chg')}).join('')});
 if(sk.length)h+='<h3>備牌（'+sideN()+'/'+SIDEMAX+'）</h3>'+sk.map(function(k){return row(k,side,'chgS')}).join('');
 $('deck').innerHTML=h||'<div class="c m">牌組是空的，到「卡片」分頁加入卡片。</div>';$('ex').classList.add('hide');rsaved()}
