@@ -2,8 +2,16 @@
   "_imgdir": "images/zh/",
   "_imgext": ".webp",
   "_icons": {
-    "1": "images/icons/1.svg",
+    "0": "images/icons/0.svg",
+	"1": "images/icons/1.svg",
     "2": "images/icons/2.svg",
+	"3": "images/icons/3.svg",
+    "4": "images/icons/4.svg",
+	"5": "images/icons/5.svg",
+    "6": "images/icons/6.svg",
+	"7": "images/icons/7.svg",
+    "8": "images/icons/8.svg",
+	"9": "images/icons/9.svg",
     "fury": "images/icons/Fury.svg",
     "狂怒": "images/icons/Fury.svg",
     "calm": "images/icons/Calm.svg",
@@ -27,8 +35,18 @@
   "_iconflip": [
     "might",
     "M",
+	"0",
 	"1",
-	"2"
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"TAP",
+	"E"
 	
   ],
   "_kwcolors": {
@@ -41,13 +59,15 @@
     "法盾": "#96b52a",
     "SHIELD": "#96b52a",
     "增添": "#727171",
-    "ADD": "#727171"
+    "ADD": "#727171",
+	"強大": "#727171",
+    "MIGHTY": "#727171"
   },
   "blazing scorcher": {
     "en": "Blazing Scorcher",
     "name": "烈焰灼魂者",
     "en_text": "[ACCELERATE] (You may pay [1] [Fury] as an additional cost to have me enter ready.)",
-    "text": "[急速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)"
+    "text": "[加速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)"
   },
   "brazen buccaneer": {
     "en": "Brazen Buccaneer",
@@ -59,25 +79,25 @@
     "en": "Chemtech Enforcer",
     "name": "生化科技執法者",
     "en_text": "[ASSAULT] (+2 [Might] while I'm an attacker.)\nWhen you play me, discard 1.",
-    "text": "[強襲 2](我為進攻方時+2[M]) 當你打出我，棄置1張牌。"
+    "text": "[強襲 2](我為進攻方時+2[M])\n當你打出我，棄置1張牌。"
   },
   "cleave": {
     "en": "Cleave",
     "name": "劈砍",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\n\nGive a unit [ASSAULT 3] this turn. (+3 [Might] while it's an attacker.)",
-    "text": "[行動](可在你的回合或法術對決時打出) 本回合給予1個單位[強襲 3](作為進攻方時+3[M])。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n本回合給予1個單位[強襲 3](作為進攻方時+3[M])。"
   },
   "disintegrate": {
     "en": "Disintegrate",
     "name": "瓦解怒焰",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[ACTION] (Play on your turn or in showdowns.)\n\nDeal 3 to a unit at a battlefield. If this kills it, do this: draw 1.",
-    "text": "[行動](可在你的回合或法術對決時打出) 對一處戰場上的1個單位造成3點傷害。若將其擊殺，則這麼做：抽1張卡牌。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n對一處戰場上的1個單位造成3點傷害。若將其擊殺，則這麼做：抽1張卡牌。"
   },
   "flame chompers": {
     "en": "Flame Chompers",
     "name": "咬咬燃燒彈",
     "en_text": "When you discard me, you may pay [Fury] to play me.",
-    "text": "當你棄置我。你可以支付[C]打出我。"
+    "text": "當你棄置我。你可以支付[Fury]打出我。"
   },
   "fury rune": {
     "en": "Fury Rune",
@@ -89,19 +109,19 @@
     "en": "Get Excited!",
     "name": "嗨起來！",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\nDiscard 1. Deal its Energy cost as damage to a unit at a battlefield. (Ignore its Power cost.)",
-    "text": "[行動](可在你的回合或法術對決時打出) 棄置1張卡牌。對一處戰場上的1個單位造成等同其能量費用的傷害(無視其符能費用)。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n棄置1張卡牌。對一處戰場上的1個單位造成等同其能量費用的傷害(無視其符能費用)。"
   },
   "hextech ray": {
     "en": "Hextech Ray",
     "name": "海克斯科技射線",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\nDeal 3 damage to a unit at a battlefield.",
-    "text": "[行動](可在你的回合或法術對決時打出) 對一處戰場上的1個單位造成3點傷害。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n對一處戰場上的1個單位造成3點傷害。"
   },
   "legion rearguard": {
     "en": "Legion Rearguard",
     "name": "軍團後衛",
     "en_text": "[ACCELERATE] (You may pay [1] [Fury] as an additional cost to have me enter ready.)",
-    "text": "[急速](你可以支付[1][C]作為額外費用，讓我以活化狀態進場)"
+    "text": "[加速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)"
   },
   "magma wurm": {
     "en": "Magma Wurm",
@@ -125,7 +145,7 @@
     "en": "Sky Splitter",
     "name": "蒼穹裂隙",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\n\nThis spell's Energy cost is reduced by the highest Might among units you control. \nDeal 5 to a unit at a battlefield.",
-    "text": "[行動](可在你的回合或法術對決時打出) 此法術的能量費用獲得減免，數值等同於你控制之單位所具備的最高戰力。對一處戰場上的1個單位造成5點傷害。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n此法術的能量費用獲得減免，數值等同於你控制之單位所具備的最高戰力。對一處戰場上的1個單位造成5點傷害。"
   },
   "captain farron": {
     "en": "Captain Farron",
@@ -143,7 +163,7 @@
     "en": "Iron Ballista",
     "name": "鋼鐵弩砲",
     "en_text": "This enters exhausted.\n[TAP]: Deal 2 to a unit at a battlefield.",
-    "text": "此牌進場時為休眠狀態。[E]：對一處戰場上的1個單位造成2點傷害。"
+    "text": "此牌進場時為休眠狀態。\n[E]：對一處戰場上的1個單位造成2點傷害。"
   },
   "noxus saboteur": {
     "en": "Noxus Saboteur",
@@ -173,25 +193,25 @@
     "en": "Thermo Beam",
     "name": "熱能光束",
     "en_text": "[ACTION] (Play on your turn or in showdowns)\nKill all gear.",
-    "text": "[行動](可在你的回合或法術對決時打出) 摧毀所有裝備。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n摧毀所有裝備。"
   },
   "unlicensed armory": {
     "en": "Unlicensed Armory",
     "name": "無照軍火庫",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nDiscard 1, [Tap]: Choose a friendly unit. The next time it would\ndie this turn, you may pay [Fury] to heal it, exhaust it, and\nrecall it instead. (Send it to base. This isn't a move.)",
-    "text": "棄置1張卡牌，[E]：選擇1個友方單位。該單位本回合下次即將陣亡時，你可以支付[C]改為治療、休眠並召回該單位(將其送至基地，此舉不視為移動)。"
+    "text": "棄置1張卡牌，[E]：選擇1個友方單位。該單位本回合下次即將陣亡時，你可以支付[Fury]改為治療、休眠並召回該單位(將其送至基地，此舉不視為移動)。"
   },
   "void seeker": {
     "en": "Void Seeker",
     "name": "虛空探索者",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\n\nDeal 4 to a unit at a battlefield. Draw 1.",
-    "text": "[行動](可在你的回合或法術對決時打出) 對一處戰場上的1個單位造成4點傷害，抽1張卡牌。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n對一處戰場上的1個單位造成4點傷害，抽1張卡牌。"
   },
   "blind fury": {
     "en": "Blind Fury",
     "name": "盲目怒火",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[Action] (Play on your turn or in showdowns.)\nEach opponent reveals the top card of their Main Deck.\nChoose one and banish it, then play it, ignoring its cost.\nThen recycle the rest.",
-    "text": "[行動](可在你的回合或法術對決時打出) 每位對手揭示其主牌堆最上方的卡牌。選擇其中1張，將其放逐，並無視費用將其直接打出，然後回收其餘卡牌。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n每位對手揭示其主牌堆最上方的卡牌。選擇其中1張，將其放逐，並無視費用將其直接打出，然後回收其餘卡牌。"
   },
   "brynhir thundersong": {
     "en": "Brynhir Thundersong",
@@ -201,27 +221,27 @@
   },
   "darius, trifarian": {
     "en": "Darius, Trifarian",
-    "name": "",
+    "name": "達瑞斯-特菲利安",
     "en_text": "When you play your second card in a turn, give me +2 [Might] this turn and ready me.",
-    "text": ""
+    "text": "當你在1個回合中打出第2張牌，該回合給予此牌+2[M]並活化我"
   },
   "draven, showboat": {
     "en": "Draven, Showboat",
-    "name": "",
+    "name": "達瑞文-炫技",
     "en_text": "My might is increased by your points.",
-    "text": ""
+    "text": "我的戰力隨著你的分數增加"
   },
   "falling star": {
     "en": "Falling Star",
     "name": "降世星辰",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗦𝗽𝗶𝗿𝗶𝘁𝗳𝗼𝗿𝗴𝗲𝗱 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nDeal 3 to a unit.\nDeal 3 to a unit.",
-    "text": "對1個單位造成3點傷害。對1個單位造成3點傷害。"
+    "text": "對1個單位造成3點傷害。\n對1個單位造成3點傷害。"
   },
   "jinx, demolitionist": {
     "en": "Jinx, Demolitionist",
-    "name": "",
+    "name": "吉茵珂絲-爆破專家",
     "en_text": "[ACCELERATE] (You may pay [1] [Fury] as an additional cost to have me enter ready.)\n[ASSAULT 2] (+2 [Might] while I'm an attacker.)\nWhen you play me, discard 2.",
-    "text": ""
+    "text": "[加速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)\n[強襲 2](我為進攻方時+2[M])\n當你打出我時，棄置2張牌。)"
   },
   "raging firebrand": {
     "en": "Raging Firebrand",
@@ -239,31 +259,31 @@
     "en": "Shakedown",
     "name": "勒索",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\nChoose an enemy unit. Deal 6 to it unless its controller has you draw 2.",
-    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算) 選擇1個敵方單位。除非其控制者讓你抽2張卡牌，否則對其造成6點傷害。"
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n選擇1個敵方單位。除非其控制者讓你抽2張卡牌，否則對其造成6點傷害。"
   },
   "tryndamere, barbarian": {
     "en": "Tryndamere, Barbarian",
-    "name": "",
+    "name": "泰達米爾-野蠻人",
     "en_text": "When I conquer after an attack, if you assigned 5 or more excess damage to enemy units, you score 1 Point.",
-    "text": ""
+    "text": "當我進攻後征服一處戰場，若你對敵方單位成5點以上額外傷害，你獲得1分。"
   },
   "vayne, hunter": {
     "en": "Vayne, Hunter",
-    "name": "",
+    "name": "汎-獵人",
     "en_text": "[ASSAULT 3] (+3 [Might] while I'm an attacker.)\nIf an opponent controls a battlefield, I enter ready.\nWhen I conquer, you may pay [1] to return me to my owner's hand.",
-    "text": ""
+    "text": "[強襲 3](我為進攻方時+3[M])\n若對手控制一處戰場，我進場時為活化狀態。\n當我征服一處戰場，你可以支付[1]將我返回擁有者的手牌。"
   },
   "vi, destructive": {
     "en": "Vi, Destructive",
-    "name": "",
+    "name": "菲艾-破壞",
     "en_text": "[GANKING] (I can move from battlefield to battlefield.)\nRecycle 1 from your trash: Give me +1 [Might] this turn.",
-    "text": ""
+    "text": "[遊走](我能夠在戰場之間移動)\n從你的棄牌堆回收1張卡片：本回合給予我+1[M]。"
   },
   "immortal phoenix": {
     "en": "Immortal Phoenix",
     "name": "不死鳳凰",
     "en_text": "[ASSAULT 2] (+2 [Might] while I'm an attacker.)\n\nWhen you kill a unit with a spell, you may pay [1] [Fury] to play me from your trash.",
-    "text": "[強襲 2](我為進攻方時+2[M]) 當你使用法術擊殺1個單位，你可以支付[1][C]從你的棄牌堆打出我。"
+    "text": "[強襲 2](我為進攻方時+2[M])\n當你使用法術擊殺1個單位，你可以支付[1][Fury]從你的棄牌堆打出我。"
   },
   "kadregrin the infernal": {
     "en": "Kadregrin the Infernal",
@@ -273,21 +293,21 @@
   },
   "kai'sa, survivor": {
     "en": "Kai'Sa, Survivor",
-    "name": "",
+    "name": "凱莎-生還者",
     "en_text": "[ACCELERATE] (You may pay [1] [FURY] as an additional cost to have me enter ready.)\nWhen I conquer, draw 1.",
-    "text": ""
+    "text": "[加速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)\n當我征服一處戰場，抽1張卡牌。"
   },
   "seal of rage": {
     "en": "Seal of Rage",
     "name": "狂怒之印",
     "en_text": "[Tap]: [REACTION] – [ADD] [Fury]. (Abilities that add resources can't be reacted to.)",
-    "text": "[E]：[反應]－[增添][C](增添資源的技能無法成為反應目標)"
+    "text": "[E]：[反應]－[增添][Fury](增添資源的技能無法成為反應目標)"
   },
   "volibear, furious": {
     "en": "Volibear, Furious",
-    "name": "",
+    "name": "弗力貝爾-狂怒",
     "en_text": "[DEFLECT 2] (Opponents must play [Rune][Rune] to choose me with a spell or effect.)\nWhen I attack, deal 5 damage split among any number of enemy units here.",
-    "text": ""
+    "text": "[法盾 2](對手必須支付[A][A]才能將我選定為法術或技能的目標)\n當我進攻，將5點傷害分配給此處任意數量的敵方單位。"
   },
   "calm rune": {
     "en": "Calm Rune",
@@ -305,31 +325,31 @@
     "en": "Clockwork Keeper",
     "name": "發條管理員",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nYou may pay [Calm] as an additional cost to play me.\n\nWhen you play me, if you paid the additional cost, draw 1.",
-    "text": "你可以支付[C]作為額外費用將我打出。當你打出我，若你支付了額外費用，抽1張卡牌。"
+    "text": "你可以支付[Calm]作為額外費用將我打出。\n當你打出我，若你支付了額外費用，抽1張卡牌。"
   },
   "defy": {
     "en": "Defy",
     "name": "抗爭",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\n\nCounter a spell that costs no more than [4] and no more than [Rune].",
-    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算) 反制1個費用不得超過[4]，亦不得超過[A]的法術。"
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n反制1個費用不得超過[4]，亦不得超過[A]的法術。"
   },
   "en garde": {
     "en": "En Garde",
     "name": "準備應戰",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\nGive a friendly unit +1 [Might] this turn, then an additional +1 [Might] this turn if it is the only unit you control there.",
-    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算) 本回合給予1個友方單位+1[M]；若他是你在該處唯一操控的單位，則本回合在+1[M]。"
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n本回合給予1個友方單位+1[M]；若他是你在該處唯一操控的單位，則本回合在+1[M]。"
   },
   "find your center": {
     "en": "Find Your Center",
     "name": "尋得自我",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\nIf an opponent's score is within 3 points of the Victory Score, this costs [2] less.\nDraw 1 and channel 1 rune exhausted.",
-    "text": "[行動](可在你的回合或法術對決時打出) 若一名對手距離勝利分數僅在3分內，此牌費用減[2]。抽1張卡牌並召喚1枚休眠狀態的符文。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n若一名對手距離勝利分數僅在3分內，此牌費用減[2]。抽1張卡牌並召喚1枚休眠狀態的符文。"
   },
   "meditation": {
     "en": "Meditation",
     "name": "冥想",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\nAs an additional cost to play this, you may exhaust a friendly unit. If you do, draw 2. Otherwise, draw 1.",
-    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算) 你可以休眠1個友方單位，當作打出此牌的額外費用。若你這麼做，抽2張卡牌。否則抽1張卡牌。"
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n你可以休眠1個友方單位，當作打出此牌的額外費用。若你這麼做，抽2張卡牌。否則抽1張卡牌。"
   },
   "playful phantom": {
     "en": "Playful Phantom",
@@ -341,7 +361,7 @@
     "en": "Rune Prison",
     "name": "符文禁錮",
     "en_text": "[Action] (Play on your turn or in showdowns.)\nStun a unit. (It doesn't deal combat damage this turn.)",
-    "text": "[行動](可在你的回合或法術對決時打出) 暈眩1個單位(該單位本回合不造成戰鬥傷害)。"
+    "text": "[行動](可在你的回合或法術對決時打出)\n暈眩1個單位(該單位本回合不造成戰鬥傷害)。"
   },
   "solari shieldbearer": {
     "en": "Solari Shieldbearer",
