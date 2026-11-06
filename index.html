@@ -237,7 +237,7 @@ var r=cards.filter(function(c){return vis(c)&&(!f||c.type===f)&&(!nk(sel.fs)||se
 var gs={},gl=[];r.forEach(function(c){var k=c.name.toLowerCase(),i=gs[k];if(i==null){gs[k]=gl.length;gl.push(c)}else if(vOf(gl[i])!=='Standard'&&vOf(c)==='Standard')gl[i]=c});r=gl;
 var tp=Math.max(1,Math.ceil(r.length/PGSZ));if(pg>tp)pg=tp;if(pg<1)pg=1;
 E.innerHTML=pager(r.length,tp,0)+r.slice((pg-1)*PGSZ,pg*PGSZ).map(function(c){
-return'<div class="c cd" style="cursor:pointer" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(pic(c)?'<img loading="lazy"'+(sec(c)==='B'?' onload="bfFix(this,1)"':'')+' src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div class="r"><b>'+esc(N(c))+'</b>'+btns(c)+'</div><div class="m">'+esc([tlab(c.type),c.dom.map(function(d){return lab(DOMN,d)}).join('/'),c.cost!==''?'費用 '+c.cost:'',c.v&&c.v!=='Standard'?lab(VARN,c.v):'',c.id].filter(Boolean).join(' · '))+'</div>'+'<div class="bd" data-k="'+esc(c.name.toLowerCase())+'">'+badge(c)+'</div><div class="t">'+rt(X(c))+'</div></div></div>'}).join('')+pager(r.length,tp,1)}
+return'<div class="c cd" style="cursor:pointer" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(pic(c)?'<img loading="lazy"'+(sec(c)==='B'?' onload="bfFix(this,1)"':'')+' src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<div><div><b>'+esc(N(c))+'</b></div><div class="m">'+esc([tlab(c.type),c.dom.map(function(d){return lab(DOMN,d)}).join('/'),c.cost!==''?'費用 '+c.cost:'',c.v&&c.v!=='Standard'?lab(VARN,c.v):'',c.id].filter(Boolean).join(' · '))+'</div>'+'<div class="r" style="align-items:center;gap:8px;margin:6px 0"><div class="bd" data-k="'+esc(c.name.toLowerCase())+'" style="min-width:0">'+badge(c)+'</div>'+btns(c)+'</div><div class="t">'+rt(X(c))+'</div></div></div>'}).join('')+pager(r.length,tp,1)}
 var SIDEMAX=10;
 function canAdd(c,w){var sc=sec(c),k,n=0;
 if(sc==='L')return !legOf()
@@ -353,26 +353,28 @@ async function exportImg(){if(!anyCards()){alert('牌組是空的');return}
 var ks=Object.keys(deck),items=ks.map(function(k){return{c:nm(k),n:deck[k],s:sec(nm(k))}}),imgs={};
 Object.keys(side).forEach(function(k){items.push({c:nm(k),n:side[k],s:'S'})});
 lastItems=items;var ico=await loadOne('icons/icon-192.png')||await loadOne('icon-192.png');await Promise.all(items.map(async function(it){if(pic(it.c))imgs[it.c.id]=await loadAny(it.c)}));
-var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1080,P=30,cw=160,chh=224,gp=12,cols=6,F='"PingFang TC","Noto Sans TC",sans-serif';
-var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});return{t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0),w:g[0]==='B'?chh:cw,h:g[0]==='B'?cw:chh,k:g[0]==='B'?4:cols}}).filter(function(x){return x.a.length});
-var H=P+96;secs.forEach(function(x){H+=50+Math.ceil(x.a.length/x.k)*(x.h+gp)});H+=20;
+var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],W=1920,P=36,gp=12,F='"PingFang TC","Noto Sans TC",sans-serif',LW=8*162,RX=P+LW+30;
+var secs=G.map(function(g){var a=items.filter(function(it){return it.s===g[0]});var bf=g[0]==='B',lf=g[0]==='M';return{id:g[0],t:g[1],a:a,n:a.reduce(function(x,it){return x+it.n},0),w:bf?160:150,h:bf?112:210,k:lf?8:3}}).filter(function(x){return x.a.length});
+function sh(x){return 50+Math.ceil(x.a.length/x.k)*(x.h+gp)}
+var left=secs.filter(function(x){return x.id==='M'}),right=secs.filter(function(x){return x.id!=='M'}),lh=0,rh=0;left.forEach(function(x){lh+=sh(x)});right.forEach(function(x){rh+=sh(x)});
+var top=P+104,H=Math.max(top+Math.max(lh,rh)+P,Math.round(W*0.5));
 var cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d');
 g.fillStyle='#1d1b22';g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
-g.fillStyle='#fff';g.font='bold 44px '+F;var tt=$('dn').value.trim()||'未命名牌組',cut=false;while(g.measureText(tt).width>720&&tt.length>1){tt=tt.slice(0,-1);cut=true}g.fillText(cut?tt+'…':tt,P,P+44);
+g.fillStyle='#fff';g.font='bold 48px '+F;var tt=$('dn').value.trim()||'未命名牌組',cut=false;while(g.measureText(tt).width>1100&&tt.length>1){tt=tt.slice(0,-1);cut=true}g.fillText(cut?tt+'…':tt,P,P+48);
 var lx=W-P;if(ico){g.drawImage(ico,W-P-64,P-4,64,64);lx=W-P-64-12}g.fillStyle='#d9d4ea';g.font='bold 26px '+F;g.textAlign='right';g.fillText('符文戰場牌組工具',lx,P+38);g.textAlign='left';
-g.fillStyle='#a9a6b3';g.font='24px '+F;g.fillText(secs.map(function(x){return x.t+' '+x.n}).join('  ·  '),P,P+84);
-var y=P+96;
-secs.forEach(function(x){g.fillStyle='#a98bff';g.font='bold 28px '+F;g.fillText(x.t+'（'+x.n+'）',P,y+32);y+=50;
-x.a.forEach(function(it,i){var cw=x.w,chh=x.h,cx=P+(i%x.k)*(cw+gp),cy=y+Math.floor(i/x.k)*(chh+gp),im=imgs[it.c.id];
-if(im&&x.k===4&&im.height>im.width){var sc=Math.min(cw/im.height,chh/im.width),rw=im.width*sc,rh=im.height*sc;g.save();g.translate(cx+cw/2,cy+chh/2);g.rotate(bfAng()*Math.PI/180);g.drawImage(im,-rw/2,-rh/2,rw,rh);g.restore()}else if(im){var ar=im.width/im.height,dw=cw,dh=cw/ar;if(dh>chh){dh=chh;dw=chh*ar}g.drawImage(im,cx+(cw-dw)/2,cy+(chh-dh)/2,dw,dh)}else{g.fillStyle='#2e2b38';g.fillRect(cx,cy,cw,chh);g.fillStyle='#fff';g.font='bold 20px '+F;
+g.fillStyle='#a9a6b3';g.font='26px '+F;g.fillText(secs.map(function(x){return x.t+' '+x.n}).join('  ·  '),P,P+92);
+function drawSec(x,ox,oy){var y=oy;g.fillStyle='#a98bff';g.font='bold 28px '+F;g.fillText(x.t+'（'+x.n+'）',ox,y+32);y+=50;
+x.a.forEach(function(it,i){var cw=x.w,chh=x.h,cx=ox+(i%x.k)*(cw+gp),cy=y+Math.floor(i/x.k)*(chh+gp),im=imgs[it.c.id];
+if(im&&x.id==='B'&&im.height>im.width){var sc=Math.min(cw/im.height,chh/im.width),rw=im.width*sc,rh2=im.height*sc;g.save();g.translate(cx+cw/2,cy+chh/2);g.rotate(bfAng()*Math.PI/180);g.drawImage(im,-rw/2,-rh2/2,rw,rh2);g.restore()}else if(im){var ar=im.width/im.height,dw=cw,dh=cw/ar;if(dh>chh){dh=chh;dw=chh*ar}g.drawImage(im,cx+(cw-dw)/2,cy+(chh-dh)/2,dw,dh)}else{g.fillStyle='#2e2b38';g.fillRect(cx,cy,cw,chh);g.fillStyle='#fff';g.font='bold 20px '+F;
 wrapT(g,N(it.c),cw-20).slice(0,5).forEach(function(l,j){g.fillText(l,cx+10,cy+34+j*26)});g.fillStyle='#a9a6b3';g.font='16px '+F;g.fillText(String(it.c.type||''),cx+10,cy+chh-14)}
 if(it.n>0){g.fillStyle='#8a5cf6';g.beginPath();g.arc(cx+cw-28,cy+chh-28,24,0,6.2832);g.fill();g.fillStyle='#fff';g.font='bold 22px '+F;g.textAlign='center';g.fillText('×'+it.n,cx+cw-28,cy+chh-20);g.textAlign='left'}});
-y+=Math.ceil(x.a.length/x.k)*(x.h+gp)});
+return sh(x)}
+var yy=top;left.forEach(function(x){yy+=drawSec(x,P,yy)});yy=top;right.forEach(function(x){yy+=drawSec(x,RX,yy)});
 var noImg=items.some(function(it){return pic(it.c)&&!imgs[it.c.id]});
 try{cv.toBlob(function(b){showImg(b,noImg)},'image/png')}catch(e){alert('圖片產生失敗：'+e.message)}}
 function showImg(b,noImg){var u=URL.createObjectURL(b),o=document.createElement('div');
 o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.88);overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));z-index:9';
-o.innerHTML='<div style="max-width:720px;margin:auto"><div class="row" style="margin-bottom:8px"><button class="btn p" id="xs">分享／下載</button><button class="btn" id="xc">關閉</button>'+(noImg?'<button class="btn" id="xv">截圖模式</button>':'')+'</div>'+(noImg?'<p class="m" style="color:#ddd">部分卡圖無法載入，已改用卡名顯示。</p>':'')+'<p class="m" style="color:#ddd">也可以長按圖片選擇「儲存影像」。</p><img src="'+u+'" style="width:100%;border-radius:8px"></div>';
+o.innerHTML='<div style="max-width:960px;margin:auto"><div class="row" style="margin-bottom:8px"><button class="btn p" id="xs">分享／下載</button><button class="btn" id="xc">關閉</button>'+(noImg?'<button class="btn" id="xv">截圖模式</button>':'')+'</div>'+(noImg?'<p class="m" style="color:#ddd">部分卡圖無法載入，已改用卡名顯示。</p>':'')+'<p class="m" style="color:#ddd">也可以長按圖片選擇「儲存影像」。</p><img src="'+u+'" style="width:100%;border-radius:8px"></div>';
 document.body.appendChild(o);$('xc').onclick=function(){o.remove();URL.revokeObjectURL(u)};if($('xv'))$('xv').onclick=function(){o.remove();shotView()};
 $('xs').onclick=async function(){var f;try{f=new File([b],'riftbound-deck.png',{type:'image/png',lastModified:Date.now()})}catch(x){f=null}
 var msg=$('xm');if(!msg){msg=document.createElement('p');msg.id='xm';msg.className='m';msg.style.color='#ffd479';$('xs').parentNode.parentNode.insertBefore(msg,$('xs').parentNode.nextSibling)}
