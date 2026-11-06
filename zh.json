@@ -19,13 +19,17 @@
     "rainbow": "images/icons/RainbowRune.png",
     "A": "images/icons/RainbowRune.png",
     "rune": "images/icons/rune.svg",
-    "exhaust": "images/icons/exhaust.svg",
+    "TAP": "images/icons/Tap.svg",
+	"E": "images/icons/Tap.svg",
     "might": "images/icons/might.svg",
     "M": "images/icons/might.svg"
   },
   "_iconflip": [
     "might",
-    "M"
+    "M",
+	"1",
+	"2"
+	
   ],
   "_kwcolors": {
     "加速": "#127463",
