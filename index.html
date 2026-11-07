@@ -149,10 +149,10 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function pick(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(v!=null&&v!=='')return v}return ''}
 function arr(v){return Array.isArray(v)?v:(v?[v]:[])}
 function normP(c){var k=c.card||{},cols=(k.colors||[]).map(function(x){return x.name});if(c.showInLibrary===false)return{id:'',name:''};
-return{id:String(c.variantNumber).toLowerCase(),name:k.name||'',type:k.type||(k.types&&k.types[0])||'',sup:k.super||'',dom:cols.length?cols:['Colorless'],cost:k.energy==null?'':k.energy,might:k.might==null?'':k.might,text:pick(k.description,k.effect),img:c.imageUrl||'',set:(c.set&&c.set.prefix)||'',sig:k.super==='Signature',v:c.variantLabel||c.variantType||''}}
+return{id:String(c.variantNumber).toLowerCase(),name:k.name||'',type:k.type||(k.types&&k.types[0])||'',sup:k.super||'',dom:cols.length?cols:['Colorless'],cost:k.energy==null?'':k.energy,might:k.might==null?'':k.might,power:k.power==null?'':k.power,text:pick(k.description,k.effect),img:c.imageUrl||'',set:(c.set&&c.set.prefix)||'',sig:k.super==='Signature',v:c.variantLabel||c.variantType||''}}
 function norm(c){if(c&&c.card&&c.variantNumber)return normP(c);var cl=c.classification||{},at=c.attributes||{},tx=c.text||{},md=c.media||{},me=c.metadata||{};
 return{id:pick(c.riftbound_id,c.public_code,c.id,c.name),name:pick(c.name),type:pick(cl.type,c.type),sup:pick(cl.supertype),
-dom:arr(cl.domain||c.domain),cost:pick(at.energy,c.cost),might:pick(at.might),
+dom:arr(cl.domain||c.domain),cost:pick(at.energy,c.cost),might:pick(at.might),power:pick(at.power),
 text:pick(tx.plain,typeof c.text==='string'?c.text:''),img:pick(md.image_url,c.img),set:pick(c.set&&c.set.set_id),sig:!!me.signature}}
 function merge(a){var map={};cards.forEach(function(c){map[c.id]=c});a.forEach(function(x){var n=norm(x);if(n.name)map[n.id]=n});
 cards=Object.keys(map).map(function(k){return map[k]});sv('rb_cards',cards);fill();render()}
@@ -173,9 +173,9 @@ function rt(t){var m=icm(),fl={};(zh._iconflip||[]).forEach(function(x){fl[Strin
 function mAdd(e,sd){if(sd)addS(e);else add(e);if(!$('s2').classList.contains('hide'))rdeck();updBtns();var bx=$('mbd');if(bx)bx.innerHTML=badge(nm(decodeURIComponent(e)))}
 function closeCard(pop){var o=$('cm');if(!o)return;o.remove();document.body.style.overflow='';if(!pop&&history.state&&history.state.rbm)history.back()}
 function openCard(e,re){var c=nm(decodeURIComponent(e)),o=$('cm'),u=pic(c);
-var R=[['類型',tlab(c.type)],['領域',c.dom.map(function(d){return lab(DOMN,d)}).join(' / ')],['法力費用',c.cost],['戰力',c.might],['彈數',lab(SETN,setOf(c))],['版本',lab(VARN,vOf(c))],['編號',c.id]].filter(function(r){return r[1]!==''&&r[1]!=null&&r[1]!=='undefined'});
+var R=[['類型',tlab(c.type)],['領域',c.dom.map(function(d){return lab(DOMN,d)}).join(' / ')],['法力費用',c.cost],['符能費用',c.power],['戰力',c.might],['彈數',lab(SETN,setOf(c))],['版本',lab(VARN,vOf(c))],['編號',c.id]].filter(function(r){return r[1]!==''&&r[1]!=null&&r[1]!=='undefined'});
 var VL=vers(c),B=sec(c)==='B',chips=[R[0],R[1],R[4],R[5]].filter(Boolean).filter(function(r){return r[0]==='類型'||r[0]==='領域'||r[0]==='彈數'||r[0]==='版本'}),
-sts=R.filter(function(r){return r[0]==='法力費用'||r[0]==='戰力'}),
+sts=R.filter(function(r){return r[0]==='法力費用'||r[0]==='符能費用'||r[0]==='戰力'}),
 h='<div class="mg'+(B?' bf':'')+'"><button class="btn" style="position:absolute;top:10px;right:10px;width:40px;padding:6px;z-index:2" onclick="closeCard()">✕</button>'
 +'<div class="im">'+(u?'<img src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}"'+(B?' onload="bfFix(this)"':'')+'>':'')+'</div>'
 +'<div class="hd"><div class="m" style="font-size:12px;letter-spacing:.08em">'+esc(String(c.id).toUpperCase())+'</div><div style="font-size:24px;font-weight:700;color:var(--ac);padding-right:46px;margin:2px 0">'+esc(N(c))+'</div>'+(L==='zh'&&N(c)!==c.name?'<div class="m" style="margin-bottom:6px">'+esc(c.name)+'</div>':'')+'<div id="mbd" class="bd">'+badge(c)+'</div><div style="margin-top:8px">'+chips.map(function(r){return'<span class="chip">'+esc(r[1])+'</span>'}).join('')+'</div>'+(VL.length>1?'<div style="margin-top:6px"><div class="m" style="font-size:12px;margin-bottom:4px">切換版本</div><div style="display:flex;flex-wrap:wrap;gap:6px">'+VL.map(function(x){var lb=lab(VARN,vOf(x)),dup=VL.filter(function(y){return vOf(y)===vOf(x)}).length>1;return'<button class="btn'+(x.id===c.id?' p':'')+'" style="padding:4px 12px;font-size:13px" onclick="openCard(\''+encodeURIComponent(x.id)+'\',1)">'+esc(dup?lb+'・'+lab(SETN,setOf(x)):lb)+'</button>'}).join('')+'</div></div>':'')+'</div>'
