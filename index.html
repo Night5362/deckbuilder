@@ -283,12 +283,12 @@ function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
 function setTheme(v){try{localStorage.setItem('rb_theme',v)}catch(e){}if(v==='light'||v==='dark')document.documentElement.setAttribute('data-theme',v);else document.documentElement.removeAttribute('data-theme')}
 function initTheme(){var v='auto';try{v=localStorage.getItem('rb_theme')||'auto'}catch(e){}if($('th'))$('th').value=v}
 function setL(v){L=v;sv('rb_lang',L);fill();render();rdeck()}
-var homeSrc=0;
+var HF='onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}"';
 function rhome(fresh){var E=$('hmf');if(!E)return;
-if(cards.length&&(fresh||!E.children.length)){var ok=cards.filter(function(c){return sec(c)!=='R'&&pic(c)}),pk=[];
+if(cards.length&&(fresh||!E.children.length)){var ok=cards.filter(function(c){return sec(c)==='M'&&pic(c)}),pk=[];
 while(pk.length<5&&ok.length){pk.push(ok.splice(Math.floor(Math.random()*ok.length),1)[0])}
-E.innerHTML=pk.map(function(c){return'<img src="'+esc(pic(c))+'" alt="" loading="lazy">'}).join('')}
-var Bd=$('hmb');if(Bd&&cards.length&&(fresh||!Bd.children.length)){var ok2=cards.filter(function(c){return sec(c)!=='R'&&pic(c)}),sl=[];for(var q=0;q<9;q++){if([2,4,6].indexOf(q)>-1||!ok2.length){sl.push('<i></i>')}else{var c2=ok2.splice(Math.floor(Math.random()*ok2.length),1)[0];sl.push('<img src="'+esc(pic(c2))+'" alt="" loading="lazy">')}}Bd.innerHTML=sl.join('')}
+E.innerHTML=pk.map(function(c){return'<img src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" '+HF+'>'}).join('')}
+var Bd=$('hmb');if(Bd&&cards.length&&(fresh||!Bd.children.length)){var ok2=cards.filter(function(c){return sec(c)==='M'&&pic(c)}),sl=[];for(var q=0;q<9;q++){if([2,4,6].indexOf(q)>-1||!ok2.length){sl.push('<i></i>')}else{var c2=ok2.splice(Math.floor(Math.random()*ok2.length),1)[0];sl.push('<img src="'+esc(pic(c2))+'" data-o="'+esc(c2.img)+'" alt="" '+HF+'>')}}Bd.innerHTML=sl.join('')}
 $('hmn').textContent=cards.length?cards.length+' CARDS · 繁中 × ENGLISH · DECK TOOLS':'';
 var mn=0;try{mn=mainN()}catch(e){}var sn=0;try{sn=Object.keys(side).reduce(function(a,k){return a+side[k]},0)}catch(e){}
 var h='';if(mn||sn||(typeof champ!=='undefined'&&champ)){h='<div class="hm-lb">CONTINUE</div><div class="c hm-f" onclick="tab(2)"><b>繼續編輯目前牌組</b><div class="m">主牌組 '+mn+' / 40・備牌 '+sn+' / 10</div></div>'}
