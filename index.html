@@ -196,6 +196,7 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ic.flip{filter:invert(1) hue-rotate(180deg)}}
 :root[data-theme="dark"] .ic.flip{filter:invert(1) hue-rotate(180deg)}
 .kw{display:inline-block;background:var(--kc,#127463);color:#fff;font-weight:700;font-style:normal;font-size:.95em;line-height:1.3;padding:0 .45em;margin:0 .3em;transform:skewX(-15deg)}
+.chip.dis,.chip.dis.gold,.chip.dis.on{opacity:.4;filter:grayscale(1);cursor:not-allowed;pointer-events:none}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chip{padding:5px 12px;border:1px solid var(--bd);border-radius:16px;background:var(--bg);color:var(--tx);font:inherit;font-size:14px;cursor:pointer}.chip.on{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}.chip.gold{border:2px solid #d4a82a;padding:4px 11px;box-shadow:0 0 7px rgba(212,168,42,.55)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
@@ -543,9 +544,9 @@ function pager(n,tp,bot){if(!n)return bot?'':'<div class="c m">沒有符合條�
 var top=bot?'':'<p class="m" style="margin:0 0 6px">共 '+n+' 筆'+(tp>1?'・第 '+pg+' / '+tp+' 頁':'')+'</p>';
 if(tp<2)return top;var o='';for(var i=1;i<=tp;i++)o+='<option value="'+i+'"'+(i===pg?' selected':'')+'>第 '+i+' 頁</option>';
 return top+'<div class="r" style="margin-bottom:8px;gap:6px"><button class="btn" style="flex:none;padding:6px 12px"'+(pg<=1?' disabled':'')+' onclick="goPg('+(pg-1)+')">‹ 上一頁</button><select style="margin:0;flex:1" onchange="goPg(+this.value)">'+o+'</select><button class="btn" style="flex:none;padding:6px 12px"'+(pg>=tp?' disabled':'')+' onclick="goPg('+(pg+1)+')">下一頁 ›</button></div>'}
-function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');syncCat();
+function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');syncCat();hlDom();
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
-var r=cards.filter(function(c){return vis(c)&&(!f||(f==='@M'?sec(c)==='M':c.type===f))&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
+var r=cards.filter(function(c){return vis(c)&&!(curTab===2&&domBad(c))&&(!f||(f==='@M'?sec(c)==='M':c.type===f))&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 var gs={},gl=[];r.forEach(function(c){var k=c.name.toLowerCase(),i=gs[k];if(i==null){gs[k]=gl.length;gl.push(c)}else if(vOf(gl[i])!=='Standard'&&vOf(c)==='Standard')gl[i]=c});r=gl;
 var tp=Math.max(1,Math.ceil(r.length/PGSZ));if(pg>tp)pg=tp;if(pg<1)pg=1;
 E.innerHTML=pager(r.length,tp,0)+r.slice((pg-1)*PGSZ,pg*PGSZ).map(function(c){
@@ -598,7 +599,7 @@ if(deck[id]<=0)delete deck[id];sv('rb_deck',deck);rdeck();return}}
 deck[id]=(deck[id]||0)+d;if(deck[id]<=0){delete deck[id];if(sc==='L')runeIds().forEach(function(k){delete deck[k]})}sv('rb_deck',deck);rdeck()}
 function chgS(id,d){id=decodeURIComponent(id);if(d>0&&sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+d;if(side[id]<=0)delete side[id];sv('rb_side',side);rdeck()}
 function cnt(){$('cnt').textContent=total();hlDom()}
-function hlDom(){var f=$('fd');if(!f)return;var l=legOf(),d=l&&l.dom?l.dom:[],b=f.querySelectorAll('button');for(var i=0;i<b.length;i++)b[i].classList.toggle('gold',d.indexOf(b[i].dataset.v)>-1)}
+function hlDom(){var f=$('fd');if(!f)return;var l=legOf(),d=l&&l.dom?l.dom:[],lock=curTab===2&&d.filter(function(x){return x!=='Colorless'}).length>0,b=f.querySelectorAll('button');for(var i=0;i<b.length;i++){var v=b[i].dataset.v,ok=d.indexOf(v)>-1,off=lock&&!ok;b[i].classList.toggle('gold',ok);b[i].classList.toggle('dis',off);b[i].disabled=off;if(off&&sel.fd&&sel.fd[v])delete sel.fd[v]}}
 var _nmI=null,_nmR=null,_nmL=-1;
 function nm(id){if(_nmR!==cards||_nmL!==cards.length){_nmI={};for(var i=0;i<cards.length;i++){var k=cards[i].id;if(!(k in _nmI))_nmI[k]=cards[i]}_nmR=cards;_nmL=cards.length}
 var s=String(id),h=_nmI[s];if(h)return h;var a=s.replace(/-\d+$/,'');if(a!==s&&_nmI[a])return _nmI[a];return{id:id,name:id,type:'',dom:[]}}
@@ -647,7 +648,7 @@ for(var t=0;t<4;t++)nx()}
 function imgCount(){var e=$('imc');if(!e)return;if(!window.caches){e.textContent='此環境不支援離線快取';return}caches.open('rb-img-v1').then(function(c){return c.keys()}).then(function(k){e.textContent='已快取 '+k.length+' 張卡圖（上限 600 張）'}).catch(function(){e.textContent=''})}
 function clrImg(){if(!window.caches)return;caches.delete('rb-img-v1').then(imgCount)}
 function syncList(){for(var K in opn){var p=K.split('|');if(!cntBy({name:p[0]},p[1]))delete opn[K]}updBadges();updBtns()}
-function rdeck(){var y=window.pageYOffset||0;rdeck0();syncList();if(!$('s2').classList.contains('hide'))window.scrollTo(0,y)}
+function rdeck(){var y=window.pageYOffset||0;rdeck0();var lg0=legOf(),lk0=lg0?lg0.id:'';if(lk0!==window._lg0){window._lg0=lk0;render()}syncList();if(!$('s2').classList.contains('hide'))window.scrollTo(0,y)}
 function rdeck0(){fixChamp();cnt();var ks=Object.keys(deck),leg=legOf(),sk=dkS(Object.keys(side),side),cc=champ?nm(champ):null;
 $('lgm').innerHTML='';
 var ops=ks.filter(function(k){var c=nm(k);return sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&okCh(k)});
