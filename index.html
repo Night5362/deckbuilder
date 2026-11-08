@@ -553,7 +553,7 @@ return'<div class="c cd" style="cursor:pointer" onclick="openCard(\''+encodeURIC
 var SIDEMAX=10;
 function canAdd(c,w){var sc=sec(c),k,n=0;
 if(sc==='L')return !legOf()
-if(sc==='R'){for(k in deck)if(sec(nm(k))==='R')n+=deck[k];return n<12}
+if(sc==='R'){if(!legOf())return false;for(k in deck)if(sec(nm(k))==='R')n+=deck[k];return n<12}
 if(sc==='B'){for(k in deck)if(sec(nm(k))==='B'){n+=deck[k];if(nm(k).name===c.name)return false}return n<3}
 var K=c.name.toLowerCase();for(k in deck)if(nm(k).name.toLowerCase()===K)n+=deck[k];for(k in side)if(nm(k).name.toLowerCase()===K)n+=side[k];
 if(n>=3)return false;if(w==='s'&&sideN()>=SIDEMAX)return false;if(w==='m'&&mainN()>=40)return false;return true}
@@ -595,7 +595,7 @@ if(Object.keys(nms).length===2&&tot===12){var me=c.name.toLowerCase(),oth=ks.fil
 if(tot-ot+d<1||ot-d<1)return;deck[id]=(deck[id]||0)+d;
 if(d>0){var r=d;oth.forEach(function(k){while(r>0&&deck[k]>0){deck[k]--;r--}if(deck[k]<=0)delete deck[k]})}else deck[oth[0]]=(deck[oth[0]]||0)-d;
 if(deck[id]<=0)delete deck[id];sv('rb_deck',deck);rdeck();return}}
-deck[id]=(deck[id]||0)+d;if(deck[id]<=0)delete deck[id];sv('rb_deck',deck);rdeck()}
+deck[id]=(deck[id]||0)+d;if(deck[id]<=0){delete deck[id];if(sc==='L')runeIds().forEach(function(k){delete deck[k]})}sv('rb_deck',deck);rdeck()}
 function chgS(id,d){id=decodeURIComponent(id);if(d>0&&sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+d;if(side[id]<=0)delete side[id];sv('rb_side',side);rdeck()}
 function cnt(){$('cnt').textContent=total();hlDom()}
 function hlDom(){var f=$('fd');if(!f)return;var l=legOf(),d=l&&l.dom?l.dom:[],b=f.querySelectorAll('button');for(var i=0;i<b.length;i++)b[i].classList.toggle('gold',d.indexOf(b[i].dataset.v)>-1)}
@@ -646,7 +646,8 @@ b.disabled=true;function nx(){if(i>=u.length)return;var m=new Image();m.onload=m
 for(var t=0;t<4;t++)nx()}
 function imgCount(){var e=$('imc');if(!e)return;if(!window.caches){e.textContent='此環境不支援離線快取';return}caches.open('rb-img-v1').then(function(c){return c.keys()}).then(function(k){e.textContent='已快取 '+k.length+' 張卡圖（上限 600 張）'}).catch(function(){e.textContent=''})}
 function clrImg(){if(!window.caches)return;caches.delete('rb-img-v1').then(imgCount)}
-function rdeck(){var y=window.pageYOffset||0;rdeck0();if(!$('s2').classList.contains('hide'))window.scrollTo(0,y)}
+function syncList(){for(var K in opn){var p=K.split('|');if(!cntBy({name:p[0]},p[1]))delete opn[K]}updBadges();updBtns()}
+function rdeck(){var y=window.pageYOffset||0;rdeck0();syncList();if(!$('s2').classList.contains('hide'))window.scrollTo(0,y)}
 function rdeck0(){fixChamp();cnt();var ks=Object.keys(deck),leg=legOf(),sk=dkS(Object.keys(side),side),cc=champ?nm(champ):null;
 $('lgm').innerHTML='';
 var ops=ks.filter(function(k){var c=nm(k);return sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&okCh(k)});
