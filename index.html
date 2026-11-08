@@ -268,7 +268,7 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 </div>
 <div id="dp2" class="hide"><div id="chk" class="c"></div><div id="stt" class="c"></div></div>
 <textarea id="ex" class="hide" rows="8" readonly></textarea>
-<div class="dbar"><button class="btn" onclick="clearDeck()" style="color:var(--no)">清除</button><button class="btn p" id="svb" onclick="saveDeck()">儲存牌組</button></div>
+<div class="dbar"><button class="btn" id="clb" onclick="clearBtn()" style="color:var(--no)">清除</button><button class="btn p" id="svb" onclick="saveDeck()">儲存牌組</button></div>
 </section>
 </div>
 <section id="s5" class="hide">
@@ -459,11 +459,14 @@ var side='<div class="vs"><div class="vtiles"><div><b>'+tot+'</b><span>主牌組
 +'<div class="c"><b>領域</b><div class="vbar">'+doms.map(function(g){return'<i style="flex:'+dm[g]+';background:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'"></i>'}).join('')+'</div><div class="chips">'+doms.map(function(g){return'<span class="chip" style="border-color:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'">'+esc(lab(DOMN,g))+' '+dm[g]+'</span>'}).join('')+'</div></div>'
 +'<div class="c"><b>卡牌類型</b><div class="vbar">'+ty.map(function(v,i){return v?'<i style="flex:'+v+';background:'+TCOL[i]+'"></i>':''}).join('')+'</div><div class="chips">'+['單位','法術','裝備'].map(function(t,i){return ty[i]?'<span class="chip" style="border-color:'+TCOL[i]+'">'+t+' '+ty[i]+'</span>':''}).join('')+'</div></div></div>';
 E.innerHTML=L1+(typeof dkStats==='function'?dkStats(vi):'')+'<div class="vwrap">'+main+side+'</div>'}
-function tab(n){var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
-$('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2)rdeck();if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview();if(n===7)rrec()}
+function edLeave(){var ed=ld('rb_edn',''),has=anyCards()||champ||$('dn').value.trim();
+if(has||ed){var m=ed?'要離開編輯嗎？\n離開會視為取消編輯，對「'+ed+'」所做的修改都不會儲存。':'要離開嗎？\n離開後，目前新建牌組的進度會被清空。';if(!confirm(m))return false}
+deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);sv('rb_edn','');cnt();updBadges();return true}
+function tab(n){if(curTab===2&&n!==2&&!edLeave())return;var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
+$('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2){rdeck();edBtn()}if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview();if(n===7)rrec()}
 function setEdv(v){edv=v;var w=$('edw');w.classList.toggle('vc',v==='c');w.classList.toggle('vd',v==='d');$('edc').classList.toggle('on',v==='c');$('edd').classList.toggle('on',v==='d')}
 function dTab(k){$('dp1').classList.toggle('hide',k!==1);$('dp2').classList.toggle('hide',k!==2);$('dt1').classList.toggle('on',k===1);$('dt2').classList.toggle('on',k===2)}
-function newDeck(){if(anyCards()&&!confirm('目前編輯中的牌組會被清空（已儲存的牌組不受影響），要新建牌組嗎？'))return;deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();edv='c';tab(2)}
+function newDeck(){var ed=ld('rb_edn','');if(anyCards()&&!confirm(ed?'目前正在編輯「'+ed+'」，改為新建牌組會視為取消編輯，修改不會儲存（已儲存的牌組不受影響），要繼續嗎？':'目前編輯中的牌組會被清空（已儲存的牌組不受影響），要新建牌組嗎？'))return;sv('rb_edn','');deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();edv='c';tab(2)}
 var CATS=[['','全部'],['L','傳奇'],['M','主牌組'],['B','戰場'],['R','符文']];
 function catVal(k){if(!k)return'';if(k==='M')return'@M';var c=cards.filter(function(x){return sec(x)===k})[0];return c?c.type:''}
 function setCat(k){$('ft').value=catVal(k);if($('ft').value!==catVal(k))$('ft').value='';rr()}
@@ -645,6 +648,8 @@ var h=sect('戰場',bn,3,bk.map(function(k){return row(k,deck,'chg')}).join(''),
 $('deck').innerHTML=h;$('ex').classList.add('hide');rsaved()}
 function pack(){return{v:2,main:deck,side:side,champ:champ,t:Date.now()}}
 function unpack(x){if(x&&x.v===2)return{main:x.main||{},side:x.side||{},champ:x.champ||'',t:x.t||0};return{main:x||{},side:{},champ:''}}
+function clearBtn(){if(ld('rb_edn',''))tab(5);else clearDeck()}
+function edBtn(){var e=$('clb');if(e)e.textContent=ld('rb_edn','')?'取消編輯':'清除'}
 function clearDeck(){if(!anyCards()){alert('目前的牌組已經是空的');return}
 if(!confirm('確定要清除目前的牌組嗎？\n主牌組、符文、戰場、備牌與指定英雄都會被移除，已儲存的牌組不會受影響。'))return;
 if(!confirm('再確認一次：清除後無法復原，要繼續嗎？'))return;
@@ -654,7 +659,7 @@ saved=saved.filter(function(d){return d.name!==n});saved.push({name:n,deck:JSON.
 var ok=false;try{localStorage.setItem('rb_saved',JSON.stringify(saved));var chk=JSON.parse(localStorage.getItem('rb_saved')||'[]');ok=chk.some(function(d){return d.name===n})}catch(e){}
 if(!ok){alert('牌組儲存失敗（瀏覽器儲存空間可能已滿），編輯中的內容已保留，請稍後再試。');return}
 var cl=await push(n);
-deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();
+deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);sv('rb_edn','');cnt();updBadges();
 tab(5);var m=$('smsg');if(m){m.innerHTML='<div class="c" style="border-color:var(--ok);color:var(--ok);margin-bottom:12px">✓ 已儲存「'+esc(n)+'」'+(cl===false?'（僅存在本機，雲端同步失敗）':cl?'（已同步到雲端）':'')+'</div>';setTimeout(function(){if(m)m.innerHTML=''},6000)}}
 function ago(t){if(!t)return'';var m=Math.floor((Date.now()-t)/60000);if(m<1)return'剛剛更新';if(m<60)return m+' 分鐘前更新';var h=Math.floor(m/60);if(h<24)return h+' 小時前更新';var d=Math.floor(h/24);if(d<30)return d+' 天前更新';if(d<365)return Math.floor(d/30)+' 個月前更新';return Math.floor(d/365)+' 年前更新'}
 function domIc(d){var k=String(d).toLowerCase(),dm=zh._domicons||{},u='';for(var x in dm)if(String(x).toLowerCase()===k){u=dm[x];break}u=u||'images/icons/'+d+'.svg';return'<img src="'+esc(u)+'" alt="'+esc(lab(DOMN,d))+'" title="'+esc(lab(DOMN,d))+'" style="height:30px;width:30px;object-fit:contain" onerror="this.outerHTML=\'<span class=chp>\'+this.alt+\'</span>\'">'}
@@ -670,7 +675,7 @@ return'<div class="c" style="position:relative;display:flex;padding:0;overflow:h
 +'<div style="position:relative;flex:1;min-width:0;padding:12px 14px 12px 124px"><div class="r" style="align-items:flex-start;gap:8px"><div style="min-width:0"><div style="font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(d.name)+'</div><div class="m">'+(ago(u.t)||'&nbsp;')+'</div></div>'+(pk?'':'<button style="flex:none;width:auto;padding:4px 10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer" onclick="event.stopPropagation();delDeck('+i+')" aria-label="刪除">✕</button>')+'</div>'
 +(pk?'':'<div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin:10px 0">'+doms.map(domIc).join('')+sl.map(function(x){return'<span class="chp">'+esc(x)+'</span>'}).join('')+'</div>')
 +(pk?'<div style="margin-top:8px;text-align:right;color:var(--ac);font-weight:600">選擇 →</div>':'<div style="border-top:1px solid var(--ac);padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="display:flex;align-items:center;gap:8px;font-size:15px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--mu)"><rect x="6" y="3" width="13" height="17" rx="2"/><path d="M3 7v12a2 2 0 0 0 2 2"/></svg><b>'+mn+'</b><span class="m">備牌 '+sn+'</span></div><span style="color:var(--ac);font-weight:600;white-space:nowrap">查看 →</span></div>')+'</div></div>'}
-function loadDeck(i){if(anyCards()&&!confirm('目前編輯中的內容尚未儲存，載入「'+saved[i].name+'」會將其覆蓋，確定要繼續嗎？'))return;var u=JSON.parse(JSON.stringify(unpack(saved[i].deck)));deck=u.main;side=u.side;champ=u.champ;if(champ&&!deck[champ])deck[champ]=1;$('dn').value=saved[i].name;sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);edv='d';tab(2)}
+function loadDeck(i){if(anyCards()&&!confirm('目前編輯中的內容尚未儲存，載入「'+saved[i].name+'」會將其覆蓋，確定要繼續嗎？'))return;var u=JSON.parse(JSON.stringify(unpack(saved[i].deck)));deck=u.main;side=u.side;champ=u.champ;if(champ&&!deck[champ])deck[champ]=1;$('dn').value=saved[i].name;sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);sv('rb_edn',saved[i].name);edv='d';tab(2)}
 function delDeck(i){var n=saved[i].name;if(confirm('刪除「'+n+'」？')){saved.splice(i,1);sv('rb_saved',saved);rsaved();if(sb&&user)sb.from('decks').delete().eq('name',n).then(function(r){if(r.error)alert('雲端刪除失敗：'+r.error.message)})}}
 function exportDeck(){function ls(o,f){return Object.keys(o).filter(function(k){return!f||sec(nm(k))===f}).map(function(k){return o[k]+' '+nm(k).name})}
 var P=[['傳奇',ls(deck,'L')],['指定英雄',champ?[nm(champ).name]:[]],['主牌組',ls(deck,'M')],['符文',ls(deck,'R')],['戰場',ls(deck,'B')],['備牌',ls(side)]],
