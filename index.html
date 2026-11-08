@@ -5,27 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>符文戰場牌組工具</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#8a5cf6">
+<meta name="theme-color" content="#010A13" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EFE6D2" media="(prefers-color-scheme: light)">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <script>try{var t0=localStorage.getItem("rb_theme");if(t0==="light"||t0==="dark")document.documentElement.setAttribute("data-theme",t0)}catch(e){}</script>
 <style>
-:root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1f;--mu:#6b6b70;--ac:#8a5cf6;--bd:#dedbd2;--ok:#1a7f4b;--no:#c62828;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161a;--card:#222126;--tx:#eeedf0;--mu:#9b9aa3;--ac:#a98bff;--bd:#38363f;--ok:#4cc38a;--no:#ff7b72;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#17161a;--card:#222126;--tx:#eeedf0;--mu:#9b9aa3;--ac:#a98bff;--bd:#38363f;--ok:#4cc38a;--no:#ff7b72;color-scheme:dark}
+:root{--bg:#EFE6D2;--card:#F8F1E1;--tx:#2A2418;--mu:#6E5F43;--ac:#8C6A2F;--ac2:#005A82;--bd:#CDBB92;--ok:#1a7f4b;--no:#c62828;--gb:linear-gradient(180deg,#B88F45 0%,#8C6A2F 55%,#6E5120 100%);--gt:#FFF8E6;--glow:rgba(140,106,47,.35);--sh:0 4px 14px rgba(70,50,15,.16);--pb:linear-gradient(0deg,#005A82,#1C9A6B);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#010A13;--card:#0A1428;--tx:#F0E6D2;--mu:#A09B8C;--ac:#C8AA6E;--ac2:#0AC8B9;--bd:rgba(200,170,110,.32);--ok:#0AC8B9;--no:#ff7b72;--gb:linear-gradient(180deg,#F0E6D2 0%,#C8AA6E 45%,#9B7A3C 100%);--gt:#010A13;--glow:rgba(200,170,110,.4);--sh:0 6px 18px rgba(0,0,0,.55);--pb:linear-gradient(0deg,#0596AA,#0ACF83);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#010A13;--card:#0A1428;--tx:#F0E6D2;--mu:#A09B8C;--ac:#C8AA6E;--ac2:#0AC8B9;--bd:rgba(200,170,110,.32);--ok:#0AC8B9;--no:#ff7b72;--gb:linear-gradient(180deg,#F0E6D2 0%,#C8AA6E 45%,#9B7A3C 100%);--gt:#010A13;--glow:rgba(200,170,110,.4);--sh:0 6px 18px rgba(0,0,0,.55);--pb:linear-gradient(0deg,#0596AA,#0ACF83);color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0 auto;background:var(--bg);color:var(--tx);font:15px/1.5 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;max-width:720px;padding:12px}
-h1{font-size:19px;margin:4px 0 10px}h3{margin:14px 0 6px}
+h1{font-size:19px;margin:4px 0 12px;color:var(--ac);letter-spacing:.06em}h1::after{content:"";display:block;height:2px;margin-top:6px;background:linear-gradient(90deg,var(--ac),var(--ac2) 55%,transparent)}h3{margin:14px 0 6px;color:var(--ac)}
 nav{display:flex;gap:6px;margin-bottom:10px}
 nav button,.btn{flex:1;padding:9px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;font:inherit;cursor:pointer}
-nav button.on,.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+nav button.on{background:linear-gradient(180deg,var(--glow),transparent 70%),var(--card);color:var(--ac);border-color:var(--ac);font-weight:700;box-shadow:inset 0 3px 0 var(--ac)}
+.btn.p{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}
 .cw{position:relative;margin-bottom:8px}.cw input,.cw textarea{margin-bottom:0;padding-right:38px}
 .chp{display:inline-block;border:1px solid var(--bd);background:var(--bg);border-radius:8px;padding:2px 7px;font:12px ui-monospace,Menlo,monospace;color:var(--tx)}
 .cx{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:28px;height:28px;padding:0;border:0;border-radius:50%;background:transparent;color:#e5484d;font-size:20px;line-height:28px;cursor:pointer;display:none}.cw.tx .cx{top:6px;transform:none}.cx.on{display:block}.cx:hover{background:rgba(229,72,77,.14)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--glow),0 0 14px var(--glow)}
 input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:8px}
-.c{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px}
+.c{background:linear-gradient(90deg,transparent,var(--ac) 50%,transparent) top/100% 1px no-repeat,var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px;box-shadow:var(--sh)}
 .c b{display:block}.m{color:var(--mu);font-size:13px}
 .t{white-space:pre-wrap;margin:6px 0;font-size:14px}
 .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
@@ -57,7 +60,7 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ic.flip{filter:invert(1) hue-rotate(180deg)}}
 :root[data-theme="dark"] .ic.flip{filter:invert(1) hue-rotate(180deg)}
 .kw{display:inline-block;background:var(--kc,#127463);color:#fff;font-weight:700;font-style:normal;font-size:.95em;line-height:1.3;padding:0 .45em;margin:0 .3em;transform:skewX(-15deg)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chip{padding:5px 12px;border:1px solid var(--bd);border-radius:16px;background:var(--bg);color:var(--tx);font:inherit;font-size:14px;cursor:pointer}.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}.chip.gold{border:2px solid #d4a82a;padding:4px 11px;box-shadow:0 0 7px rgba(212,168,42,.55)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chip{padding:5px 12px;border:1px solid var(--bd);border-radius:16px;background:var(--bg);color:var(--tx);font:inherit;font-size:14px;cursor:pointer}.chip.on{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}.chip.gold{border:2px solid #d4a82a;padding:4px 11px;box-shadow:0 0 7px rgba(212,168,42,.55)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
@@ -336,7 +339,7 @@ for(k in deck){c=nm(k);if(sec(c)!=='M')continue;n=deck[k];var v=Number(c.cost)||
 if(!tot)return'<b>牌組統計</b><div class="m">主牌組還沒有卡片。</div>';
 var mx=Math.max.apply(null,cu)||1,chip=function(t){return'<span style="display:inline-block;border:1px solid var(--ac);color:var(--ac);border-radius:999px;padding:2px 10px;font-size:13px;margin:0 6px 6px 0">'+esc(t)+'</span>'};
 return'<b>牌組統計</b><span class="m">（主牌組 '+tot+' 張・平均費用 '+(sum/tot).toFixed(1)+'）</span><div class="m" style="margin-top:8px">費用曲線</div>'
-+'<div style="display:flex;gap:6px;align-items:flex-end;height:110px;margin:6px 0 4px">'+cu.map(function(v){return'<div style="flex:1;text-align:center;min-width:0"><div class="m" style="font-size:12px;height:18px">'+(v||'')+'</div><div style="height:'+Math.round(v/mx*80)+'px;min-height:'+(v?3:0)+'px;background:var(--ac);border-radius:4px 4px 0 0"></div></div>'}).join('')+'</div>'
++'<div style="display:flex;gap:6px;align-items:flex-end;height:110px;margin:6px 0 4px">'+cu.map(function(v){return'<div style="flex:1;text-align:center;min-width:0"><div class="m" style="font-size:12px;height:18px">'+(v||'')+'</div><div style="height:'+Math.round(v/mx*80)+'px;min-height:'+(v?3:0)+'px;background:var(--pb);border-radius:4px 4px 0 0"></div></div>'}).join('')+'</div>'
 +'<div style="display:flex;gap:6px;margin-bottom:10px">'+cu.map(function(v,i){return'<div class="m" style="flex:1;text-align:center;font-size:12px">'+(i===7?'7+':i)+'</div>'}).join('')+'</div>'
 +'<div class="m" style="margin-bottom:4px">類型</div><div>'+['單位','法術','裝備'].map(function(t,i){return chip(t+' '+ty[i])}).join('')+'</div>'
 +'<div class="m" style="margin:4px 0">領域</div><div>'+Object.keys(dm).sort(domCmp).map(function(d){return chip(lab(DOMN,d)+' '+dm[d])}).join('')+'</div>'}
@@ -418,27 +421,27 @@ function cnt2(a){return a.reduce(function(x,it){return x+it.n},0)}
 var rn=Rs.length,rtw=rn>3?64:84,rth=Math.round(rtw*1.4),panelH=20+(Ls.length?318:0)+(rn?rth+46:0)+Bs.length*152+20,mainRows=Math.ceil(Ms.length/cols),mainB=mt+mainRows*(CH+gp),sideRows=Math.ceil(Ss.length/cols),sideB=Ss.length?mainB+60+sideRows*(CH+gp):mainB;
 var H=Math.max(1080,top+panelH+40,sideB+70);
 var cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d');
-var bgG=g.createRadialGradient(W*0.7,0,50,W*0.5,H*0.4,W*0.8);bgG.addColorStop(0,'#2a2240');bgG.addColorStop(1,'#141317');g.fillStyle=bgG;g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
+var bgG=g.createRadialGradient(W*0.7,0,50,W*0.5,H*0.4,W*0.8);bgG.addColorStop(0,'#0B2542');bgG.addColorStop(1,'#010A13');g.fillStyle=bgG;g.fillRect(0,0,W,H);g.textBaseline='alphabetic';
 function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
-function tl(x0,y0,x1,y1){var dx=x1-x0,dy=y1-y0,L=Math.sqrt(dx*dx+dy*dy),ux=dx/L,uy=dy/L,nx=-uy*0.9,ny=ux*0.9,r=Math.min(70,L/3);g.fillStyle='#8a5cf6';g.beginPath();g.moveTo(x0,y0);g.lineTo(x0+ux*r+nx,y0+uy*r+ny);g.lineTo(x1-ux*r+nx,y1-uy*r+ny);g.lineTo(x1,y1);g.lineTo(x1-ux*r-nx,y1-uy*r-ny);g.lineTo(x0+ux*r-nx,y0+uy*r-ny);g.closePath();g.fill()}
+function tl(x0,y0,x1,y1){var dx=x1-x0,dy=y1-y0,L=Math.sqrt(dx*dx+dy*dy),ux=dx/L,uy=dy/L,nx=-uy*0.9,ny=ux*0.9,r=Math.min(70,L/3);g.fillStyle='#C8AA6E';g.beginPath();g.moveTo(x0,y0);g.lineTo(x0+ux*r+nx,y0+uy*r+ny);g.lineTo(x1-ux*r+nx,y1-uy*r+ny);g.lineTo(x1,y1);g.lineTo(x1-ux*r-nx,y1-uy*r-ny);g.lineTo(x0+ux*r-nx,y0+uy*r-ny);g.closePath();g.fill()}
 function drawBox(it,x,y,w,h){var im=imgs[it.c.id];g.save();rr(x,y,w,h,8);g.clip();
 if(im&&it.s==='B'&&im.height>im.width){var sc=Math.min(w/im.height,h/im.width),rw=im.width*sc,rh2=im.height*sc;g.translate(x+w/2,y+h/2);g.rotate(bfAng()*Math.PI/180);g.drawImage(im,-rw/2,-rh2/2,rw,rh2)}
 else if(im){var ar=im.width/im.height,dw=w,dh=w/ar;if(dh>h){dh=h;dw=h*ar}g.drawImage(im,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
-else{g.fillStyle='#2e2b38';g.fillRect(x,y,w,h);g.fillStyle='#fff';g.font='bold 18px '+F;wrapT(g,N(it.c),w-16).slice(0,5).forEach(function(l,j){g.fillText(l,x+8,y+28+j*24)});g.fillStyle='#a9a6b3';g.font='14px '+F;g.fillText(String(it.c.type||''),x+8,y+h-10)}
+else{g.fillStyle='#0F1F3A';g.fillRect(x,y,w,h);g.fillStyle='#fff';g.font='bold 18px '+F;wrapT(g,N(it.c),w-16).slice(0,5).forEach(function(l,j){g.fillText(l,x+8,y+28+j*24)});g.fillStyle='#A09B8C';g.font='14px '+F;g.fillText(String(it.c.type||''),x+8,y+h-10)}
 g.restore()}
 function pill(txt,cx,cy,font,pad){g.font=font;var w=g.measureText(txt).width+pad*2,h=30;g.fillStyle='rgba(0,0,0,.78)';rr(cx-w/2,cy-h/2,w,h,15);g.fill();g.fillStyle='#fff';g.textAlign='center';g.fillText(txt,cx,cy+8);g.textAlign='left'}
 g.fillStyle='#fff';g.font='bold 46px '+F;var tt=$('dn').value.trim()||'未命名牌組',cut=false;while(g.measureText(tt).width>900&&tt.length>1){tt=tt.slice(0,-1);cut=true}tt=cut?tt+'…':tt;g.fillText(tt,P,P+46);
-g.fillStyle='#a9a6b3';g.font='26px '+F;g.textAlign='right';g.fillText('主牌組 '+cnt2(Ms)+'  ·  符文 '+cnt2(Rs)+'  ·  戰場 '+cnt2(Bs)+(Ss.length?'  ·  備牌 '+cnt2(Ss):''),W-P,P+44);g.textAlign='left';
-g.fillStyle='rgba(255,255,255,.05)';rr(P,top,PW,panelH,18);g.fill();g.strokeStyle='rgba(138,92,246,.55)';g.lineWidth=1.5;rr(P,top,PW,panelH,18);g.stroke();
+g.fillStyle='#A09B8C';g.font='26px '+F;g.textAlign='right';g.fillText('主牌組 '+cnt2(Ms)+'  ·  符文 '+cnt2(Rs)+'  ·  戰場 '+cnt2(Bs)+(Ss.length?'  ·  備牌 '+cnt2(Ss):''),W-P,P+44);g.textAlign='left';
+g.fillStyle='rgba(255,255,255,.05)';rr(P,top,PW,panelH,18);g.fill();g.strokeStyle='rgba(200,170,110,.6)';g.lineWidth=1.5;rr(P,top,PW,panelH,18);g.stroke();
 var py=top+20,pcx=P+PW/2;
 if(Ls.length){drawBox(Ls[0],pcx-107,py,214,300);py+=318}
 if(rn){var gw=rn*rtw+(rn-1)*14,rx=pcx-gw/2;Rs.forEach(function(it,i){var x=rx+i*(rtw+14);drawBox(it,x,py,rtw,rth);g.fillStyle='#fff';g.font='bold 24px '+F;g.textAlign='center';g.fillText('×'+it.n,x+rtw/2,py+rth+30);g.textAlign='left'});py+=rth+46}
 Bs.forEach(function(it){drawBox(it,pcx-98,py,196,140);py+=152});
 function grid(a,y0){a.forEach(function(it,i){var x=mx+(i%cols)*(CW+gp),y=y0+Math.floor(i/cols)*(CH+gp);drawBox(it,x,y,CW,CH);if(it.n>1)pill('×'+it.n,x+CW/2,y+CH-26,'bold 20px '+F,12)})}
 grid(Ms,mt);
-if(chIt){var fx=mx-6,fy=mt-6,fw=CW+12,fh=CH+12;g.strokeStyle='#8a5cf6';g.lineWidth=2.5;rr(fx,fy,fw,fh,12);g.stroke();g.font='bold 20px '+F;var tw2=g.measureText('指定英雄').width+28;g.fillStyle='#1b1823';rr(fx+fw/2-tw2/2,fy-16,tw2,32,16);g.fill();g.lineWidth=2;g.strokeStyle='#8a5cf6';rr(fx+fw/2-tw2/2,fy-16,tw2,32,16);g.stroke();g.fillStyle='#d9d4ea';g.textAlign='center';g.fillText('指定英雄',fx+fw/2,fy+7);g.textAlign='left'}
-if(Ss.length){var ly=mainB+22,lx0=mx,lx1=mx+cols*(CW+gp)-gp;tl(lx0,ly,lx1,ly);g.font='bold 22px '+F;var lw=g.measureText('備牌').width+36;g.fillStyle='#17161a';rr((lx0+lx1)/2-lw/2,ly-17,lw,34,17);g.fill();g.strokeStyle='#8a5cf6';g.lineWidth=1.5;rr((lx0+lx1)/2-lw/2,ly-17,lw,34,17);g.stroke();g.fillStyle='#d9d4ea';g.textAlign='center';g.fillText('備牌',(lx0+lx1)/2,ly+8);g.textAlign='left';grid(Ss,mainB+60)}
-var bx=W-P;g.fillStyle='#d9d4ea';g.font='bold 26px '+F;g.textAlign='right';g.fillText('符文戰場牌組工具',ico?bx-70:bx,H-P-4);g.textAlign='left';if(ico)g.drawImage(ico,bx-56,H-P-44,56,56);
+if(chIt){var fx=mx-6,fy=mt-6,fw=CW+12,fh=CH+12;g.strokeStyle='#C8AA6E';g.lineWidth=2.5;rr(fx,fy,fw,fh,12);g.stroke();g.font='bold 20px '+F;var tw2=g.measureText('指定英雄').width+28;g.fillStyle='#0A1428';rr(fx+fw/2-tw2/2,fy-16,tw2,32,16);g.fill();g.lineWidth=2;g.strokeStyle='#C8AA6E';rr(fx+fw/2-tw2/2,fy-16,tw2,32,16);g.stroke();g.fillStyle='#F0E6D2';g.textAlign='center';g.fillText('指定英雄',fx+fw/2,fy+7);g.textAlign='left'}
+if(Ss.length){var ly=mainB+22,lx0=mx,lx1=mx+cols*(CW+gp)-gp;tl(lx0,ly,lx1,ly);g.font='bold 22px '+F;var lw=g.measureText('備牌').width+36;g.fillStyle='#010A13';rr((lx0+lx1)/2-lw/2,ly-17,lw,34,17);g.fill();g.strokeStyle='#C8AA6E';g.lineWidth=1.5;rr((lx0+lx1)/2-lw/2,ly-17,lw,34,17);g.stroke();g.fillStyle='#F0E6D2';g.textAlign='center';g.fillText('備牌',(lx0+lx1)/2,ly+8);g.textAlign='left';grid(Ss,mainB+60)}
+var bx=W-P;g.fillStyle='#F0E6D2';g.font='bold 26px '+F;g.textAlign='right';g.fillText('符文戰場牌組工具',ico?bx-70:bx,H-P-4);g.textAlign='left';if(ico)g.drawImage(ico,bx-56,H-P-44,56,56);
 var noImg=items.some(function(it){return pic(it.c)&&!imgs[it.c.id]});
 try{cv.toBlob(function(b){showImg(b,noImg)},'image/png')}catch(e){alert('圖片產生失敗：'+e.message)}}
 function showImg(b,noImg){var u=URL.createObjectURL(b),o=document.createElement('div');
@@ -466,11 +469,11 @@ async function loadPublic(){if(ADMIN){await loadExtra();fill();render();return}
 try{var r=await fetch('cards.json',{cache:'no-cache'});if(r.ok){var j=await r.json();if(Array.isArray(j)&&j.length){cards=j;sv('rb_cards',cards)}}}catch(e){}
 try{var r2=await fetch('zh.json',{cache:'no-cache'});if(r2.ok){var z=await r2.json();if(z&&typeof z==='object'){zh={};for(var kk in z)zh[kk.toLowerCase()]=z[kk];sv('rb_zh',zh)}}}catch(e){}
 await loadExtra();if(!cards.length)await autoLoad();fill();render();rdeck()}
-function shotView(){var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:#1d1b22;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px 24px;z-index:9;color:#fff';
+function shotView(){var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:#010A13;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px 24px;z-index:9;color:#fff';
 var G=[['L','傳奇'],['M','主牌組'],['R','符文'],['B','戰場'],['S','備牌']],h='<div style="max-width:720px;margin:auto"><p style="color:#bbb;font-size:13px">請直接截圖保存。<button class="btn" id="xk" style="width:auto;padding:4px 12px;margin-left:8px;flex:none">關閉</button></p><h2 style="margin:6px 0">'+esc($('dn').value.trim()||'未命名牌組')+'</h2>';
 G.forEach(function(g){var a=lastItems.filter(function(it){return it.s===g[0]});if(!a.length)return;var n=a.reduce(function(x,it){return x+it.n},0);
-h+='<h3 style="color:#a98bff">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat('+(g[0]==='B'?3:4)+',1fr);gap:6px">'+a.map(function(it){
-return'<div style="position:relative;background:#2e2b38;border-radius:6px;min-height:60px">'+(pic(it.c)?'<img'+(it.s==='B'?' onload="bfFix(this)"':'')+' src="'+esc(pic(it.c))+'" alt="'+esc(N(it.c))+'" style="width:100%;border-radius:6px;display:block;font-size:12px">':'<div style="padding:6px;font-size:12px">'+esc(N(it.c))+'</div>')+'<span style="position:absolute;right:4px;bottom:4px;background:#8a5cf6;border-radius:12px;padding:0 8px;font-weight:bold;font-size:14px">×'+it.n+'</span></div>'}).join('')+'</div>'});
+h+='<h3 style="color:#C8AA6E">'+g[1]+'（'+n+'）</h3><div style="display:grid;grid-template-columns:repeat('+(g[0]==='B'?3:4)+',1fr);gap:6px">'+a.map(function(it){
+return'<div style="position:relative;background:#0F1F3A;border-radius:6px;min-height:60px">'+(pic(it.c)?'<img'+(it.s==='B'?' onload="bfFix(this)"':'')+' src="'+esc(pic(it.c))+'" alt="'+esc(N(it.c))+'" style="width:100%;border-radius:6px;display:block;font-size:12px">':'<div style="padding:6px;font-size:12px">'+esc(N(it.c))+'</div>')+'<span style="position:absolute;right:4px;bottom:4px;background:#C8AA6E;border-radius:12px;padding:0 8px;font-weight:bold;font-size:14px">×'+it.n+'</span></div>'}).join('')+'</div>'});
 o.innerHTML=h+'</div>';document.body.appendChild(o);$('xk').onclick=function(){o.remove()}}
 var SIG0=null,lastChk=0,updShown=false;
 async function sig(){try{var r=await fetch('index.html',{cache:'no-store'});var t=await r.text(),h=0;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return h}catch(e){return null}}
