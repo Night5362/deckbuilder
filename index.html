@@ -22,7 +22,8 @@ h1{font-size:19px;margin:4px 0 12px;color:var(--ac);letter-spacing:.06em}h1::aft
 nav{display:flex;gap:6px;margin-bottom:10px}
 .hd0{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:12px;padding-bottom:10px;position:relative}
 .hd0::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac2) 55%,transparent)}
-.hd0 h1{flex:1;min-width:0;margin:0}.hd0 h1::after{display:none}
+.hd0 h1{flex:1;min-width:0;margin:0}
+.uo{display:inline-block;vertical-align:middle;margin-left:8px;padding:2px 7px;border:1px solid var(--ac);border-radius:4px;color:var(--ac);font-size:11px;font-weight:600;letter-spacing:.08em;line-height:1.4}.hd0 h1::after{display:none}
 .hd0 nav{margin:0;flex:1 1 100%}
 .lg{flex:none;width:46px;height:46px;padding:3px;border:1px solid var(--bd);border-radius:12px;background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)}
 .lg img{width:100%;height:100%;object-fit:contain;border-radius:8px}
@@ -73,6 +74,27 @@ body{max-width:1240px;padding:18px 28px}
 .hm-f{cursor:pointer;margin:0!important;text-align:left}.hm-f b{color:var(--ac);font-size:15px;margin-bottom:4px}.hm-f .m{font-size:13px}.hm-f:hover{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac),var(--sh)}
 .hm-lb{font:11px ui-monospace,Menlo,monospace;letter-spacing:.22em;color:var(--ac);margin:16px 0 8px}
 @media (min-width:900px){.hm-hero{padding:40px 44px}.hm-in{grid-template-columns:1.05fr 1fr}.hm-t{font-size:64px}.hm-fan{height:340px;max-width:520px}.hm-g{grid-template-columns:repeat(4,1fr)}}
+.fx-h{display:grid;gap:10px;margin:26px 0 14px;align-items:end}
+.fx-k{font:11px ui-monospace,Menlo,monospace;letter-spacing:.22em;color:var(--ac2);margin-bottom:10px}
+.fx-t{font-size:28px;line-height:1.25;margin:0;color:var(--tx)}.fx-p{color:var(--mu);margin:0;max-width:30em}
+.fx{border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--sh)}
+.fx-r{display:grid;border-top:1px solid var(--bd)}.fx-r:first-child{border-top:0}
+.fx-x{padding:26px 22px}.fx-x h3{font-size:24px;line-height:1.3;margin:0 0 12px;color:var(--tx)}.fx-x p{color:var(--mu);margin:0 0 16px;font-size:14px}
+.fx-a{color:var(--ac);font-weight:600;cursor:pointer;border-bottom:1px solid var(--ac);padding-bottom:2px}
+.fx-v{display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(90% 90% at 50% 50%,rgba(10,200,185,.10),transparent 70%),var(--bg);border-top:1px solid var(--bd)}
+.fx-bind{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:300px;padding:12px;border:1px solid var(--ac);border-radius:14px;background:var(--card)}
+.fx-bind i,.fx-bind img{aspect-ratio:5/7;border-radius:5px;background:var(--bg);border:1px solid var(--bd);width:100%;object-fit:cover;display:block}
+.fx-mock{width:100%;max-width:300px;padding:14px;border:1px solid var(--ac);border-radius:12px;background:var(--card)}
+.fx-mh{font-weight:700;color:var(--ac);margin-bottom:6px}.fx-ck{font-size:13px;padding:2px 0}.fx-ck.ok{color:var(--ok)}.fx-ck.no{color:var(--no)}
+.fx-bars{display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:12px}.fx-bars i{flex:1;background:var(--pb);border-radius:3px 3px 0 0}
+.fx-exp{display:flex;gap:10px;width:100%;max-width:340px;aspect-ratio:16/9;padding:10px;border:1px solid var(--ac);border-radius:10px;background:linear-gradient(135deg,#0B2542,#010A13)}
+.fx-el{width:26%;display:flex;flex-direction:column;gap:6px;padding-right:8px;border-right:1px solid rgba(200,170,110,.5)}.fx-el b{flex:1.5;border:1px solid #C8AA6E;border-radius:3px;background:rgba(200,170,110,.15)}.fx-el i{flex:.6;border:1px solid rgba(200,170,110,.5);border-radius:3px}
+.fx-eg{flex:1;display:grid;grid-template-columns:repeat(8,1fr);gap:3px;align-content:start}.fx-eg i{aspect-ratio:5/7;border:1px solid rgba(200,170,110,.55);border-radius:2px;background:rgba(10,20,40,.9)}.fx-eg i:first-child{border-color:#C8AA6E;background:rgba(200,170,110,.3)}
+.fx-dev{display:flex;align-items:center;gap:14px}
+.fx-pc{width:150px;height:96px;border:2px solid var(--ac);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px;background:var(--card)}.fx-pc i,.fx-ph i{display:block;height:10px;border-radius:3px;background:var(--bd)}.fx-pc i:first-child,.fx-ph i:first-child{background:var(--gb)}
+.fx-ph{width:56px;height:100px;border:2px solid var(--ac);border-radius:10px;padding:10px 6px;display:flex;flex-direction:column;gap:8px;background:var(--card)}
+.fx-sy{font-size:26px;color:var(--ac2)}
+@media (min-width:900px){.fx-h{grid-template-columns:1fr 1fr;margin-top:40px;gap:30px}.fx-t{font-size:36px}.fx-r{grid-template-columns:1fr 1fr}.fx-x{padding:48px 44px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.fx-x h3{font-size:30px}.fx-x p{font-size:15px}.fx-v{border-top:0;border-left:1px solid var(--bd);padding:40px}.fx-r:nth-child(even) .fx-x{order:2}.fx-r:nth-child(even) .fx-v{order:1;border-left:0;border-right:1px solid var(--bd)}}
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -103,7 +125,7 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 <body>
 <header class="hd0">
 <button id="n0" class="lg on" onclick="tab(0)" aria-label="首頁" title="首頁"><img id="logo" src="icons/icon-192.png" alt=""></button>
-<h1>符文戰場牌組工具</h1>
+<h1>符文戰場牌組工具<span class="uo">非官方</span></h1>
 <nav>
 <button id="n1" onclick="tab(1)">卡片</button>
 <button id="n2" onclick="tab(2)">牌組 (<span id="cnt">0</span>)</button>
@@ -121,13 +143,19 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 <div class="hm-cta"><button class="btn p" onclick="tab(1)">開始查卡</button><button class="btn" onclick="tab(2)">建構牌組</button></div>
 <div class="hm-n" id="hmn"></div>
 </div><div class="hm-fan" id="hmf"></div></div></div>
-<div class="hm-g">
-<div class="c hm-f" onclick="tab(1)"><b>卡牌查詢</b><div class="m">依類型、領域、費用、彈數篩選，並可切換各版本卡圖。</div></div>
-<div class="c hm-f" onclick="tab(2)"><b>牌組構築</b><div class="m">傳奇、符文、戰場、備牌與指定英雄，即時規則檢查。</div></div>
-<div class="c hm-f" onclick="tab(2)"><b>匯出圖片</b><div class="m">一鍵產生橫式牌組圖，直接分享到 LINE。</div></div>
-<div class="c hm-f" onclick="tab(4)"><b>雲端存檔</b><div class="m">登入帳號後，牌組跨裝置同步，手機電腦都能用。</div></div>
-</div>
 <div id="hmd"></div>
+<div class="fx-h"><div><div class="fx-k">BUILT FOR ACTUAL PLAYERS</div><h2 class="fx-t">不只查卡。<br>從找牌到分享，一個地方完成。</h2></div><p class="fx-p">查詢卡片、構築並檢查牌組、匯出分享圖、雲端同步，每個功能都能接到下一步。</p></div>
+<div class="fx">
+<div class="fx-r"><div class="fx-x"><div class="fx-k">01 · CARDS</div><h3>查一張卡，<br>立刻加進牌組。</h3><p>用類型、領域、費用、彈數與關鍵字快速篩選，繁中與英文卡名都能搜尋。點開卡片可看大圖與各版本，並直接加入主牌組或備牌。</p><a class="fx-a" onclick="tab(1)">開始查卡 →</a></div>
+<div class="fx-v"><div class="fx-bind" id="hmb"></div></div></div>
+<div class="fx-r"><div class="fx-x"><div class="fx-k">02 · DECK BUILDER</div><h3>邊組邊檢查，<br>規則不再出錯。</h3><p>選擇傳奇後自動配置符文，主牌組 40 張、備牌 10 張、同名 3 張、戰場與指定英雄都即時檢查。還有費用曲線、類型與領域統計，並可在主牌組與備牌間一鍵切換。</p><a class="fx-a" onclick="tab(2)">建構牌組 →</a></div>
+<div class="fx-v"><div class="fx-mock"><div class="fx-mh">規則檢查</div><div class="fx-ck ok">✓ 傳奇 1/1</div><div class="fx-ck ok">✓ 主牌組 40/40</div><div class="fx-ck ok">✓ 符文 12/12</div><div class="fx-ck ok">✓ 戰場 3/3</div><div class="fx-ck ok">✓ 備牌 8/10</div><div class="fx-ck no">× 指定英雄尚未選擇</div><div class="fx-bars"><i style="height:22%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:100%"></i><i style="height:70%"></i><i style="height:42%"></i><i style="height:20%"></i></div></div></div></div>
+<div class="fx-r"><div class="fx-x"><div class="fx-k">03 · SHARE</div><h3>一鍵匯出，<br>直接丟到 LINE。</h3><p>把牌組輸出成橫式分享圖：傳奇、符文、戰場在左，主牌組與備牌依類型、費用排序，指定英雄會特別標示，也可匯出成文字清單。</p><a class="fx-a" onclick="tab(2)">做一份牌組圖 →</a></div>
+<div class="fx-v"><div class="fx-exp"><div class="fx-el"><b></b><i></i><i></i><i></i></div><div class="fx-eg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
+<div class="fx-r"><div class="fx-x"><div class="fx-k">04 · SYNC</div><h3>登入後，<br>手機電腦都是同一份。</h3><p>註冊帳號即可把牌組存到雲端，換裝置、換瀏覽器也能繼續編輯。支援深色、淺色與跟隨系統，手機與電腦版面各自最佳化。</p><a class="fx-a" onclick="tab(4)">前往設定 →</a></div>
+<div class="fx-v"><div class="fx-dev"><div class="fx-pc"><i></i><i></i><i></i></div><div class="fx-sy">⇄</div><div class="fx-ph"><i></i><i></i></div></div></div></div>
+</div>
+
 </section>
 <section id="s1" class="hide">
 <input id="q" placeholder="搜尋卡名或效果…" oninput="rr()">
@@ -255,9 +283,12 @@ function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
 function setTheme(v){try{localStorage.setItem('rb_theme',v)}catch(e){}if(v==='light'||v==='dark')document.documentElement.setAttribute('data-theme',v);else document.documentElement.removeAttribute('data-theme')}
 function initTheme(){var v='auto';try{v=localStorage.getItem('rb_theme')||'auto'}catch(e){}if($('th'))$('th').value=v}
 function setL(v){L=v;sv('rb_lang',L);fill();render();rdeck()}
-function rhome(){var E=$('hmf');if(!E)return;var ok=cards.filter(function(c){return sec(c)!=='R'&&pic(c)});
-var pk=[],u={};while(pk.length<5&&ok.length>pk.length&&pk.length<ok.length){var c=ok[Math.floor(Math.random()*ok.length)];if(!u[c.id]){u[c.id]=1;pk.push(c)}if(Object.keys(u).length>=ok.length)break}
-if(!E.dataset.f||!pk.length||E.dataset.n!==String(cards.length)){E.dataset.f=1;E.dataset.n=String(cards.length);E.innerHTML=pk.map(function(c){return'<img src="'+esc(pic(c))+'" alt="" loading="lazy">'}).join('')}
+var homeSrc=0;
+function rhome(fresh){var E=$('hmf');if(!E)return;
+if(cards.length&&(fresh||!E.children.length)){var ok=cards.filter(function(c){return sec(c)!=='R'&&pic(c)}),pk=[];
+while(pk.length<5&&ok.length){pk.push(ok.splice(Math.floor(Math.random()*ok.length),1)[0])}
+E.innerHTML=pk.map(function(c){return'<img src="'+esc(pic(c))+'" alt="" loading="lazy">'}).join('')}
+var Bd=$('hmb');if(Bd&&cards.length&&(fresh||!Bd.children.length)){var ok2=cards.filter(function(c){return sec(c)!=='R'&&pic(c)}),sl=[];for(var q=0;q<9;q++){if([2,4,6].indexOf(q)>-1||!ok2.length){sl.push('<i></i>')}else{var c2=ok2.splice(Math.floor(Math.random()*ok2.length),1)[0];sl.push('<img src="'+esc(pic(c2))+'" alt="" loading="lazy">')}}Bd.innerHTML=sl.join('')}
 $('hmn').textContent=cards.length?cards.length+' CARDS · 繁中 × ENGLISH · DECK TOOLS':'';
 var mn=0;try{mn=mainN()}catch(e){}var sn=0;try{sn=Object.keys(side).reduce(function(a,k){return a+side[k]},0)}catch(e){}
 var h='';if(mn||sn||(typeof champ!=='undefined'&&champ)){h='<div class="hm-lb">CONTINUE</div><div class="c hm-f" onclick="tab(2)"><b>繼續編輯目前牌組</b><div class="m">主牌組 '+mn+' / 40・備牌 '+sn+' / 10</div></div>'}
@@ -533,7 +564,7 @@ for(var k in zh){if(!(k in o)&&!ids[k])o[k]=zh[k]}
 if(!cards.length){alert('尚未載入卡片資料，請先匯入卡片。');return}
 dl('zh-template.json',o,true)}
 async function loadExtra(){try{var r=await fetch('cards-extra.json',{cache:'no-cache'});if(!r.ok)return;var j=await r.json();if(!Array.isArray(j))return;var map={};cards.forEach(function(c){map[c.id]=c});j.forEach(function(x){var n=norm(x);if(n.name)map[n.id]=n});cards=Object.keys(map).map(function(k){return map[k]});sv('rb_cards',cards)}catch(e){}}
-async function loadPublic(){if(ADMIN){await loadExtra();fill();render();return}
+async function loadPublic(){if(ADMIN){await loadExtra();fill();render();rhome();return}
 try{var r=await fetch('cards.json',{cache:'no-cache'});if(r.ok){var j=await r.json();if(Array.isArray(j)&&j.length){cards=j;sv('rb_cards',cards)}}}catch(e){}
 try{var r2=await fetch('zh.json',{cache:'no-cache'});if(r2.ok){var z=await r2.json();if(z&&typeof z==='object'){zh={};for(var kk in z)zh[kk.toLowerCase()]=z[kk];sv('rb_zh',zh)}}}catch(e){}
 await loadExtra();if(!cards.length)await autoLoad();fill();render();rdeck();rhome()}
