@@ -586,8 +586,8 @@ function addLegend(c){Object.keys(deck).forEach(function(k){if(sec(nm(k))==='L')
 var rs=runeIds(),tot=0,ds=legDoms(c).map(function(x){return String(x).toLowerCase()});rs.forEach(function(k){tot+=deck[k]});
 var ok=rs.length&&tot===12&&rs.every(function(k){return nm(k).dom.some(function(x){return ds.indexOf(String(x).toLowerCase())>-1})});
 if(!ok)setRunes(c)}
-function add(id){id=decodeURIComponent(id);var c=nm(id);if(!canAdd(c,'m'))return;if(sec(c)==='L')addLegend(c);else deck[id]=(deck[id]||0)+1;sv('rb_deck',deck);cnt();updBadges();updBtns()}
-function addS(id){id=decodeURIComponent(id);if(!canAdd(nm(id),'s'))return;if(sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+1;sv('rb_side',side);cnt();updBadges();updBtns()}
+function add(id){id=decodeURIComponent(id);var c=nm(id);if(!canAdd(c,'m'))return;if(sec(c)==='L')addLegend(c);else deck[id]=(deck[id]||0)+1;sv('rb_deck',deck);cnt();updBadges();updBtns();if(!$('s2').classList.contains('hide'))rdeck()}
+function addS(id){id=decodeURIComponent(id);if(!canAdd(nm(id),'s'))return;if(sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+1;sv('rb_side',side);cnt();updBadges();updBtns();if(!$('s2').classList.contains('hide'))rdeck()}
 function mainN(){var k,n=0;for(k in deck)if(sec(nm(k))==='M')n+=deck[k];return n}
 function chg(id,d){id=decodeURIComponent(id);var c=nm(id),sc=sec(c);if(sc==='L'&&d>0)return;if(sc==='M'&&d>0&&mainN()>=40)return;
 if(sc==='R'){var ks=runeIds(),tot=0,nms={};ks.forEach(function(k){tot+=deck[k];nms[nm(k).name.toLowerCase()]=1});
@@ -599,7 +599,9 @@ deck[id]=(deck[id]||0)+d;if(deck[id]<=0)delete deck[id];sv('rb_deck',deck);rdeck
 function chgS(id,d){id=decodeURIComponent(id);if(d>0&&sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}side[id]=(side[id]||0)+d;if(side[id]<=0)delete side[id];sv('rb_side',side);rdeck()}
 function cnt(){$('cnt').textContent=total();hlDom()}
 function hlDom(){var f=$('fd');if(!f)return;var l=legOf(),d=l&&l.dom?l.dom:[],b=f.querySelectorAll('button');for(var i=0;i<b.length;i++)b[i].classList.toggle('gold',d.indexOf(b[i].dataset.v)>-1)}
-function nm(id){var i,a=String(id).replace(/-\d+$/,'');for(i=0;i<cards.length;i++)if(cards[i].id===id)return cards[i];if(a!==id)for(i=0;i<cards.length;i++)if(cards[i].id===a)return cards[i];return{id:id,name:id,type:'',dom:[]}}
+var _nmI=null,_nmR=null,_nmL=-1;
+function nm(id){if(_nmR!==cards||_nmL!==cards.length){_nmI={};for(var i=0;i<cards.length;i++){var k=cards[i].id;if(!(k in _nmI))_nmI[k]=cards[i]}_nmR=cards;_nmL=cards.length}
+var s=String(id),h=_nmI[s];if(h)return h;var a=s.replace(/-\d+$/,'');if(a!==s&&_nmI[a])return _nmI[a];return{id:id,name:id,type:'',dom:[]}}
 function sec(c){var t=String(c.type).toLowerCase();return t.indexOf('legend')>-1?'L':t.indexOf('battlefield')>-1?'B':t.indexOf('rune')>-1?'R':'M'}
 function legOf(){for(var k in deck){var c=nm(k);if(sec(c)==='L')return c}return null}
 function cands(leg){var seen={},all=cards.filter(function(c){return vis(c)&&sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&c.dom.every(function(d){return d==='Colorless'||leg.dom.indexOf(d)>-1})}).filter(function(c){if(seen[c.name])return false;seen[c.name]=1;return true});
