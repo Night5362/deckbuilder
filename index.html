@@ -169,6 +169,7 @@ body:not(.ed) .ctl,body:not(.ed) button.ab,body:not(.ed) .bd,body:not(.ed) .mg .
 .rdk.ad,.rdk.ul{font:inherit;font-size:13px;color:var(--ac);cursor:pointer;border-style:dashed}.rdk.ul{color:var(--mu);border-style:solid}.rdk.ad:hover,.rdk.ul:hover{border-color:var(--ac)}.rdk.lk em{color:var(--ok)}.rdk.lk b{max-width:12em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lkm{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}.lkb{width:100%;max-width:420px;max-height:80vh;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--ac);border-radius:14px;box-shadow:var(--sh)}.lkh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bd)}.lkh .rx{position:static}.lkl{overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px}.lki{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);cursor:pointer;font:inherit}.lki b{display:block}.lki:hover{border-color:var(--ac);box-shadow:0 0 0 2px var(--glow)}
 .lkb{max-width:460px}.lkl .c{margin:0}
+.dks{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;margin:0 0 12px;padding:6px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);font-size:13px}.dki{display:inline-flex;align-items:baseline;gap:5px}.dki b{color:var(--ac);font-size:15px}.dki .m{font-size:12px}
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -411,6 +412,11 @@ function lkClose(){var m=$('lkm');if(m)m.remove()}
 function lkPick(ri){lkClose();var m=document.createElement('div');m.id='lkm';m.className='lkm';m.onclick=function(e){if(e.target===m)lkClose()};
 var l=saved.length?saved.map(function(d,i){return dkCard(d,i,'lkSet('+ri+','+i+')')}).join(''):'<p class="m">還沒有已儲存的牌組。先到「＋新建牌組」建立並儲存。</p>';
 m.innerHTML='<div class="lkb"><div class="lkh"><b>選擇要連結的牌組</b><button class="rx" onclick="lkClose()" aria-label="關閉">✕</button></div><div class="lkl">'+l+'</div></div>';document.body.appendChild(m)}
+function dkStats(i){var ev=REC.filter(function(x){return lkIdx(x)===i});if(!ev.length)return'';var W=0,L=0,ue=0,uh=0,best=0,ty={},tk=[];
+ev.forEach(function(x){W+=x.w;L+=x.l;var n=+x.pn,r=+x.rk;if(r>0&&(!best||r<best))best=r;if(n&&r&&n>=5){ue++;if(n>=16?r<=8:r<=4)uh++}var t=x.et||'未分類';if(!ty[t]){ty[t]=0;tk.push(t)}ty[t]++});
+var tt=W+L,wr=tt?Math.round(W/tt*100)+'%':'—',up=ue?Math.round(uh/ue*100)+'%':'—';
+function s(l,v,m){return'<span class="dki"><span class="m">'+l+'</span><b>'+v+'</b>'+(m?'<span class="m">'+m+'</span>':'')+'</span>'}
+return'<div class="dks">'+s('賽事',ev.length+' 場',tk.map(function(t){return esc(t)+' '+ty[t]}).join('・'))+s('勝率',wr,tt?W+'勝'+L+'敗':'')+s('上位率',up,ue?uh+'/'+ue:'')+s('最高名次',best?'第 '+best+' 名':'—')+'</div>'}
 function nrm(t){return String(t||'').toLowerCase().replace(/[\s·・,，.\-_]/g,'')}
 function rdkMatch(me,mn){var m=nrm(me),c=[];if(!m)return-1;saved.forEach(function(d,i){var u=unpack(d.deck),k=Object.keys(u.main).filter(function(x){var y=nm(x);return y&&sec(y)==='L'})[0],y=k&&nm(k);if(!y)return;var ns=[y.name,N(y)].map(nrm).filter(Boolean);if(ns.some(function(n){return n===m||n.indexOf(m)>-1||m.indexOf(n)>-1}))c.push(i)});
 if(!c.length)return-1;var mm=nrm(mn),p=c.filter(function(i){return mm&&nrm(saved[i].name).indexOf(mm)>-1});return p.length?p[0]:c[0]}
@@ -452,7 +458,7 @@ var side='<div class="vs"><div class="vtiles"><div><b>'+tot+'</b><span>主牌組
 +(hp?'<div class="c"><b>符能費用曲線</b>'+bars(pw,pm,function(i){return i===4?'4+':i})+'</div>':'')
 +'<div class="c"><b>領域</b><div class="vbar">'+doms.map(function(g){return'<i style="flex:'+dm[g]+';background:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'"></i>'}).join('')+'</div><div class="chips">'+doms.map(function(g){return'<span class="chip" style="border-color:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'">'+esc(lab(DOMN,g))+' '+dm[g]+'</span>'}).join('')+'</div></div>'
 +'<div class="c"><b>卡牌類型</b><div class="vbar">'+ty.map(function(v,i){return v?'<i style="flex:'+v+';background:'+TCOL[i]+'"></i>':''}).join('')+'</div><div class="chips">'+['單位','法術','裝備'].map(function(t,i){return ty[i]?'<span class="chip" style="border-color:'+TCOL[i]+'">'+t+' '+ty[i]+'</span>':''}).join('')+'</div></div></div>';
-E.innerHTML=L1+'<div class="vwrap">'+main+side+'</div>'}
+E.innerHTML=L1+(typeof dkStats==='function'?dkStats(vi):'')+'<div class="vwrap">'+main+side+'</div>'}
 function tab(n){var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
 $('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2)rdeck();if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview();if(n===7)rrec()}
 function setEdv(v){edv=v;var w=$('edw');w.classList.toggle('vc',v==='c');w.classList.toggle('vd',v==='d');$('edc').classList.toggle('on',v==='c');$('edd').classList.toggle('on',v==='d')}
