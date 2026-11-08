@@ -147,6 +147,21 @@ body:not(.ed) .ctl,body:not(.ed) button.ab,body:not(.ed) .bd,body:not(.ed) .mg .
 .sbu{display:flex;align-items:center;gap:10px;padding:8px 6px;border-top:1px solid var(--bd);cursor:pointer;margin-top:4px}.sbu i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--gb);color:var(--gt);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700}.sbu b{display:block;font-size:14px;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}.sbu span{font-size:12px;color:var(--mu);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}
 .hd0{display:flex;align-items:center;gap:10px}.hd0 h1{flex:1;min-width:0;font-size:16px}
 @media (min-width:900px){#sb{transform:none;box-shadow:none}#sbk{display:none!important}.hd0{display:none}body{padding-left:calc(236px + clamp(24px,3vw,64px))!important}#edw.two{height:calc(100vh - 40px)!important}}
+.rhd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.vtiles.rt{grid-template-columns:repeat(5,1fr)}.rt div em{display:block;font-style:normal;font-size:12px;color:var(--mu);margin-top:2px}
+.rbar{height:6px;background:var(--bg);border-radius:9px;overflow:hidden}.rbar i{display:block;height:100%;background:linear-gradient(90deg,#0596AA,#0ACF83)}
+.rv2{display:grid;grid-template-columns:64px minmax(0,1fr) auto 28px;align-items:center;gap:14px}.rdt{text-align:center;border-right:1px solid var(--bd);padding-right:12px}.rdt b{display:block;font-size:20px;color:var(--tx)}
+.rrk{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.rk1{display:inline-flex;align-items:center;justify-content:center;gap:0;width:140px;font-size:14px;color:var(--ac);white-space:nowrap}.rk1 b{display:inline;font-size:24px}
+.rrk .chp{white-space:nowrap}#radd .row>button{flex:none;width:auto;padding:8px 26px}#radd .row>span{flex:1}.rx{border:0;background:transparent;color:var(--mu);cursor:pointer;font-size:16px;align-self:flex-start}.rx:hover{color:var(--no)}
+.rfm{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:8px 0}.rfm input{margin:0}
+@media (max-width:700px){.vtiles.rt{grid-template-columns:repeat(2,1fr)}.rv2{grid-template-columns:52px minmax(0,1fr) 26px}.rrk{grid-column:2/3;grid-row:2;flex-direction:row;align-items:center;justify-content:flex-start}.rfm{grid-template-columns:1fr 1fr}}
+.rlk{flex:none;width:auto;padding:8px 18px;text-decoration:none;display:inline-flex;align-items:center;white-space:nowrap}
+.rdks{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:8px}.rdk{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);border-radius:8px;padding:3px 10px;background:var(--bg);font-size:13px}.rdk b{display:inline;color:var(--ac)}.rdk em{font-style:normal;color:var(--mu)}.rdk i{font-style:normal;color:var(--mu);font-size:12px}.rdk.lk{cursor:pointer;border-color:var(--ac)}.rdk.lk u{text-decoration:none;color:var(--ac);font-size:12px}.rdk.lk:hover{box-shadow:0 0 0 2px var(--glow)}
+.rk1.rkc0{color:var(--mu)}.rk1.rkc1{color:#D4AF37}.rk1.rkc2{color:#C0C7D1}.rk1.rkc3{color:#CD7F32}
+[data-theme=light] .rk1.rkc1{color:#9A7B1E}
+.lau{flex:none;opacity:.95}.lau.r{transform:scaleX(-1)}
+.rrk>.m{display:inline-block;width:140px;text-align:center}.lau{margin:0 -1px}
+@media (min-width:701px){.rrk{align-items:center}}
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -184,6 +199,7 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 <button id="n0" class="on" onclick="tab(0)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>首頁</span></button>
 <button id="n1" onclick="tab(1)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="12" height="17" rx="2"/><path d="M8 7h6M8 11h6"/></svg><span>卡片</span></button>
 <button id="n5" onclick="tab(5)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="13" height="17" rx="2"/><path d="M3 7v12a2 2 0 0 0 2 2"/></svg><span>我的牌組</span></button>
+<button id="n7" onclick="tab(7)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M12 13v4M8 20h8"/></svg><span>戰績紀錄</span></button>
 <button id="n3" class="hide" onclick="tab(3)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg><span>資料</span></button>
 </div>
 <div class="sbf">
@@ -252,6 +268,11 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 <div id="cur"></div>
 <h3 style="margin-top:6px">我的牌組</h3>
 <div id="saved"></div>
+</section>
+<section id="s7" class="hide">
+<div class="rhd"><div><h2 class="vtt" style="margin:0 0 4px">戰績紀錄</h2><div class="m">每場賽事的最終成績：名次與勝敗。要新增紀錄請到戰績記錄 App，再從這裡匯入。</div></div><div class="vbt"><a class="btn p rlk" href="https://night5362.github.io/tcg-manager/" target="_blank" rel="noopener">開啟戰績記錄 App ↗</a><button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="$('rimp').classList.toggle('hide')">匯入</button><button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="expRec()">匯出</button></div></div>
+<div id="rimp" class="c hide"><b>匯入戰績記錄 App 的匯出內容</b><div class="m" style="margin:4px 0 8px">貼上匯出內容後，會依賽事合併成一筆最終成績（名次、人數、勝敗），逐輪細節不保留；已存在的賽事會略過。</div><textarea id="rtx" rows="5" placeholder='{"recs":[...],"ev":{...}}'></textarea><div class="row"><button class="btn p" onclick="impRec()">匯入</button><input id="rfile" type="file" accept=".json,application/json" onchange="impFile(this)" style="margin:0"></div><div id="rmsg" class="m" style="margin-top:8px"></div></div>
+<div id="rbody"></div>
 </section>
 <section id="s6" class="hide"><div id="vw"></div></section>
 
@@ -366,6 +387,30 @@ function sbStat(){var e=$('sbst');if(e)e.textContent='牌組 '+(saved?saved.leng
 function sbUser(){var n=user?uname(user):'',e=user&&user.email||'';$('sbav').textContent=(n||'?').slice(0,1).toUpperCase();$('sbnm').textContent=user?n:'尚未登入';$('sbem').textContent=user?e:'點此登入或註冊'}
 var edv='c',curTab=0;
 
+var REC=ld('rb_rec2',[]);
+function saveRec(){try{localStorage.setItem('rb_rec2',JSON.stringify(REC))}catch(e){}}
+function impRec(){var m=$('rmsg'),j;try{j=JSON.parse($('rtx').value)}catch(e){m.textContent='格式錯誤，無法讀取這段內容。';return}
+if(!j||!Array.isArray(j.recs)){m.textContent='找不到 recs，請確認是戰績記錄 App 匯出的內容。';return}
+var g={},ord=[];j.recs.forEach(function(r){if(!r||!r.date||!(r.game==='符文戰場'||!r.game))return;var k=r.ek||(r.date+'|'+(r.event||''));if(!g[k]){g[k]={id:k,date:r.date,event:r.event||'未命名賽事',et:r.et||'',w:0,l:0,decks:[]};ord.push(k)}if(r.res==='W')g[k].w++;else if(r.res==='L')g[k].l++;var dk=(r.mn||'')+'|'+(r.me||''),o=g[k].decks.filter(function(d){return d.k===dk})[0];if(!o){o={k:dk,mn:r.mn||'',me:r.me||'',w:0,l:0};g[k].decks.push(o)}if(r.res==='W')o.w++;else if(r.res==='L')o.l++});
+var ev=j.ev||{},have={};REC.forEach(function(x){have[x.id]=1});var add=0,skip=0;
+ord.forEach(function(k){if(have[k]){skip++;return}var e=ev[k]||{};g[k].pn=e.pn||'';g[k].rk=e.rk||'';REC.push(g[k]);add++});
+saveRec();m.textContent='已匯入 '+add+' 場賽事，略過 '+skip+' 場（已存在）。逐輪對戰細節不會保留，只統計最終成績。';$('rtx').value='';rrec()}
+function impFile(i){var f=i.files&&i.files[0];if(!f)return;var r=new FileReader();r.onload=function(){$('rtx').value=r.result;impRec()};r.readAsText(f)}
+var LAU='<svg class="lau" viewBox="0 0 20 34" width="18" height="30" aria-hidden="true"><path d="M15 32C7 27 3 18 5 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><g fill="currentColor"><ellipse cx="4.2" cy="8" rx="2" ry="4" transform="rotate(-20 4.2 8)"/><ellipse cx="9" cy="10" rx="2" ry="4" transform="rotate(35 9 10)"/><ellipse cx="3.6" cy="15" rx="2" ry="4" transform="rotate(-35 3.6 15)"/><ellipse cx="9" cy="17.5" rx="2" ry="4" transform="rotate(45 9 17.5)"/><ellipse cx="5.2" cy="22.5" rx="2" ry="4" transform="rotate(-50 5.2 22.5)"/><ellipse cx="11" cy="24.5" rx="2" ry="3.8" transform="rotate(55 11 24.5)"/><ellipse cx="9.5" cy="29.5" rx="1.8" ry="3.2" transform="rotate(-70 9.5 29.5)"/></g></svg>';
+function nrm(t){return String(t||'').toLowerCase().replace(/[\s·・,，.\-_]/g,'')}
+function rdkMatch(me,mn){var m=nrm(me),c=[];if(!m)return-1;saved.forEach(function(d,i){var u=unpack(d.deck),k=Object.keys(u.main).filter(function(x){var y=nm(x);return y&&sec(y)==='L'})[0],y=k&&nm(k);if(!y)return;var ns=[y.name,N(y)].map(nrm).filter(Boolean);if(ns.some(function(n){return n===m||n.indexOf(m)>-1||m.indexOf(n)>-1}))c.push(i)});
+if(!c.length)return-1;var mm=nrm(mn),p=c.filter(function(i){return mm&&nrm(saved[i].name).indexOf(mm)>-1});return p.length?p[0]:c[0]}
+function delRec(i){if(confirm('刪除這筆賽事成績？')){REC.splice(i,1);saveRec();rrec()}}
+function expRec(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(REC)],{type:'application/json'}));a.download='riftbound-results.json';a.click()}
+function rrec(){var E=$('rbody');if(!REC.length){E.innerHTML='<div class="c m">還沒有賽事成績，按右上「開啟戰績記錄 App」記錄，再用「匯入」帶進來。</div>';return}
+var W=0,L=0,rk=[],pc=[];REC.forEach(function(x){W+=x.w;L+=x.l;var r=+x.rk,p=+x.pn;if(r>0){rk.push(r);if(p>0)pc.push(r/p)}});
+var best=rk.length?Math.min.apply(null,rk):0,avg=rk.length?(rk.reduce(function(a,b){return a+b},0)/rk.length).toFixed(1):'—',pct=W+L?Math.round(W/(W+L)*100):0;
+function tile(b,s,x){return'<div><b>'+b+'</b><span>'+s+'</span>'+(x?'<em>'+x+'</em>':'')+'</div>'}
+var ue=0,uh=0;REC.forEach(function(x){var n=+x.pn,r=+x.rk;if(!n||!r||n<5)return;ue++;if(n>=16?r<=8:r<=4)uh++});var up=ue?Math.round(uh/ue*100)+'%':'—';
+var h='<div class="vtiles rt">'+tile(REC.length,'賽事場數')+tile(pct+'%','總勝率',W+' 勝 '+L+' 敗')+tile(best?'第 '+best+' 名':'—','最佳名次')+tile(up,'上位率',ue?uh+' / '+ue+' 場上位':'無符合場次')+tile(avg,'平均名次',pc.length?'平均前 '+Math.round(pc.reduce(function(a,b){return a+b},0)/pc.length*100)+'%':'')+'</div><h3 style="margin-top:18px">賽事成績</h3>';
+h+=REC.map(function(x,i){return{x:x,i:i}}).sort(function(a,b){return a.x.date<b.x.date?1:a.x.date>b.x.date?-1:0}).map(function(o){var x=o.x,t=x.w+x.l,p=t?Math.round(x.w/t*100):0;
+return'<div class="c rev rv2"><div class="rdt"><b>'+esc(x.date.slice(5).replace('-','/'))+'</b><span class="m">'+esc(x.date.slice(0,4))+'</span></div><div class="rmid"><b style="color:var(--ac);font-size:16px">'+esc(x.event)+'</b><div class="m">'+(x.et?esc(x.et)+' · ':'')+(x.pn?esc(x.pn)+' 人參賽':'')+'</div>'+(x.decks&&x.decks.length?'<div class="rdks"><span class="m">使用牌組</span>'+x.decks.map(function(d){var si=rdkMatch(d.me,d.mn),t='<b>'+esc(d.me||'未填傳奇')+'</b>'+(d.mn?'<em>'+esc(d.mn)+'</em>':'')+(x.decks.length>1?'<i>'+d.w+'勝'+d.l+'敗</i>':'');return si>=0?'<a class="rdk lk" onclick="viewDeck('+si+')" title="查看已儲存的牌組">'+t+'<u>查看牌組 →</u></a>':'<span class="rdk">'+t+'</span>'}).join('')+'</div>':'')+'<div class="rbar" style="margin-top:8px;max-width:260px"><i style="width:'+p+'%"></i></div></div><div class="rrk">'+(x.rk?'<span class="rk1 rkc'+(+x.rk>=1&&+x.rk<=3?+x.rk:0)+'">'+(+x.rk>=1&&+x.rk<=3?LAU:'')+'<span>第 <b>'+esc(x.rk)+'</b> 名</span>'+(+x.rk>=1&&+x.rk<=3?LAU.replace('lau"','lau r"'):'')+'</span>':'<span class="m">未填名次</span>')+'<span class="chp">'+x.w+' 勝 '+x.l+' 敗</span></div><button class="rx" onclick="delRec('+o.i+')" aria-label="刪除">✕</button></div>'}).join('');
+E.innerHTML=h}
 var vi=-1;
 function viewDeck(i){vi=i;tab(6)}
 function delView(){var n=saved.length;delDeck(vi);if(saved.length<n)tab(5)}
@@ -394,8 +439,8 @@ var side='<div class="vs"><div class="vtiles"><div><b>'+tot+'</b><span>主牌組
 +'<div class="c"><b>領域</b><div class="vbar">'+doms.map(function(g){return'<i style="flex:'+dm[g]+';background:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'"></i>'}).join('')+'</div><div class="chips">'+doms.map(function(g){return'<span class="chip" style="border-color:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'">'+esc(lab(DOMN,g))+' '+dm[g]+'</span>'}).join('')+'</div></div>'
 +'<div class="c"><b>卡牌類型</b><div class="vbar">'+ty.map(function(v,i){return v?'<i style="flex:'+v+';background:'+TCOL[i]+'"></i>':''}).join('')+'</div><div class="chips">'+['單位','法術','裝備'].map(function(t,i){return ty[i]?'<span class="chip" style="border-color:'+TCOL[i]+'">'+t+' '+ty[i]+'</span>':''}).join('')+'</div></div></div>';
 E.innerHTML=L1+'<div class="vwrap">'+main+side+'</div>'}
-function tab(n){var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6]}[n]||[0];for(var i=0;i<=6;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
-$('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2)rdeck();if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview()}
+function tab(n){var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
+$('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2)rdeck();if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview();if(n===7)rrec()}
 function setEdv(v){edv=v;var w=$('edw');w.classList.toggle('vc',v==='c');w.classList.toggle('vd',v==='d');$('edc').classList.toggle('on',v==='c');$('edd').classList.toggle('on',v==='d')}
 function dTab(k){$('dp1').classList.toggle('hide',k!==1);$('dp2').classList.toggle('hide',k!==2);$('dt1').classList.toggle('on',k===1);$('dt2').classList.toggle('on',k===2)}
 function newDeck(){if(anyCards()&&!confirm('目前編輯中的牌組會被清空（已儲存的牌組不受影響），要新建牌組嗎？'))return;deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();edv='c';tab(2)}
