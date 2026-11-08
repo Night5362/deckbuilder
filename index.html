@@ -48,12 +48,10 @@ input,textarea,select{width:100%;padding:9px;border:1px solid var(--bd);border-r
 .mv{width:auto!important;padding:0 8px;font-size:12px!important;height:32px;white-space:nowrap}
 .q button{width:32px;height:32px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;font-size:17px;cursor:pointer}
 @media (min-width:900px){
-body{max-width:1240px;padding:18px 28px}
+body{max-width:none;padding:18px clamp(24px,3vw,64px)}
 #list>p,#list>.pg,#list>div:not(.c):not(.cd){grid-column:1/-1}
 #list{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:12px;align-items:start}#list>.c,#list>.cd{margin-bottom:0}
 #s1>input,#s1>.row{max-width:560px}
-#s2:not(.hide){display:grid;grid-template-columns:minmax(340px,400px) minmax(0,1fr);gap:0 24px;align-items:start}
-#s2 .dl{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding:2px 4px 2px 2px}
 #saved{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:10px}#saved>.c{margin-bottom:0}
 #s3{max-width:720px}
 }
@@ -73,7 +71,7 @@ body{max-width:1240px;padding:18px 28px}
 .hm-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .hm-f{cursor:pointer;margin:0!important;text-align:left}.hm-f b{color:var(--ac);font-size:15px;margin-bottom:4px}.hm-f .m{font-size:13px}.hm-f:hover{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac),var(--sh)}
 .hm-lb{font:11px ui-monospace,Menlo,monospace;letter-spacing:.22em;color:var(--ac);margin:16px 0 8px}
-@media (min-width:900px){.hm-hero{padding:40px 44px}.hm-in{grid-template-columns:1.05fr 1fr}.hm-t{font-size:64px}.hm-fan{height:340px;max-width:520px}.hm-g{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:900px){.hm-hero{padding:40px 44px}.hm-in{grid-template-columns:1.05fr 1fr}.hm-t{font-size:64px}.hm-fan{height:340px;max-width:520px}@media (min-width:1500px){.hm-fan{height:420px;max-width:640px}.hm-t{font-size:78px}}.hm-g{grid-template-columns:repeat(4,1fr)}}
 .fx-h{display:grid;gap:10px;margin:26px 0 14px;align-items:end}
 .fx-k{font:11px ui-monospace,Menlo,monospace;letter-spacing:.22em;color:var(--ac2);margin-bottom:10px}
 .fx-t{font-size:28px;line-height:1.25;margin:0;color:var(--tx)}.fx-p{color:var(--mu);margin:0;max-width:30em}
@@ -95,6 +93,60 @@ body{max-width:1240px;padding:18px 28px}
 .fx-ph{width:56px;height:100px;border:2px solid var(--ac);border-radius:10px;padding:10px 6px;display:flex;flex-direction:column;gap:8px;background:var(--card)}
 .fx-sy{font-size:26px;color:var(--ac2)}
 @media (min-width:900px){.fx-h{grid-template-columns:1fr 1fr;margin-top:40px;gap:30px}.fx-t{font-size:36px}.fx-r{grid-template-columns:1fr 1fr}.fx-x{padding:48px 44px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.fx-x h3{font-size:30px}.fx-x p{font-size:15px}.fx-v{border-top:0;border-left:1px solid var(--bd);padding:40px}.fx-r:nth-child(even) .fx-x{order:2}.fx-r:nth-child(even) .fx-v{order:1;border-left:0;border-right:1px solid var(--bd)}}
+
+nav button.nw{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:700;flex:1.25}
+nav button.nw.on{box-shadow:0 0 0 2px var(--glow),0 0 16px var(--glow)}
+.cat{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px}.cat button{flex:none;padding:7px 14px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;font:inherit;cursor:pointer}.cat button.on{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}
+#edw:not(.two) .cat,#edw:not(.two) .edt{display:none}
+.edt{display:flex;gap:6px;margin-bottom:8px}.edt button{flex:1;padding:9px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;font:inherit;cursor:pointer}.edt button.on{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}
+.dpt{display:flex;border-bottom:1px solid var(--bd);margin-bottom:10px;position:sticky;top:0;background:var(--bg);z-index:3}.dpt button{flex:1;padding:10px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--mu);font:inherit;cursor:pointer}.dpt button.on{color:var(--ac);border-bottom-color:var(--ac);font-weight:700}
+.dsum{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--mu);margin-bottom:12px}.dsum b{color:var(--tx)}.dsum .full b{color:var(--ok)}
+.slots{display:flex;gap:12px;margin-bottom:14px}.slot{flex:1;min-width:0;max-width:170px}.slot .sl{font-size:13px;color:var(--mu);margin-bottom:6px}.slot .sl b{color:var(--tx)}
+.slot .im{position:relative;aspect-ratio:5/7;border:1px dashed var(--bd);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--mu);background:var(--card);cursor:pointer;overflow:hidden}.slot .im.has{border:1px solid var(--ac);border-style:solid;cursor:default}.slot .im img{width:100%;height:100%;object-fit:cover}
+.slot .x{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;cursor:pointer;line-height:24px;padding:0}
+.dsec{display:flex;align-items:baseline;justify-content:space-between;margin:18px 0 8px}.dsec b{color:var(--tx);font-size:15px}.dsec b span{color:var(--mu);font-weight:400;margin-left:6px}.dsec.m1 b{color:var(--ac)}
+.dph{border:1px dashed var(--bd);border-radius:10px;padding:18px;text-align:center;color:var(--mu);font-size:13px;background:var(--card)}
+.dbar{position:sticky;bottom:0;display:flex;gap:8px;padding:10px 0;margin-top:14px;background:var(--bg);border-top:1px solid var(--bd);z-index:3}.dbar .btn{flex:1;padding:10px 6px}.dbar .btn.p{flex:1.4}
+@media (max-width:899px){#edw.two.vc #s2,#edw.two.vd #s1{display:none}}
+@media (min-width:900px){
+.edt{display:none!important}
+#edw.two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(400px,1fr);gap:18px;height:calc(100vh - 104px);min-height:520px}
+#edw.two>section{overflow:auto;min-height:0;padding-right:6px}
+#edw.two #list{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+#edw.two #list>.cd{flex-direction:column;padding:6px;gap:6px}
+#edw.two .cd img{width:100%}
+#edw.two .cd .bfw{width:100%!important;align-self:stretch!important}
+#edw.two .cd .bfw img.rot{width:100cqh;height:100cqw}
+#edw.two .cd>div>.m,#edw.two .cd>div>.t{display:none}
+#edw.two .cd>div>div:first-child b{font-size:13px}
+#edw.two .cd .r{margin:2px 0!important;justify-content:flex-end}
+}
+body:not(.ed) .ctl,body:not(.ed) button.ab,body:not(.ed) .bd,body:not(.ed) .mg .bt,body:not(.ed) #list .cd .r,body:not(.ed) #list .cd .no{display:none!important}
+
+.vhd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}.vtt{margin:0 0 8px;font-size:28px;color:var(--tx)}.vmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.vdm{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--bd);border-radius:999px;padding:2px 10px 2px 4px;font-size:13px;background:var(--card)}.vdm img{height:20px!important;width:20px!important}.vbt{display:flex;gap:8px}
+.vwrap{display:grid;gap:16px}.vh{font:12px ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--mu);margin:18px 0 8px}.vh span{color:var(--mu);margin-left:6px;letter-spacing:0}.vh .ok{color:var(--ok)}
+.vr{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}.vg1{width:104px}.vg2{display:flex;flex-wrap:wrap;gap:8px}.vg2 .vcd{width:80px}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}.vb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.vcb{cursor:pointer}
+.vcd{position:relative;aspect-ratio:5/7;border-radius:7px;overflow:hidden;border:1px solid var(--bd);cursor:pointer;background:var(--card)}.vcd img{width:100%;height:100%;object-fit:cover;display:block}.vcd.hl{border:2px solid var(--ac);box-shadow:0 0 0 2px var(--glow),0 0 14px var(--glow)}
+.vp{position:absolute;right:4px;bottom:4px;background:rgba(1,10,19,.85);color:var(--ac);border:1px solid var(--ac);border-radius:999px;padding:0 7px;font-size:12px;font-weight:700}.vt{position:absolute;left:50%;top:0;transform:translateX(-50%);background:var(--ac);color:#010A13;font-size:10px;font-weight:700;padding:0 8px;border-radius:0 0 6px 6px;white-space:nowrap}
+.vs .c{margin-bottom:12px}.vtiles{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--bd);border-radius:10px;background:var(--card);margin-bottom:12px;box-shadow:var(--sh)}.vtiles div{padding:14px 6px;text-align:center;border-left:1px solid var(--bd)}.vtiles div:first-child{border-left:0}.vtiles b{display:block;font-size:26px;color:var(--tx)}.vtiles span{font-size:12px;color:var(--mu)}
+.vbars{display:flex;gap:6px;align-items:flex-end;height:120px;margin-top:10px}.vbc{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0}.vbc span{font-size:12px;color:var(--mu);height:16px}.vbc i{display:block;width:100%;background:var(--pb);border-radius:4px 4px 0 0}.vbc em{font-style:normal;font-size:12px;color:var(--mu);margin-top:3px}.vbc i{flex:none}
+.vbar{display:flex;height:8px;border-radius:99px;overflow:hidden;margin:10px 0 8px;gap:2px}.vbar i{display:block}
+@media (min-width:900px){.vwrap{grid-template-columns:minmax(0,1fr) 360px;align-items:start}.vs{position:sticky;top:12px}.vg{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}.vg1{width:150px}.vg2 .vcd{width:120px}}
+
+#sb{position:fixed;left:0;top:0;bottom:0;width:236px;z-index:60;display:flex;flex-direction:column;gap:6px;padding:14px 12px;background:var(--card);border-right:1px solid var(--bd);overflow-y:auto;transform:translateX(-102%);transition:transform .22s}
+#sb.open{transform:none;box-shadow:var(--sh)}
+#sbk{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:55;display:none}#sbk.on{display:block}
+.mnb{flex:none;width:40px;height:40px;border:1px solid var(--bd);background:var(--card);color:var(--ac);border-radius:10px;font-size:20px;cursor:pointer}
+.sbh{display:flex;align-items:center;gap:10px;cursor:pointer;padding:2px 4px 12px;margin-bottom:6px;border-bottom:1px solid var(--bd)}.sbh img{width:38px;height:38px;border-radius:9px;flex:none}.sbh b{display:block;color:var(--ac);font-size:15px;line-height:1.25}.sbh .uo{margin:3px 0 0;font-size:10px}
+#sb .nw{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border:1px solid var(--ac);border-radius:10px;background:var(--gb);color:var(--gt);font:inherit;font-weight:700;cursor:pointer;margin:2px 0 8px}
+#sb .nw.on{box-shadow:0 0 0 2px var(--glow),0 0 16px var(--glow)}
+.sbn{display:flex;flex-direction:column;gap:2px}.sbn button{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:0;border-left:3px solid transparent;border-radius:8px;background:transparent;color:var(--mu);font:inherit;cursor:pointer;text-align:left}.sbn button:hover{background:var(--bg);color:var(--tx)}.sbn button.on{background:linear-gradient(90deg,var(--glow),transparent);border-left-color:var(--ac);color:var(--ac);font-weight:700}.sbn button.hide{display:none}
+.sbf{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding-top:10px}
+.sbst{text-align:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:var(--mu);border:1px solid var(--bd);border-radius:8px;padding:8px 4px;background:var(--bg)}
+.sbu{display:flex;align-items:center;gap:10px;padding:8px 6px;border-top:1px solid var(--bd);cursor:pointer;margin-top:4px}.sbu i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--gb);color:var(--gt);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700}.sbu b{display:block;font-size:14px;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}.sbu span{font-size:12px;color:var(--mu);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}
+.hd0{display:flex;align-items:center;gap:10px}.hd0 h1{flex:1;min-width:0;font-size:16px}
+@media (min-width:900px){#sb{transform:none;box-shadow:none}#sbk{display:none!important}.hd0{display:none}body{padding-left:calc(236px + clamp(24px,3vw,64px))!important}#edw.two{height:calc(100vh - 40px)!important}}
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -123,16 +175,23 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-<header class="hd0">
-<button id="n0" class="lg on" onclick="tab(0)" aria-label="首頁" title="首頁"><img id="logo" src="icons/icon-192.png" alt=""></button>
-<h1>符文戰場牌組工具<span class="uo">非官方</span></h1>
-<nav>
-<button id="n1" onclick="tab(1)">卡片</button>
-<button id="n2" onclick="tab(2)">牌組 (<span id="cnt">0</span>)</button>
-<button id="n3" class="hide" onclick="tab(3)">資料</button>
-<button id="n4" onclick="tab(4)">設定</button>
-</nav>
-</header>
+<header class="hd0"><button class="mnb" onclick="sbToggle(1)" aria-label="選單">☰</button><h1>符文戰場牌組工具<span class="uo">非官方</span></h1></header>
+<div id="sbk" onclick="sbToggle(0)"></div>
+<aside id="sb">
+<div class="sbh" onclick="tab(0)"><img id="logo" src="icons/icon-192.png" alt=""><div><b>符文戰場牌組工具</b><span class="uo">非官方</span></div></div>
+<button id="n2" class="nw" onclick="newDeck()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span>新建牌組</span></button>
+<div class="sbn">
+<button id="n0" class="on" onclick="tab(0)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>首頁</span></button>
+<button id="n1" onclick="tab(1)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="12" height="17" rx="2"/><path d="M8 7h6M8 11h6"/></svg><span>卡片</span></button>
+<button id="n5" onclick="tab(5)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="13" height="17" rx="2"/><path d="M3 7v12a2 2 0 0 0 2 2"/></svg><span>我的牌組</span></button>
+<button id="n3" class="hide" onclick="tab(3)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg><span>資料</span></button>
+</div>
+<div class="sbf">
+<div class="sbst" id="sbst"></div>
+<div class="sbn"><button id="n4" onclick="tab(4)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>設定</span></button></div>
+<div class="sbu" id="sbu" onclick="tab(4)"><i id="sbav">?</i><div><b id="sbnm">尚未登入</b><span id="sbem">點此登入或註冊</span></div></div>
+</div>
+</aside>
 
 <section id="s0">
 <div class="hm-hero"><div class="hm-in"><div>
@@ -157,7 +216,10 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 </div>
 
 </section>
+<div id="edw">
+<div class="edt" id="edt"><button id="edc" onclick="setEdv('c')">卡片庫</button><button id="edd" onclick="setEdv('d')">我的牌組內容 <span id="cnt">0</span></button></div>
 <section id="s1" class="hide">
+<div class="cat" id="cat"></div>
 <input id="q" placeholder="搜尋卡名或效果…" oninput="rr()">
 <div class="row"><select id="ft" onchange="rr()"></select></div>
 <button class="btn" id="mf" onclick="toggleMore()" style="width:100%;margin-bottom:8px">更多篩選 ▾</button>
@@ -171,22 +233,27 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 </section>
 
 <section id="s2" class="hide">
-<div class="dl">
-<div id="lgm"></div>
+<div class="dpt"><button id="dt1" class="on" onclick="dTab(1)">牌組</button><button id="dt2" onclick="dTab(2)">統計與檢查</button></div>
+<div id="dp1">
 <input id="dn" placeholder="牌組名稱">
-<div class="row"><button class="btn p" onclick="saveDeck()">儲存牌組</button><button class="btn" onclick="exportDeck()">匯出文字</button><button class="btn" onclick="exportImg()">匯出圖片</button></div>
-<div class="row" style="margin-top:8px"><button class="btn" onclick="clearDeck()" style="color:var(--no)">清除牌組</button></div>
-<div id="chbox" class="c" style="margin-top:8px"></div>
-<div id="chk" class="c"></div>
-<div id="stt" class="c"></div>
-</div>
-<div class="dr">
+<div id="dsum" class="dsum"></div>
+<div id="lgm"></div>
+<div id="dslots" class="slots"></div>
+<div id="chbox" class="c"></div>
 <div id="deck"></div>
-<textarea id="ex" class="hide" rows="8" readonly></textarea>
-<h3>已儲存的牌組</h3>
-<div id="saved"></div>
 </div>
+<div id="dp2" class="hide"><div id="chk" class="c"></div><div id="stt" class="c"></div></div>
+<textarea id="ex" class="hide" rows="8" readonly></textarea>
+<div class="dbar"><button class="btn" onclick="clearDeck()" style="color:var(--no)">清除</button><button class="btn p" id="svb" onclick="saveDeck()">儲存牌組</button></div>
 </section>
+</div>
+<section id="s5" class="hide">
+<div id="smsg"></div>
+<div id="cur"></div>
+<h3 style="margin-top:6px">我的牌組</h3>
+<div id="saved"></div>
+</section>
+<section id="s6" class="hide"><div id="vw"></div></section>
 
 <section id="s3" class="hide">
 <div class="c"><b>開發者：發佈資料給所有使用者</b>
@@ -218,8 +285,8 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 <select id="lg" onchange="setL(this.value)"><option value="zh">繁體中文</option><option value="en">English</option></select></div>
 <b style="display:block;margin:12px 4px 6px">帳號</b>
 <div class="c"><b id="ast">尚未登入</b>
-<div id="lf" style="margin-top:8px"><input id="em" type="email" placeholder="電子郵件" autocomplete="email"><input id="pw" type="password" placeholder="密碼（至少 6 個字元）" autocomplete="current-password"><div class="row"><button class="btn p" onclick="signIn()">登入</button><button class="btn" onclick="signUp()">註冊</button></div></div>
-<div id="lo" class="hide" style="margin-top:8px"><button class="btn" onclick="signOut()">登出</button></div>
+<div id="lf" style="margin-top:8px"><input id="un" placeholder="使用者名稱（註冊時填寫）" maxlength="20" autocomplete="nickname"><input id="em" type="email" placeholder="電子郵件" autocomplete="email"><input id="pw" type="password" placeholder="密碼（至少 6 個字元）" autocomplete="current-password"><div class="row"><button class="btn p" onclick="signIn()">登入</button><button class="btn" onclick="signUp()">註冊</button></div></div>
+<div id="lo" class="hide" style="margin-top:8px"><div class="m" id="aem" style="margin-bottom:8px"></div><input id="un2" placeholder="使用者名稱" maxlength="20"><div class="row"><button class="btn" onclick="saveName()">修改名稱</button><button class="btn" onclick="signOut()">登出</button></div></div>
 <p id="am" class="m"></p></div>
 <p class="m">登入後，儲存的牌組會自動同步到雲端，換裝置登入也能看到。未登入時牌組只存在這台裝置。</p>
 </section>
@@ -284,7 +351,7 @@ function setTheme(v){try{localStorage.setItem('rb_theme',v)}catch(e){}if(v==='li
 function initTheme(){var v='auto';try{v=localStorage.getItem('rb_theme')||'auto'}catch(e){}if($('th'))$('th').value=v}
 function setL(v){L=v;sv('rb_lang',L);fill();render();rdeck()}
 var HF='onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}"';
-function rhome(fresh){var E=$('hmf');if(!E)return;
+function rhome(fresh){sbStat();sbUser();var E=$('hmf');if(!E)return;
 if(cards.length&&(fresh||!E.children.length)){var ok=cards.filter(function(c){return sec(c)==='M'&&pic(c)}),pk=[];
 while(pk.length<5&&ok.length){pk.push(ok.splice(Math.floor(Math.random()*ok.length),1)[0])}
 E.innerHTML=pk.map(function(c){return'<img src="'+esc(pic(c))+'" data-o="'+esc(c.img)+'" alt="" '+HF+'>'}).join('')}
@@ -292,9 +359,49 @@ var Bd=$('hmb');if(Bd&&cards.length&&(fresh||!Bd.children.length)){var ok2=cards
 $('hmn').textContent=cards.length?cards.length+' CARDS · 繁中 × ENGLISH · DECK TOOLS':'';
 var mn=0;try{mn=mainN()}catch(e){}var sn=0;try{sn=Object.keys(side).reduce(function(a,k){return a+side[k]},0)}catch(e){}
 var h='';if(mn||sn||(typeof champ!=='undefined'&&champ)){h='<div class="hm-lb">CONTINUE</div><div class="c hm-f" onclick="tab(2)"><b>繼續編輯目前牌組</b><div class="m">主牌組 '+mn+' / 40・備牌 '+sn+' / 10</div></div>'}
-if(saved&&saved.length)h+='<div class="hm-lb">SAVED DECKS</div><div class="hm-g" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">'+saved.slice(0,4).map(function(d){return'<div class="c hm-f" onclick="tab(2)"><b>'+esc(d.name||'未命名牌組')+'</b><div class="m">'+(typeof ago==='function'&&d.t?ago(d.t):'')+'</div></div>'}).join('')+'</div>';
+if(saved&&saved.length)h+='<div class="hm-lb">SAVED DECKS</div><div class="hm-g" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">'+saved.slice(0,4).map(function(d){return'<div class="c hm-f" onclick="tab(5)"><b>'+esc(d.name||'未命名牌組')+'</b><div class="m">'+(typeof ago==='function'&&d.t?ago(d.t):'')+'</div></div>'}).join('')+'</div>';
 $('hmd').innerHTML=h}
-function tab(n){window.scrollTo(0,0);for(var i=0;i<=4;i++){$('s'+i).classList.toggle('hide',i!==n);$('n'+i).classList.toggle('on',i===n)}if(n===0)rhome();if(n===1)render();if(n===2)rdeck()}
+function sbToggle(o){$('sb').classList.toggle('open',!!o);$('sbk').classList.toggle('on',!!o)}
+function sbStat(){var e=$('sbst');if(e)e.textContent='牌組 '+(saved?saved.length:0)+'　卡片 '+cards.length}
+function sbUser(){var n=user?uname(user):'',e=user&&user.email||'';$('sbav').textContent=(n||'?').slice(0,1).toUpperCase();$('sbnm').textContent=user?n:'尚未登入';$('sbem').textContent=user?e:'點此登入或註冊'}
+var edv='c',curTab=0;
+
+var vi=-1;
+function viewDeck(i){vi=i;tab(6)}
+function delView(){var n=saved.length;delDeck(vi);if(saved.length<n)tab(5)}
+var DCOL={fury:'#D6453D',body:'#E38B2C',calm:'#3FB27F',mind:'#3B82D6',chaos:'#8B5CD6',order:'#C8AA6E'},TCOL=['#3B82D6','#8B5CD6','#E38B2C'];
+function rview(){var E=$('vw'),d=saved[vi];if(!d){tab(5);return}var u=unpack(d.deck),k,c,leg=null,rn=[],bf=[],mk=[],tot=0,sum=0,cu=[0,0,0,0,0,0,0,0],ty=[0,0,0],dm={},pw=[0,0,0,0,0],pt=0,ps=0,hp=false;
+var ks=Object.keys(u.main);ks.forEach(function(k){c=nm(k);if(!c)return;var x=sec(c);if(x==='L'){if(!leg)leg=c}else if(x==='R')rn.push(k);else if(x==='B')bf.push(k);else{mk.push(k);var n=u.main[k],v=Number(c.cost)||0;cu[Math.min(7,v)]+=n;tot+=n;sum+=v*n;var r=dkR(c);if(r<3)ty[r]+=n;c.dom.forEach(function(g){if(g!=='Colorless')dm[g]=(dm[g]||0)+n});if(c.power!==undefined&&c.power!==''&&c.power!==null){hp=true;var pv=Number(c.power)||0;pw[Math.min(4,pv)]+=n;ps+=pv*n;pt+=n}}});
+mk=dkS(mk,u.main);var sk=dkS(Object.keys(u.side).filter(function(k){return nm(k)}),u.side),sn=0;sk.forEach(function(k){sn+=u.side[k]});
+var rc=0;rn.forEach(function(k){rc+=u.main[k]});var bc=0;bf.forEach(function(k){bc+=u.main[k]});
+function img(c,x){var q=pic(c);return q?'<img loading="lazy" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="'+esc(N(c))+'"'+(x||'')+' onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'<div class="m" style="padding:6px">'+esc(N(c))+'</div>'}
+function vc(k,n,hl){var c=nm(k);return'<div class="vcd'+(hl?' hl':'')+'" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+img(c)+(n>1?'<span class="vp">×'+n+'</span>':'')+(hl?'<span class="vt">指定英雄</span>':'')+'</div>'}
+function sh(t,n,m,ok){return'<div class="vh">'+t+' <span class="'+(ok?'ok':'')+'">'+n+(m?'/'+m:'')+'</span></div>'}
+var doms=Object.keys(dm).sort(domCmp),dt=0;doms.forEach(function(g){dt+=dm[g]});
+var ld=leg?leg.dom.filter(function(x){return x!=='Colorless'}):doms;
+var L1='<div class="vhd"><div><button class="btn" style="flex:none;width:auto;padding:5px 12px;margin-bottom:10px" onclick="tab(5)">← 我的牌組</button><h2 class="vtt">'+esc(d.name)+'</h2><div class="vmeta">'+ld.map(function(g){return'<span class="vdm">'+domIc(g)+esc(lab(DOMN,g))+'</span>'}).join('')+'<span class="m">'+(ago(u.t)||'')+'</span></div></div><div class="vbt"><button class="btn p" style="flex:none;width:auto;padding:8px 18px" onclick="loadDeck(vi)">編輯牌組</button><button class="btn" style="flex:none;width:auto;padding:8px 14px;color:var(--no)" onclick="delView()">刪除</button></div></div>';
+var main='<div class="vl">'
++'<div class="vr"><div>'+sh('傳奇',leg?1:0,1,!!leg)+'<div class="vg1">'+(leg?vc(leg.id,1,false):'<div class="dph">無</div>')+'</div></div><div style="flex:1;min-width:0">'+sh('符文',rc,12,rc===12)+'<div class="vg2">'+rn.map(function(k){return vc(k,u.main[k])}).join('')+'</div></div></div>'
++sh('戰場',bc,3,bc===3)+'<div class="vb">'+bf.map(function(k){var c=nm(k);return'<div class="vcb" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+img(c,' onload="bfFix(this)"')+'</div>'}).join('')+'</div>'
++sh('主牌組',tot,40,tot===40)+'<div class="vg">'+mk.map(function(k){return vc(k,u.main[k],k===u.champ)}).join('')+'</div>'
++(sk.length?sh('備牌',sn,SIDEMAX,false)+'<div class="vg">'+sk.map(function(k){return vc(k,u.side[k])}).join('')+'</div>':'')+'</div>';
+var mx=Math.max.apply(null,cu)||1,pm=Math.max.apply(null,pw)||1;
+function bars(a,m,lbl){return'<div class="vbars">'+a.map(function(v,i){return'<div class="vbc"><span>'+(v||'')+'</span><i style="height:calc((100% - 34px)*'+(v/m).toFixed(3)+');min-height:'+(v?3:0)+'px"></i><em>'+lbl(i)+'</em></div>'}).join('')+'</div>'}
+var side='<div class="vs"><div class="vtiles"><div><b>'+tot+'</b><span>主牌組張數</span></div><div><b>'+(tot?(sum/tot).toFixed(1):'—')+'</b><span>平均費用</span></div><div><b>'+(hp&&pt?(ps/pt).toFixed(1):'—')+'</b><span>平均符能</span></div></div>'
++'<div class="c"><b>費用曲線</b>'+bars(cu,mx,function(i){return i===7?'7+':i})+'</div>'
++(hp?'<div class="c"><b>符能費用曲線</b>'+bars(pw,pm,function(i){return i===4?'4+':i})+'</div>':'')
++'<div class="c"><b>領域</b><div class="vbar">'+doms.map(function(g){return'<i style="flex:'+dm[g]+';background:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'"></i>'}).join('')+'</div><div class="chips">'+doms.map(function(g){return'<span class="chip" style="border-color:'+(DCOL[String(g).toLowerCase()]||'var(--ac)')+'">'+esc(lab(DOMN,g))+' '+dm[g]+'</span>'}).join('')+'</div></div>'
++'<div class="c"><b>卡牌類型</b><div class="vbar">'+ty.map(function(v,i){return v?'<i style="flex:'+v+';background:'+TCOL[i]+'"></i>':''}).join('')+'</div><div class="chips">'+['單位','法術','裝備'].map(function(t,i){return ty[i]?'<span class="chip" style="border-color:'+TCOL[i]+'">'+t+' '+ty[i]+'</span>':''}).join('')+'</div></div></div>';
+E.innerHTML=L1+'<div class="vwrap">'+main+side+'</div>'}
+function tab(n){var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6]}[n]||[0];for(var i=0;i<=6;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
+$('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2)rdeck();if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview()}
+function setEdv(v){edv=v;var w=$('edw');w.classList.toggle('vc',v==='c');w.classList.toggle('vd',v==='d');$('edc').classList.toggle('on',v==='c');$('edd').classList.toggle('on',v==='d')}
+function dTab(k){$('dp1').classList.toggle('hide',k!==1);$('dp2').classList.toggle('hide',k!==2);$('dt1').classList.toggle('on',k===1);$('dt2').classList.toggle('on',k===2)}
+function newDeck(){if(anyCards()&&!confirm('目前編輯中的牌組會被清空（已儲存的牌組不受影響），要新建牌組嗎？'))return;deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();edv='c';tab(2)}
+var CATS=[['','全部'],['L','傳奇'],['M','主牌組'],['B','戰場'],['R','符文']];
+function catVal(k){if(!k)return'';if(k==='M')return'@M';var c=cards.filter(function(x){return sec(x)===k})[0];return c?c.type:''}
+function setCat(k){$('ft').value=catVal(k);if($('ft').value!==catVal(k))$('ft').value='';rr()}
+function syncCat(){var e=$('cat');if(!e)return;var f=$('ft').value;e.innerHTML=CATS.map(function(c){var v=catVal(c[0]);return'<button class="'+((f||'')===v?'on':'')+'" onclick="setCat(\''+c[0]+'\')">'+c[1]+'</button>'}).join('')}
 function setOf(c){return(String(c.id).match(/^[A-Za-z]+/)||[''])[0].slice(0,3).toUpperCase()}
 function uq(a){var o={};a.forEach(function(x){if(x!==''&&x!=null)o[x]=1});return Object.keys(o)}
 var HIDE=/^(jdg|opp)/i;
@@ -340,7 +447,7 @@ function tg(id,v){if(sel[id][v])delete sel[id][v];else sel[id][v]=1;fill2();rr()
 function toggleMore(){$('more').classList.toggle('hide');upBtn()}
 function clearMore(){sel={fs:{},fd:{},fc:{}};fill2();rr();upBtn()}
 function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(vis(c)&&c.type)t[c.type]=1});
-s.innerHTML='<option value="">所有類型</option>'+Object.keys(t).sort(typeCmp).map(function(k){return'<option value="'+esc(k)+'">'+esc(tlab(k))+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
+s.innerHTML='<option value="">所有類型</option><option value="@M">主牌組（單位／法術／裝備）</option>'+Object.keys(t).sort(typeCmp).map(function(k){return'<option value="'+esc(k)+'">'+esc(tlab(k))+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
 var PGSZ=30,pg=1;
 function rr(){pg=1;render()}
 function goPg(p){pg=p;render();window.scrollTo(0,0)}
@@ -348,9 +455,9 @@ function pager(n,tp,bot){if(!n)return bot?'':'<div class="c m">沒有符合條�
 var top=bot?'':'<p class="m" style="margin:0 0 6px">共 '+n+' 筆'+(tp>1?'・第 '+pg+' / '+tp+' 頁':'')+'</p>';
 if(tp<2)return top;var o='';for(var i=1;i<=tp;i++)o+='<option value="'+i+'"'+(i===pg?' selected':'')+'>第 '+i+' 頁</option>';
 return top+'<div class="r" style="margin-bottom:8px;gap:6px"><button class="btn" style="flex:none;padding:6px 12px"'+(pg<=1?' disabled':'')+' onclick="goPg('+(pg-1)+')">‹ 上一頁</button><select style="margin:0;flex:1" onchange="goPg(+this.value)">'+o+'</select><button class="btn" style="flex:none;padding:6px 12px"'+(pg>=tp?' disabled':'')+' onclick="goPg('+(pg+1)+')">下一頁 ›</button></div>'}
-function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');
+function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');syncCat();
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
-var r=cards.filter(function(c){return vis(c)&&(!f||c.type===f)&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
+var r=cards.filter(function(c){return vis(c)&&(!f||(f==='@M'?sec(c)==='M':c.type===f))&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&(!nk(sel.fc)||sel.fc[String(c.cost)])&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 var gs={},gl=[];r.forEach(function(c){var k=c.name.toLowerCase(),i=gs[k];if(i==null){gs[k]=gl.length;gl.push(c)}else if(vOf(gl[i])!=='Standard'&&vOf(c)==='Standard')gl[i]=c});r=gl;
 var tp=Math.max(1,Math.ceil(r.length/PGSZ));if(pg>tp)pg=tp;if(pg<1)pg=1;
 E.innerHTML=pager(r.length,tp,0)+r.slice((pg-1)*PGSZ,pg*PGSZ).map(function(c){
@@ -412,7 +519,7 @@ var by=all.filter(function(c){return pref(c.name)===pref(leg.name)});return by.l
 function okCh(k){var l=legOf();if(!l||!deck[k])return false;var n=nm(k).name;return cands(l).some(function(x){return x.name===n})}
 function setChamp(v){v=decodeURIComponent(v);if(!okCh(v))return;champ=champ===v?'':v;sv('rb_champ',champ);rdeck()}
 function fixChamp(){if(champ&&!okCh(champ)){champ='';sv('rb_champ',champ)}}
-function pickLegend(){tab(1);var t=cards.filter(function(c){return sec(c)==='L'})[0];if(t){$('ft').value=t.type}rr()}
+function pickLegend(){if($('s2').classList.contains('hide'))tab(2);setEdv('c');var t=cards.filter(function(c){return sec(c)==='L'})[0];if(t){$('ft').value=t.type}rr()}
 function check(){var S={L:0,B:0,R:0,M:0},cp={},leg=null,cc=champ?nm(champ):null,out=[],k,c,bad=[],sd=0;
 function a2(ok,t){out.push({ok:ok,t:t})}
 function chk(c){var x=c.dom.filter(function(d){return d!=='Colorless'&&leg.dom.indexOf(d)<0});if(x.length&&bad.indexOf(N(c))<0)bad.push(N(c))}
@@ -451,37 +558,52 @@ function imgCount(){var e=$('imc');if(!e)return;if(!window.caches){e.textContent
 function clrImg(){if(!window.caches)return;caches.delete('rb-img-v1').then(imgCount)}
 function rdeck(){var y=window.pageYOffset||0;rdeck0();if(!$('s2').classList.contains('hide'))window.scrollTo(0,y)}
 function rdeck0(){fixChamp();cnt();var ks=Object.keys(deck),leg=legOf(),sk=dkS(Object.keys(side),side),cc=champ?nm(champ):null;
-$('lgm').innerHTML=leg?'':'<div class="c" style="border:2px solid var(--ac);text-align:center;padding:16px"><b style="font-size:18px;color:var(--ac)">請選擇你的傳奇</b><div class="m" style="margin:6px 0 10px">傳奇是組牌的必要條件，選好後會自動配置符文。</div><button class="btn p" onclick="pickLegend()">前往選擇傳奇</button></div>';
+$('lgm').innerHTML='';
 var ops=ks.filter(function(k){var c=nm(k);return sec(c)==='M'&&String(c.sup).toLowerCase().indexOf('champion')>-1&&okCh(k)});
 $('chbox').innerHTML='<b>指定英雄</b>'+(!leg?'<div class="m">請先選擇傳奇。</div>':!ops.length?'<div class="m">主牌組中還沒有與此傳奇相符的英雄單位，請先到「卡片」分頁加入。</div>':'<div class="m" style="margin-bottom:8px">從主牌組的英雄單位中點選一張；再點一次可取消。</div><div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">'+ops.map(function(k){var c=nm(k),u=pic(c),on=k===champ;
 return'<div style="cursor:pointer;min-width:0" onclick="setChamp(\''+encodeURIComponent(k)+'\')"><div style="aspect-ratio:5/7;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:8px;border:3px solid '+(on?'var(--ac)':'transparent')+';overflow:hidden">'+(u?'<img loading="lazy" src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" style="max-width:100%;max-height:100%" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</div><div class="m" style="font-size:12px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'+(on?'color:var(--ac);font-weight:700':'')+'">'+esc(N(c))+'</div></div>'}).join('')+'</div>');
 $('stt').innerHTML=stats();$('chk').innerHTML='<b>規則檢查</b>'+check().map(function(o){return'<div class="'+(o.ok?'ok':'no')+'">'+(o.ok?'✓ ':'✗ ')+esc(o.t)+'</div>'}).join('')+'<div class="m">依官方核心規則；英雄與傳奇的對應依名稱判斷，專屬卡限制請自行確認。</div>';
-var G={L:'傳奇',M:'主牌組',R:'符文',B:'戰場'},h='',mk=dkS(ks.filter(function(k){return sec(nm(k))==='M'}),deck),mn=0;mk.forEach(function(k){mn+=deck[k]});
-['L','M','R','B'].forEach(function(s){var a=ks.filter(function(k){return sec(nm(k))===s});if(s==='M')a=dkS(a,deck);
-if(!a.length)return;h+='<h3>'+G[s]+(s==='M'?'（'+mn+'）':'')+'</h3>'+a.map(function(k){return row(k,deck,'chg')}).join('')});
-if(sk.length)h+='<h3>備牌（'+sideN()+'/'+SIDEMAX+'）</h3>'+sk.map(function(k){return row(k,side,'chgS')}).join('');
-$('deck').innerHTML=h||'<div class="c m">牌組是空的，到「卡片」分頁加入卡片。</div>';$('ex').classList.add('hide');rsaved()}
+var mk=dkS(ks.filter(function(k){return sec(nm(k))==='M'}),deck),mn=0,bn=0,rn=0;mk.forEach(function(k){mn+=deck[k]});ks.forEach(function(k){var x=sec(nm(k));if(x==='B')bn+=deck[k];if(x==='R')rn+=deck[k]});
+var sn=sideN(),cs=(function(){var cnn=cc&&deck[champ]?1:0;return cnn})();
+function sm(t,v,m){return'<span class="'+(v>=m?'full':'')+'">'+t+' <b>'+v+'/'+m+'</b></span>'}
+$('dsum').innerHTML=sm('傳奇',leg?1:0,1)+sm('指定英雄',cs,1)+sm('戰場',bn,3)+sm('符文',rn,12)+sm('主牌組',mn,40)+sm('備牌',sn,SIDEMAX);
+function slot(t,c,ph,xo,po){var u=c&&pic(c);return'<div class="slot"><div class="sl">'+t+'</div><div class="im'+(c?' has':'')+'"'+(c?'':' onclick="'+po+'"')+'>'+(c?(u?'<img src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':esc(N(c)))+'<button class="x" onclick="'+xo+'" aria-label="移除">✕</button>':ph)+'</div></div>'}
+var lk=leg?Object.keys(deck).filter(function(k){return sec(nm(k))==='L'})[0]:'';
+$('dslots').innerHTML=slot('傳奇 <b>'+(leg?1:0)+'/1</b>',leg,'＋ 加入','chg(\''+encodeURIComponent(lk||'')+'\',-1)','pickLegend()')+slot('指定英雄 <b>'+cs+'/1</b>',cs?cc:null,'選擇','setChamp(\''+encodeURIComponent(champ||'')+'\')',"document.getElementById('chbox').scrollIntoView({behavior:'smooth'})");
+function sect(t,n,m,body,ph,cl){return'<div class="dsec'+(cl||'')+'"><b>'+t+'<span>'+n+(m?' / '+m:'')+'</span></b></div>'+(body||'<div class="dph">'+ph+'</div>')}
+var bk=ks.filter(function(k){return sec(nm(k))==='B'}),rk=ks.filter(function(k){return sec(nm(k))==='R'});
+var h=sect('戰場',bn,3,bk.map(function(k){return row(k,deck,'chg')}).join(''),'到卡片庫加入 3 張戰場')
++sect('符文',rn,12,rk.map(function(k){return row(k,deck,'chg')}).join(''),'選擇傳奇後自動配置 12 張符文')
++sect('主牌組',mn,40,mk.map(function(k){return row(k,deck,'chg')}).join(''),'到卡片庫加入卡片到主牌組',' m1')
++sect('備牌',sn,SIDEMAX,sk.map(function(k){return row(k,side,'chgS')}).join(''),'選填：0–'+SIDEMAX+' 張');
+$('deck').innerHTML=h;$('ex').classList.add('hide');rsaved()}
 function pack(){return{v:2,main:deck,side:side,champ:champ,t:Date.now()}}
 function unpack(x){if(x&&x.v===2)return{main:x.main||{},side:x.side||{},champ:x.champ||'',t:x.t||0};return{main:x||{},side:{},champ:''}}
 function clearDeck(){if(!anyCards()){alert('目前的牌組已經是空的');return}
 if(!confirm('確定要清除目前的牌組嗎？\n主牌組、符文、戰場、備牌與指定英雄都會被移除，已儲存的牌組不會受影響。'))return;
 if(!confirm('再確認一次：清除後無法復原，要繼續嗎？'))return;
 deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();rdeck();updBadges()}
-function saveDeck(){var n=$('dn').value.trim()||'未命名牌組';if(!anyCards()){alert('牌組是空的');return}
-saved=saved.filter(function(d){return d.name!==n});saved.push({name:n,deck:JSON.parse(JSON.stringify(pack()))});sv('rb_saved',saved);rsaved();push(n)}
+async function saveDeck(){var n=$('dn').value.trim()||'未命名牌組';if(!anyCards()){alert('牌組是空的');return}
+saved=saved.filter(function(d){return d.name!==n});saved.push({name:n,deck:JSON.parse(JSON.stringify(pack()))});
+var ok=false;try{localStorage.setItem('rb_saved',JSON.stringify(saved));var chk=JSON.parse(localStorage.getItem('rb_saved')||'[]');ok=chk.some(function(d){return d.name===n})}catch(e){}
+if(!ok){alert('牌組儲存失敗（瀏覽器儲存空間可能已滿），編輯中的內容已保留，請稍後再試。');return}
+var cl=await push(n);
+deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();
+tab(5);var m=$('smsg');if(m){m.innerHTML='<div class="c" style="border-color:var(--ok);color:var(--ok);margin-bottom:12px">✓ 已儲存「'+esc(n)+'」'+(cl===false?'（僅存在本機，雲端同步失敗）':cl?'（已同步到雲端）':'')+'</div>';setTimeout(function(){if(m)m.innerHTML=''},6000)}}
 function ago(t){if(!t)return'';var m=Math.floor((Date.now()-t)/60000);if(m<1)return'剛剛更新';if(m<60)return m+' 分鐘前更新';var h=Math.floor(m/60);if(h<24)return h+' 小時前更新';var d=Math.floor(h/24);if(d<30)return d+' 天前更新';if(d<365)return Math.floor(d/30)+' 個月前更新';return Math.floor(d/365)+' 年前更新'}
 function domIc(d){var k=String(d).toLowerCase(),dm=zh._domicons||{},u='';for(var x in dm)if(String(x).toLowerCase()===k){u=dm[x];break}u=u||'images/icons/'+d+'.svg';return'<img src="'+esc(u)+'" alt="'+esc(lab(DOMN,d))+'" title="'+esc(lab(DOMN,d))+'" style="height:30px;width:30px;object-fit:contain" onerror="this.outerHTML=\'<span class=chp>\'+this.alt+\'</span>\'">'}
 function baseSets(){var m={};cards.forEach(function(x){if(!x.name||!x.set||(x.v&&x.v!=='Standard'))return;var K=x.name.toLowerCase(),S=String(x.set).toUpperCase(),i=SETO.indexOf(S);i=i<0?99:i;if(!m[K]||i<m[K].i)m[K]={s:S,i:i}});return m}
 function bset(c,bm){var b=bm[c.name.toLowerCase()];return b?b.s:String(c.set).toUpperCase()}
-function rsaved(){var bm=baseSets();$('saved').innerHTML=saved.length?saved.map(function(d,i){var u=unpack(d.deck),mn=0,sn=0,k,leg=null,sets={},first=null;
+function rcur(){var e=$('cur');if(!e)return;if(!anyCards()){e.innerHTML='';return}var mn=mainN();e.innerHTML='<div class="c hm-f" style="cursor:pointer;margin-bottom:12px" onclick="edv=\'d\';tab(2)"><b style="color:var(--ac)">編輯中的牌組'+($('dn').value?'：'+esc($('dn').value):'')+'</b><div class="m">主牌組 '+mn+' / 40・備牌 '+sideN()+' / '+SIDEMAX+'　點擊繼續編輯</div></div>'}
+function rsaved(){sbStat();rcur();var bm=baseSets();$('saved').innerHTML=saved.length?saved.map(function(d,i){var u=unpack(d.deck),mn=0,sn=0,k,leg=null,sets={},first=null;
 for(k in u.main){var c=nm(k);if(!c)continue;if(sec(c)==='L'){if(!leg)leg=c}else{if(sec(c)==='M')mn+=u.main[k];if(!first)first=c}if(c.set&&sec(c)!=='R')sets[bset(c,bm)]=1}
 for(k in u.side){var c2=nm(k);sn+=u.side[k];if(c2&&c2.set&&sec(c2)!=='R')sets[bset(c2,bm)]=1}
 var cv=leg||first,im=cv?pic(cv):'',doms=leg?leg.dom.filter(function(x){return x!=='Colorless'}):[],sl=Object.keys(sets).sort(setCmp);
-return'<div class="c" style="position:relative;display:flex;padding:0;overflow:hidden;gap:0"><div style="position:absolute;left:0;top:0;bottom:0;width:124px;pointer-events:none">'+(im?'<img loading="lazy" src="'+esc(im)+'" data-o="'+esc(cv.img)+'" alt="" style="width:100%;height:100%;object-fit:cover;object-position:0 0;display:block;-webkit-mask-image:linear-gradient(to right,#000 72%,transparent 100%);mask-image:linear-gradient(to right,#000 72%,transparent 100%)" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</div>'
-+'<div style="position:relative;flex:1;min-width:0;padding:12px 14px 12px 124px"><div class="r" style="align-items:flex-start;gap:8px"><div style="min-width:0"><div style="font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(d.name)+'</div><div class="m">'+(ago(u.t)||'&nbsp;')+'</div></div><button style="flex:none;width:auto;padding:4px 10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer" onclick="delDeck('+i+')" aria-label="刪除">✕</button></div>'
+return'<div class="c" style="position:relative;display:flex;padding:0;overflow:hidden;gap:0;cursor:pointer" onclick="viewDeck('+i+')"><div style="position:absolute;left:0;top:0;bottom:0;width:124px;pointer-events:none">'+(im?'<img loading="lazy" src="'+esc(im)+'" data-o="'+esc(cv.img)+'" alt="" style="width:100%;height:100%;object-fit:cover;object-position:0 0;display:block;-webkit-mask-image:linear-gradient(to right,#000 72%,transparent 100%);mask-image:linear-gradient(to right,#000 72%,transparent 100%)" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</div>'
++'<div style="position:relative;flex:1;min-width:0;padding:12px 14px 12px 124px"><div class="r" style="align-items:flex-start;gap:8px"><div style="min-width:0"><div style="font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(d.name)+'</div><div class="m">'+(ago(u.t)||'&nbsp;')+'</div></div><button style="flex:none;width:auto;padding:4px 10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer" onclick="event.stopPropagation();delDeck('+i+')" aria-label="刪除">✕</button></div>'
 +'<div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin:10px 0">'+doms.map(domIc).join('')+sl.map(function(x){return'<span class="chp">'+esc(x)+'</span>'}).join('')+'</div>'
-+'<div style="border-top:1px solid var(--ac);padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="display:flex;align-items:center;gap:8px;font-size:15px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--mu)"><rect x="6" y="3" width="13" height="17" rx="2"/><path d="M3 7v12a2 2 0 0 0 2 2"/></svg><b>'+mn+'</b><span class="m">備牌 '+sn+'</span></div><button class="btn p" style="flex:none;width:auto;padding:4px 16px" onclick="loadDeck('+i+')">載入</button></div></div></div>'}).join(''):'<div class="m">尚無儲存的牌組。</div>'}
-function loadDeck(i){var u=JSON.parse(JSON.stringify(unpack(saved[i].deck)));deck=u.main;side=u.side;champ=u.champ;if(champ&&!deck[champ])deck[champ]=1;$('dn').value=saved[i].name;sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);rdeck()}
++'<div style="border-top:1px solid var(--ac);padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="display:flex;align-items:center;gap:8px;font-size:15px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--mu)"><rect x="6" y="3" width="13" height="17" rx="2"/><path d="M3 7v12a2 2 0 0 0 2 2"/></svg><b>'+mn+'</b><span class="m">備牌 '+sn+'</span></div><span style="color:var(--ac);font-weight:600;white-space:nowrap">查看 →</span></div></div></div>'}).join(''):'<div class="m">尚無儲存的牌組。</div>'}
+function loadDeck(i){if(anyCards()&&!confirm('目前編輯中的內容尚未儲存，載入「'+saved[i].name+'」會將其覆蓋，確定要繼續嗎？'))return;var u=JSON.parse(JSON.stringify(unpack(saved[i].deck)));deck=u.main;side=u.side;champ=u.champ;if(champ&&!deck[champ])deck[champ]=1;$('dn').value=saved[i].name;sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);edv='d';tab(2)}
 function delDeck(i){var n=saved[i].name;if(confirm('刪除「'+n+'」？')){saved.splice(i,1);sv('rb_saved',saved);rsaved();if(sb&&user)sb.from('decks').delete().eq('name',n).then(function(r){if(r.error)alert('雲端刪除失敗：'+r.error.message)})}}
 function exportDeck(){function ls(o,f){return Object.keys(o).filter(function(k){return!f||sec(nm(k))===f}).map(function(k){return o[k]+' '+nm(k).name})}
 var P=[['傳奇',ls(deck,'L')],['指定英雄',champ?[nm(champ).name]:[]],['主牌組',ls(deck,'M')],['符文',ls(deck,'R')],['戰場',ls(deck,'B')],['備牌',ls(side)]],
@@ -489,8 +611,10 @@ t=P.filter(function(x){return x[1].length}).map(function(x){return x[0]+'：\n'+
 var SB_URL='https://mibivznenhauezbjotjm.supabase.co',SB_KEY='sb_publishable_5sMXvITqcu55oqQbrEIo1w_LJe09-1Y',sb=null,user=null;
 try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}
 function am(t){$('am').textContent=t}
-function uiAcc(){$('ast').textContent=user?'已登入：'+user.email:'尚未登入';$('lf').classList.toggle('hide',!!user);$('lo').classList.toggle('hide',!user)}
-async function signUp(){if(!sb){am('無法連線帳號服務。');return}var r=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value});am(r.error?'註冊失敗：'+r.error.message:'註冊成功，請到信箱點確認連結後再回來登入。')}
+function uname(u){var n=u&&u.user_metadata&&u.user_metadata.name;return n||(u&&u.email?u.email.split('@')[0]:'')}
+async function saveName(){var n=$('un2').value.trim();if(!n){am('請輸入使用者名稱。');return}if(!sb)return;var r=await sb.auth.updateUser({data:{name:n}});if(r.error){am('修改失敗：'+r.error.message);return}if(r.data&&r.data.user)user=r.data.user;uiAcc();am('已更新使用者名稱。')}
+function uiAcc(){sbUser();$('ast').textContent=user?'已登入：'+uname(user):'尚未登入';if(user){$('aem').textContent=user.email||'';if(document.activeElement!==$('un2'))$('un2').value=uname(user)}$('lf').classList.toggle('hide',!!user);$('lo').classList.toggle('hide',!user)}
+async function signUp(){if(!sb){am('無法連線帳號服務。');return}var un=$('un').value.trim();if(!un){am('請先輸入使用者名稱。');return}var r=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value,options:{emailRedirectTo:location.origin+location.pathname,data:{name:un}}});am(r.error?(/rate limit/i.test(r.error.message)?'寄信次數已達上限，請約 1 小時後再試（若已註冊過，可直接登入）。':/already registered/i.test(r.error.message)?'這個電子郵件已註冊，請直接登入。':'註冊失敗：'+r.error.message):'註冊成功，請到信箱點確認連結後再回來登入。')}
 async function signIn(){if(!sb){am('無法連線帳號服務。');return}var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});am(r.error?'登入失敗：'+r.error.message:'')}
 async function signOut(){if(sb)await sb.auth.signOut()}
 async function sync(){if(!sb||!user)return;var r=await sb.from('decks').select('name,deck');if(r.error){am('同步失敗：'+r.error.message);return}
@@ -498,8 +622,8 @@ var cl={};r.data.forEach(function(d){cl[d.name]=d.deck});var local={};saved.forE
 for(var n in cl)local[n]=cl[n];saved=Object.keys(local).map(function(n){return{name:n,deck:local[n]}});sv('rb_saved',saved);rsaved();
 var up=saved.filter(function(d){return!cl[d.name]}).map(function(d){return{user_id:user.id,name:d.name,deck:d.deck}});
 if(up.length)await sb.from('decks').upsert(up,{onConflict:'user_id,name'});am('已同步 '+saved.length+' 組牌組。')}
-async function push(n){if(!sb||!user)return;var d=saved.filter(function(x){return x.name===n})[0];if(!d)return;
-var r=await sb.from('decks').upsert({user_id:user.id,name:n,deck:d.deck,updated_at:new Date().toISOString()},{onConflict:'user_id,name'});if(r.error)alert('雲端儲存失敗：'+r.error.message)}
+async function push(n){if(!sb||!user)return null;var d=saved.filter(function(x){return x.name===n})[0];if(!d)return false;
+var r=await sb.from('decks').upsert({user_id:user.id,name:n,deck:d.deck,updated_at:new Date().toISOString()},{onConflict:'user_id,name'});if(r.error){alert('雲端儲存失敗：'+r.error.message);return false}return true}
 if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;uiAcc();if(user)setTimeout(sync,0)});
 function loadOne(u){return new Promise(function(res){var i=new Image();i.crossOrigin='anonymous';i.onload=function(){res(i)};i.onerror=function(){res(null)};i.src=u})}
 async function loadImg(u){var i=await loadOne(u);if(!i)i=await loadOne('https://wsrv.nl/?url='+encodeURIComponent(u)+'&w=320');return i}
