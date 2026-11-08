@@ -403,14 +403,14 @@ function saveRec(){try{localStorage.setItem('rb_rec2',JSON.stringify(REC))}catch
 function impRec(){var m=$('rmsg'),j;try{j=JSON.parse($('rtx').value)}catch(e){m.textContent='格式錯誤，無法讀取這段內容。';return}
 if(!j||!Array.isArray(j.recs)){m.textContent='找不到 recs，請確認是戰績記錄 App 匯出的內容。';return}
 var g={},ord=[];j.recs.forEach(function(r){if(!r||!r.date||!(r.game==='符文戰場'||!r.game))return;var k=r.ek||(r.date+'|'+(r.event||''));if(!g[k]){g[k]={id:k,date:r.date,event:r.event||'未命名賽事',et:r.et||'',w:0,l:0,decks:[]};ord.push(k)}if(r.res==='W')g[k].w++;else if(r.res==='L')g[k].l++;var dk=(r.mn||'')+'|'+(r.me||''),o=g[k].decks.filter(function(d){return d.k===dk})[0];if(!o){o={k:dk,mn:r.mn||'',me:r.me||'',w:0,l:0};g[k].decks.push(o)}if(r.res==='W')o.w++;else if(r.res==='L')o.l++});
-var ev=j.ev||{},have={};REC.forEach(function(x){have[x.id]=1});var add=0,skip=0;
-ord.forEach(function(k){if(have[k]){skip++;return}var e=ev[k]||{};g[k].pn=e.pn||'';g[k].rk=e.rk||'';REC.push(g[k]);add++});
-saveRec();m.textContent='';$('rtx').value='';$('rimp').classList.add('hide');var nt=$('rnote');nt.innerHTML='<div class="c" style="border-color:var(--ok);color:var(--ok);margin-bottom:12px">✓ 已匯入 '+add+' 場賽事，略過 '+skip+' 場（已存在）。逐輪對戰細節不會保留，只統計最終成績。</div>';setTimeout(function(){nt.innerHTML=''},6000);rrec()}
+var ev=j.ev||{},have={};REC.forEach(function(x){have[x.id]=1});var add=0,skip=0,addl=[];
+ord.forEach(function(k){if(have[k]){skip++;return}var e=ev[k]||{};g[k].pn=e.pn||'';g[k].rk=e.rk||'';g[k].u=Date.now();REC.push(g[k]);addl.push(g[k]);add++});
+saveRec();recUp(addl);m.textContent='';$('rtx').value='';$('rimp').classList.add('hide');var nt=$('rnote');nt.innerHTML='<div class="c" style="border-color:var(--ok);color:var(--ok);margin-bottom:12px">✓ 已匯入 '+add+' 場賽事，略過 '+skip+' 場（已存在）。逐輪對戰細節不會保留，只統計最終成績。</div>';setTimeout(function(){nt.innerHTML=''},6000);rrec()}
 function impFile(i){var f=i.files&&i.files[0];if(!f)return;var r=new FileReader();r.onload=function(){$('rtx').value=r.result;impRec()};r.readAsText(f)}
 var LAU='<svg class="lau" viewBox="0 0 20 34" width="18" height="30" aria-hidden="true"><path d="M15 32C7 27 3 18 5 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><g fill="currentColor"><ellipse cx="4.2" cy="8" rx="2" ry="4" transform="rotate(-20 4.2 8)"/><ellipse cx="9" cy="10" rx="2" ry="4" transform="rotate(35 9 10)"/><ellipse cx="3.6" cy="15" rx="2" ry="4" transform="rotate(-35 3.6 15)"/><ellipse cx="9" cy="17.5" rx="2" ry="4" transform="rotate(45 9 17.5)"/><ellipse cx="5.2" cy="22.5" rx="2" ry="4" transform="rotate(-50 5.2 22.5)"/><ellipse cx="11" cy="24.5" rx="2" ry="3.8" transform="rotate(55 11 24.5)"/><ellipse cx="9.5" cy="29.5" rx="1.8" ry="3.2" transform="rotate(-70 9.5 29.5)"/></g></svg>';
 function lkIdx(x){if(!x.lk)return-1;for(var i=0;i<saved.length;i++){if(saved[i].deck&&saved[i].deck.t&&saved[i].deck.t===x.lk.t)return i}for(i=0;i<saved.length;i++){if(saved[i].name===x.lk.n)return i}return-1}
 function lkBtn(x,ri){var i=lkIdx(x);return i>=0?'<a class="rdk lk" onclick="viewDeck('+i+')" title="'+esc(saved[i].name)+'"><em>已連結</em><b>'+esc(saved[i].name)+'</b><u>查看牌組 →</u></a><button class="rdk ul" onclick="lkSet('+ri+',-1)">取消連結</button>':'<button class="rdk ad" onclick="lkPick('+ri+')">連結我的牌組</button>'}
-function lkSet(ri,si){var x=REC[ri];if(!x)return;if(si<0)delete x.lk;else x.lk={n:saved[si].name,t:saved[si].deck&&saved[si].deck.t||0};saveRec();lkClose();rrec()}
+function lkSet(ri,si){var x=REC[ri];if(!x)return;if(si<0)delete x.lk;else x.lk={n:saved[si].name,t:saved[si].deck&&saved[si].deck.t||0};x.u=Date.now();saveRec();recUp([x]);lkClose();rrec()}
 function lkClose(){var m=$('lkm');if(m)m.remove()}
 function lkPick(ri){lkClose();var m=document.createElement('div');m.id='lkm';m.className='lkm';m.onclick=function(e){if(e.target===m)lkClose()};
 var l=saved.length?saved.map(function(d,i){return dkCard(d,i,'lkSet('+ri+','+i+')')}).join(''):'<p class="m">還沒有已儲存的牌組。先到「＋新建牌組」建立並儲存。</p>';
@@ -424,10 +424,21 @@ function dkCrown(i){var st=[];saved.forEach(function(d,k){var W=0,L=0,n=0;REC.fo
 st.sort(function(a,b){return b.r-a.r||b.g-a.g||b.n-a.n});var p=-1;st.slice(0,3).forEach(function(s,q){if(s.k===i)p=q});if(p<0)return'';var nmz=['金冠','銀冠','銅冠'][p];
 var C=[["#FFF4B8", "#F0C94A", "#B8860B", "#6E4A0C"], ["#FFFFFF", "#D3D9E2", "#8D97A6", "#556070"], ["#FFD9AE", "#DB8F4A", "#A25A1F", "#62360F"]][p],g='dcg'+p;
 return'<span class="dcr" title="戰績第 '+(p+1)+' 名牌組（依勝率）" aria-label="'+nmz+'"><svg viewBox="0 0 32 28" width="28" height="25"><defs><linearGradient id="'+g+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+C[0]+'"/><stop offset=".35" stop-color="'+C[1]+'"/><stop offset=".7" stop-color="'+C[2]+'"/><stop offset="1" stop-color="'+C[3]+'"/></linearGradient><linearGradient id="'+g+'b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="'+C[3]+'"/><stop offset=".5" stop-color="'+C[1]+'"/><stop offset="1" stop-color="'+C[0]+'"/></linearGradient></defs><path d="M3 21 1.5 7.5l7 6L16 3l7.5 10.5 7-6L29 21z" fill="url(#'+g+')" stroke="'+C[3]+'" stroke-width="1" stroke-linejoin="round"/><path d="M3.6 17 2.8 10l5.4 4.6L16 5.4 12 15.5z" fill="#fff" opacity=".28"/><rect x="3" y="21.5" width="26" height="4.2" rx="1.4" fill="url(#'+g+'b)" stroke="'+C[3]+'" stroke-width="1"/><circle cx="1.8" cy="7.2" r="1.7" fill="'+C[0]+'" stroke="'+C[3]+'" stroke-width=".7"/><circle cx="16" cy="3" r="1.9" fill="'+C[0]+'" stroke="'+C[3]+'" stroke-width=".7"/><circle cx="30.2" cy="7.2" r="1.7" fill="'+C[0]+'" stroke="'+C[3]+'" stroke-width=".7"/><circle cx="16" cy="23.6" r="1.1" fill="#fff" opacity=".85"/></svg></span>'}
+function recRow(x){return{user_id:user.id,id:x.id,data:x,updated_at:new Date(x.u||Date.now()).toISOString()}}
+async function recUp(l){if(!sb||!user||!l.length)return;try{var r=await sb.from('records').upsert(l.map(recRow),{onConflict:'user_id,id'});if(r&&r.error)am('戰績雲端儲存失敗：'+r.error.message)}catch(e){am('戰績雲端儲存失敗')}}
+async function recDel(id){if(!sb||!user)return;try{var r=await sb.from('records').delete().eq('id',id);if(r&&r.error)am('戰績雲端刪除失敗：'+r.error.message)}catch(e){am('戰績雲端刪除失敗')}}
+async function recSync(){if(!sb||!user)return;var r;try{r=await sb.from('records').select('id,data,updated_at')}catch(e){r={error:{message:'連線失敗'}}}
+if(r.error){am($('am').textContent+' 戰績同步失敗：'+r.error.message);return}
+var cl={};(r.data||[]).forEach(function(c){var d=c.data||{};d.id=c.id;if(!d.u)d.u=Date.parse(c.updated_at)||0;cl[c.id]=d});
+var lc={};REC.forEach(function(x){lc[x.id]=x});var up=[],out=[];
+Object.keys(cl).forEach(function(k){var c=cl[k],l=lc[k];if(!l||(c.u||0)>(l.u||0)){lc[k]=c}else if((l.u||0)>(c.u||0)){up.push(l)}});
+REC.forEach(function(x){if(!cl[x.id]){if(!x.u)x.u=Date.now();up.push(x)}});
+REC=Object.keys(lc).map(function(k){return lc[k]});saveRec();await recUp(up);
+if(!$('s7').classList.contains('hide'))rrec();$('am').textContent+=' 戰績 '+REC.length+' 場。'}
 function nrm(t){return String(t||'').toLowerCase().replace(/[\s·・,，.\-_]/g,'')}
 function rdkMatch(me,mn){var m=nrm(me),c=[];if(!m)return-1;saved.forEach(function(d,i){var u=unpack(d.deck),k=Object.keys(u.main).filter(function(x){var y=nm(x);return y&&sec(y)==='L'})[0],y=k&&nm(k);if(!y)return;var ns=[y.name,N(y)].map(nrm).filter(Boolean);if(ns.some(function(n){return n===m||n.indexOf(m)>-1||m.indexOf(n)>-1}))c.push(i)});
 if(!c.length)return-1;var mm=nrm(mn),p=c.filter(function(i){return mm&&nrm(saved[i].name).indexOf(mm)>-1});return p.length?p[0]:c[0]}
-function delRec(i){if(confirm('刪除這筆賽事成績？')){REC.splice(i,1);saveRec();rrec()}}
+function delRec(i){if(confirm('刪除這筆賽事成績？')){var id=REC[i]&&REC[i].id;REC.splice(i,1);saveRec();if(id)recDel(id);rrec()}}
 function rrec(){var E=$('rbody');if(!REC.length){E.innerHTML='<div class="c m">還沒有賽事成績，按右上「開啟戰績記錄 App」記錄，再用「匯入」帶進來。</div>';return}
 var W=0,L=0,rk=[],pc=[];REC.forEach(function(x){W+=x.w;L+=x.l;var r=+x.rk,p=+x.pn;if(r>0){rk.push(r);if(p>0)pc.push(r/p)}});
 var best=rk.length?Math.min.apply(null,rk):0,avg=rk.length?(rk.reduce(function(a,b){return a+b},0)/rk.length).toFixed(1):'—',pct=W+L?Math.round(W/(W+L)*100):0;
@@ -701,7 +712,7 @@ async function sync(){if(!sb||!user)return;var r=await sb.from('decks').select('
 var cl={};r.data.forEach(function(d){cl[d.name]=d.deck});var local={};saved.forEach(function(d){local[d.name]=d.deck});
 for(var n in cl)local[n]=cl[n];saved=Object.keys(local).map(function(n){return{name:n,deck:local[n]}});sv('rb_saved',saved);rsaved();
 var up=saved.filter(function(d){return!cl[d.name]}).map(function(d){return{user_id:user.id,name:d.name,deck:d.deck}});
-if(up.length)await sb.from('decks').upsert(up,{onConflict:'user_id,name'});am('已同步 '+saved.length+' 組牌組。')}
+if(up.length)await sb.from('decks').upsert(up,{onConflict:'user_id,name'});am('已同步 '+saved.length+' 組牌組。');if(typeof recSync==='function')await recSync()}
 async function push(n){if(!sb||!user)return null;var d=saved.filter(function(x){return x.name===n})[0];if(!d)return false;
 var r=await sb.from('decks').upsert({user_id:user.id,name:n,deck:d.deck,updated_at:new Date().toISOString()},{onConflict:'user_id,name'});if(r.error){alert('雲端儲存失敗：'+r.error.message);return false}return true}
 if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;uiAcc();if(user)setTimeout(sync,0)});
