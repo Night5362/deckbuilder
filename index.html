@@ -811,7 +811,7 @@ if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;uiAcc();if(
 function loadOne(u){return new Promise(function(res){var i=new Image();i.crossOrigin='anonymous';i.onload=function(){res(i)};i.onerror=function(){res(null)};i.src=u})}
 async function loadImg(u){var i=await loadOne(u);if(!i)i=await loadOne('https://wsrv.nl/?url='+encodeURIComponent(u)+'&w=320');return i}
 var lastItems=[];
-function zi(c){if(L!=='zh')return '';var z=Z(c);if(z.img)return z.img;if(zh._imgdir)return zh._imgdir+c.id.toLowerCase()+(zh._imgext||'.png');return ''}
+function zi(c){if(L!=='zh')return '';var z=Z(c);if(z.img)return z.img;if(zh._imgdir)return zh._imgdir+c.id.toLowerCase().replace(/\*/g,'star')+(zh._imgext||'.png');return ''}
 function pic(c){return zi(c)||c.img}
 function thumb(c){var u=pic(c);return'<span class="th">'+(u?'<img loading="lazy"'+(sec(c)==='B'?' onload="bfFix(this,1)"':'')+' src="'+esc(u)+'" data-o="'+esc(c.img)+'" alt="" style="max-width:100%;max-height:100%;width:auto;height:auto;border-radius:4px" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</span>'}
 async function loadAny(c){var u=zi(c),i=null;if(u)i=await loadOne(u);if(!i&&c.img)i=await loadImg(c.img);return i}
