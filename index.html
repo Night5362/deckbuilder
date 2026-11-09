@@ -533,15 +533,16 @@ E.innerHTML=L1+(typeof dkStats==='function'?dkStats(vi):'')+'<div class="vwrap">
 function edLeave(){var ed=ld('rb_edn',''),has=anyCards()||champ||$('dn').value.trim();
 if(has||ed){var m=ed?'要離開編輯嗎？\n離開會視為取消編輯，對「'+ed+'」所做的修改都不會儲存。':'要離開嗎？\n離開後，目前新建牌組的進度會被清空。';if(!confirm(m))return false}
 deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);sv('rb_edn','');cnt();updBadges();return true}
-function tab(n){if(curTab===2&&n!==2&&!edLeave())return;var was=curTab;curTab=n;window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
+function tab(n){if(curTab===2&&n!==2&&!edLeave())return;var was=curTab;curTab=n;if(was!==n)resetFilt();window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
 $('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2){rdeck();edBtn()}if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview();if(n===7)rrec()}
 function setEdv(v){edv=v;var w=$('edw');w.classList.toggle('vc',v==='c');w.classList.toggle('vd',v==='d');$('edc').classList.toggle('on',v==='c');$('edd').classList.toggle('on',v==='d')}
 function dTab(k){$('dp1').classList.toggle('hide',k!==1);$('dp2').classList.toggle('hide',k!==2);$('dt1').classList.toggle('on',k===1);$('dt2').classList.toggle('on',k===2)}
 function newDeck(){var ed=ld('rb_edn','');if(anyCards()&&!confirm(ed?'目前正在編輯「'+ed+'」，改為新建牌組會視為取消編輯，修改不會儲存（已儲存的牌組不受影響），要繼續嗎？':'目前編輯中的牌組會被清空（已儲存的牌組不受影響），要新建牌組嗎？'))return;sv('rb_edn','');deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);cnt();updBadges();edv='c';tab(2)}
 var CATS=[['','全部'],['L','傳奇'],['M','主牌組'],['B','戰場'],['R','符文']];
-function catVal(k){if(!k)return'';if(k==='M')return'@M';var c=cards.filter(function(x){return sec(x)===k})[0];return c?c.type:''}
-function setCat(k){$('ft').value=catVal(k);if($('ft').value!==catVal(k))$('ft').value='';rr()}
-function syncCat(){tbLab();var e=$('cat');if(!e)return;var f=$('ft').value;e.innerHTML=CATS.map(function(c){var v=catVal(c[0]);return'<button class="'+((f||'')===v?'on':'')+'" onclick="setCat(\''+c[0]+'\')">'+c[1]+'</button>'}).join('')}
+function cTy(c){if(c._ts&&c._tt===c.type)return c._ts;var s=String(c.type||''),l=s.toLowerCase(),r=[];TYPEO.forEach(function(t){if(l.indexOf(t)>-1)r.push(t)});if(!r.length&&s)r=[l];c._ts=r;c._tt=c.type;return r}
+function catKeys(k){var a=k==='M'?['unit','spell','gear']:k==='L'?['legend']:k==='B'?['battlefield']:k==='R'?['rune']:[];var e={};cards.forEach(function(c){if(vis(c))cTy(c).forEach(function(t){e[t]=1})});return a.filter(function(t){return e[t]})}
+function setCat(k){sel.ft={};catKeys(k).forEach(function(t){sel.ft[t]=1});rr()}
+function syncCat(){tbLab();var e=$('cat');if(!e)return;var fk=Object.keys(sel.ft);e.innerHTML=CATS.map(function(c){var ck=catKeys(c[0]);return'<button class="'+((!c[0]?fk.length===0:(ck.length&&ck.length===fk.length&&ck.every(function(t){return sel.ft[t]})))?'on':'')+'" onclick="setCat(\''+c[0]+'\')">'+c[1]+'</button>'}).join('')}
 function setOf(c){return(String(c.id).match(/^[A-Za-z]+/)||[''])[0].slice(0,3).toUpperCase()}
 function uq(a){var o={};a.forEach(function(x){if(x!==''&&x!=null)o[x]=1});return Object.keys(o)}
 var HIDE=/^(jdg|opp)/i;
@@ -576,7 +577,7 @@ function setCmp(a,b){var i=SETO.indexOf(a),j=SETO.indexOf(b);i=i<0?99:i;j=j<0?99
 var VARN={Standard:'標準','Alt Art':'異畫',Overnumbered:'超編',Promo:'特典',Signed:'簽名'},VARO=['Standard','Alt Art','Overnumbered','Promo','Signed'];
 function vOf(c){return c.v||'Standard'}
 function varCmp(a,b){var i=VARO.indexOf(a),j=VARO.indexOf(b);i=i<0?99:i;j=j<0?99:j;return i-j||(a<b?-1:a>b?1:0)}
-var sel={fs:{},fd:{},sr:{}};
+var sel={fs:{},fd:{},sr:{},ft:{}};
 function nk(o){return Object.keys(o).length}
 function fo(id,a,f){$(id).innerHTML=a.map(function(x){return'<button class="chip'+(sel[id][x]?' on':'')+'" data-v="'+esc(x)+'" onclick="tg(\''+id+'\',this.dataset.v)">'+esc(f?f(x):x)+'</button>'}).join('')}
 var FO={fs:[]},FN={fs:'彈數'},RG=[['cost','法力',0,12],['power','符能',0,4],['might','戰力',0,12]];
@@ -594,18 +595,19 @@ function rgPaint(it){var r=RG[+it.dataset.i],lo=it.querySelector('.rlo'),hi=it.q
 function rgIn(it,inp){var r=RG[+it.dataset.i],lo=it.querySelector('.rlo'),hi=it.querySelector('.rhi');if(+lo.value>+hi.value){if(inp===lo)lo.value=hi.value;else hi.value=lo.value}var a=+lo.value,z=+hi.value;if(a===r[2]&&z===r[3])delete sel.sr[r[0]];else sel.sr[r[0]]=[a,z];rgPaint(it);rgLab();upBtn()}
 function rgClear(){sel.sr={};[].forEach.call(document.querySelectorAll('#tsw .rgi'),function(it){var r=RG[+it.dataset.i];it.querySelector('.rlo').value=r[2];it.querySelector('.rhi').value=r[3];rgPaint(it)});rgLab();upBtn();rr()}
 function pickMS(id,el){var v=el.dataset.v;tg(id,v);el.classList.toggle('on',!!sel[id][v])}
-function upBtn(){var a=nk(sel.fs)+nk(sel.sr)+nk(sel.fd)+($('ft').value?1:0),c=$('bcl');if(c)c.classList.toggle('act',a>0)}
+function upBtn(){var a=nk(sel.fs)+nk(sel.sr)+nk(sel.fd)+nk(sel.ft),c=$('bcl');if(c)c.classList.toggle('act',a>0)}
 function tg(id,v){if(sel[id][v])delete sel[id][v];else sel[id][v]=1;fill2();rr();upBtn()}
 function clearMore(){clearAll()}
-function clearAll(){sel={fs:{},fd:{},sr:{}};$('ft').value='';fill2();rr();upBtn()}
-function tbLab(){var s=$('ft'),o=s.options[s.selectedIndex],t=$('tb');if(t)t.textContent=(s.value&&o?'類型：'+o.text:'類型')+' ▾';t.classList.toggle('on',!!s.value)}
-function tIc(v){var m=zh._typeicons||{},k=String(v||'main').toLowerCase().replace('@m','main'),u='';for(var x in m)if(String(x).toLowerCase()===k){u=m[x];break}if(!u&&v&&v!=='@M')u='images/icons/'+v+'.svg';return u}
-function tCnt(v){var a=cards.filter(vis);return v===''?a.length:v==='@M'?a.filter(function(c){return sec(c)==='M'}).length:a.filter(function(c){return c.type===v}).length}
-function openTS(){var s=$('ft'),h='<div class="tsb" onclick="closeTS()"></div><div class="tss"><div class="tsg"></div><div class="tsh"><span>類型</span><button class="tsx" onclick="closeTS()" aria-label="關閉">✕</button></div><div class="tsl">';for(var i=0;i<s.options.length;i++){var o=s.options[i];if(o.value==='')continue;var u=tIc(o.value);h+='<button class="tso'+(o.value===s.value?' on':'')+'" data-i="'+i+'" onclick="pickTS(this.dataset.i)"><span class="tck"></span><span class="tic">'+(u?'<img src="'+esc(u)+'" alt="" onerror="this.remove()">':'')+'</span><span class="tnm">'+esc(o.text)+'</span><span class="tn">'+tCnt(o.value)+'</span></button>'}h+='</div></div>';var e=$('tsw');if(!e){e=document.createElement('div');e.id='tsw';document.body.appendChild(e)}e.innerHTML=h;e.className='';void e.offsetWidth;e.className='open'}
+function resetFilt(){sel={fs:{},fd:{},sr:{},ft:{}};var f=$('ft');if(f)f.value='';var r=$('fbar');if(r)r.scrollLeft=0}
+function clearAll(){sel={fs:{},fd:{},sr:{},ft:{}};$('ft').value='';fill2();rr();upBtn()}
+function tbLab(){var k=Object.keys(sel.ft),t=$('tb'),s=$('ft');if(!t)return;var nm='';if(k.length===1)for(var i=0;i<s.options.length;i++)if(s.options[i].value===k[0])nm=s.options[i].text;t.textContent=(k.length===1?'類型：'+(nm||k[0]):k.length?'類型：'+k.length+' 項':'類型')+' ▾';t.classList.toggle('on',k.length>0)}
+function tIc(v){var m=zh._typeicons||{},k=String(v||'').toLowerCase(),u='';for(var x in m)if(String(x).toLowerCase()===k){u=m[x];break}if(!u&&v)u='images/icons/'+v.charAt(0).toUpperCase()+v.slice(1)+'.svg';return u}
+function tCnt(v){return cards.filter(vis).filter(function(c){return cTy(c).indexOf(v)>-1}).length}
+function openTS(){var s=$('ft'),h='<div class="tsb" onclick="closeTS()"></div><div class="tss"><div class="tsg"></div><div class="tsh"><span>類型</span><button class="tsx" onclick="closeTS()" aria-label="關閉">✕</button></div><div class="tsl">';for(var i=0;i<s.options.length;i++){var o=s.options[i];if(o.value==='')continue;var u=tIc(o.value);h+='<button class="tso'+(sel.ft[o.value]?' on':'')+'" data-v="'+esc(o.value)+'" onclick="pickTS(this)"><span class="tck"></span><span class="tic">'+(u?'<img src="'+esc(u)+'" alt="" onerror="this.remove()">':'')+'</span><span class="tnm">'+esc(o.text)+'</span><span class="tn">'+tCnt(o.value)+'</span></button>'}h+='</div><div class="tsd"><button onclick="closeTS()">完成</button></div></div>';var e=$('tsw');if(!e){e=document.createElement('div');e.id='tsw';document.body.appendChild(e)}e.innerHTML=h;e.className='';void e.offsetWidth;e.className='open'}
 function closeTS(){var e=$('tsw');if(e)e.className=''}
-function pickTS(i){var s=$('ft'),v=s.options[+i].value;if(v===s.value)s.value='';else s.selectedIndex=+i;closeTS();rr()}
-function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(vis(c)&&c.type)t[c.type]=1});
-s.innerHTML='<option value="">所有類型</option><option value="@M">主牌組（單位／法術／裝備）</option>'+Object.keys(t).sort(typeCmp).map(function(k){return'<option value="'+esc(k)+'">'+esc(tlab(k))+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
+function pickTS(el){var v=el.dataset.v;if(sel.ft[v])delete sel.ft[v];else sel.ft[v]=1;el.classList.toggle('on',!!sel.ft[v]);rr()}
+function fill(){var s=$('ft'),v=s.value,t={};cards.forEach(function(c){if(vis(c)&&c.type)cTy(c).forEach(function(x){t[x]=1})});
+s.innerHTML='<option value="">所有類型</option>'+Object.keys(t).sort(typeCmp).map(function(k){return'<option value="'+esc(k)+'">'+esc(tlab(k))+'</option>'}).join('');s.value=v;$('lg').value=L;fill2()}
 var PGSZ=30,pg=1;
 function rr(){pg=1;render()}
 function goPg(p){pg=p;render();window.scrollTo(0,0)}
@@ -620,9 +622,9 @@ var o=pl.map(function(i){return i?'<button class="btn pgn'+(i===pg?' p':'')+'"'+
 return top+'<div class="pgr"><button class="btn pgn pgw"'+(pg<=1?' disabled':'')+' onclick="goPg('+(pg-1)+')" aria-label="上一頁">'+(md.t?'‹ 上一頁':'‹')+'</button>'+o+'<button class="btn pgn pgw"'+(pg>=tp?' disabled':'')+' onclick="goPg('+(pg+1)+')" aria-label="下一頁">'+(md.t?'下一頁 ›':'›')+'</button></div>'}
 function pgMode(){var l=$('list'),w=(l&&l.clientWidth)||window.innerWidth;return w>=640?{s:2,t:1,k:'w'}:w>=440?{s:2,t:0,k:'m'}:{s:1,t:0,k:'n'}}
 var _pgk='';window.addEventListener('resize',function(){clearTimeout(window._pgt);window._pgt=setTimeout(function(){var l=$('list');if(!l||!l.offsetParent)return;var k=pgMode().k;if(_pgk&&k!==_pgk&&typeof render==='function')render();_pgk=k},150)});
-function render(){var q=$('q').value.toLowerCase(),f=$('ft').value,E=$('list');syncCat();hlDom();
+function render(){var q=$('q').value.toLowerCase(),f=sel.ft,E=$('list');syncCat();hlDom();
 if(!cards.length){E.innerHTML='<div class="c m">'+(ADMIN?'還沒有卡片資料。請到「資料」分頁載入。':'卡片資料準備中，請稍後再回來。')+'</div>';return}
-var r=cards.filter(function(c){return vis(c)&&!(curTab===2&&domBad(c))&&(!f||(f==='@M'?sec(c)==='M':c.type===f))&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&rgOk(c)&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
+var r=cards.filter(function(c){return vis(c)&&!(curTab===2&&domBad(c))&&(!nk(f)||cTy(c).some(function(t){return f[t]}))&&(!nk(sel.fs)||sel.fs[setOf(c)])&&(!nk(sel.fd)||c.dom.some(function(d){return sel.fd[d]}))&&rgOk(c)&&(!q||(c.name+' '+c.text+' '+(Z(c).name||'')+' '+(Z(c).text||'')).toLowerCase().indexOf(q)>-1)});
 var gs={},gl=[];r.forEach(function(c){var k=c.name.toLowerCase(),i=gs[k];if(i==null){gs[k]=gl.length;gl.push(c)}else if(vOf(gl[i])!=='Standard'&&vOf(c)==='Standard')gl[i]=c});r=gl;
 var tp=Math.max(1,Math.ceil(r.length/PGSZ));if(pg>tp)pg=tp;if(pg<1)pg=1;
 E.innerHTML=pager(r.length,tp,0)+r.slice((pg-1)*PGSZ,pg*PGSZ).map(function(c){
@@ -686,7 +688,7 @@ var by=all.filter(function(c){return pref(c.name)===pref(leg.name)});return by.l
 function okCh(k){var l=legOf();if(!l||!deck[k])return false;var n=nm(k).name;return cands(l).some(function(x){return x.name===n})}
 function setChamp(v){v=decodeURIComponent(v);if(!okCh(v))return;champ=champ===v?'':v;sv('rb_champ',champ);rdeck()}
 function fixChamp(){if(champ&&!okCh(champ)){champ='';sv('rb_champ',champ)}}
-function pickLegend(){if($('s2').classList.contains('hide'))tab(2);setEdv('c');var t=cards.filter(function(c){return sec(c)==='L'})[0];if(t){$('ft').value=t.type}rr()}
+function pickLegend(){if($('s2').classList.contains('hide'))tab(2);setEdv('c');var t=cards.filter(function(c){return sec(c)==='L'})[0];sel.ft={};if(t)catKeys('L').forEach(function(x){sel.ft[x]=1});rr()}
 function check(){var S={L:0,B:0,R:0,M:0},cp={},leg=null,cc=champ?nm(champ):null,out=[],k,c,bad=[],sd=0;
 function a2(ok,t){out.push({ok:ok,t:t})}
 function chk(c){var x=c.dom.filter(function(d){return d!=='Colorless'&&leg.dom.indexOf(d)<0});if(x.length&&bad.indexOf(N(c))<0)bad.push(N(c))}
