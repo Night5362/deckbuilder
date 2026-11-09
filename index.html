@@ -533,7 +533,7 @@ E.innerHTML=L1+(typeof dkStats==='function'?dkStats(vi):'')+'<div class="vwrap">
 function edLeave(){var ed=ld('rb_edn',''),has=anyCards()||champ||$('dn').value.trim();
 if(has||ed){var m=ed?'要離開編輯嗎？\n離開會視為取消編輯，對「'+ed+'」所做的修改都不會儲存。':'要離開嗎？\n離開後，目前新建牌組的進度會被清空。';if(!confirm(m))return false}
 deck={};side={};champ='';$('dn').value='';sv('rb_deck',deck);sv('rb_side',side);sv('rb_champ',champ);sv('rb_edn','');cnt();updBadges();return true}
-function tab(n){if(curTab===2&&n!==2&&!edLeave())return;var was=curTab;curTab=n;if(was!==n)resetFilt();window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
+function tab(n){if(curTab===2&&n!==2&&!edLeave())return;var was=curTab;curTab=n;try{if(n===2)sessionStorage.setItem('rb_t2','1');else sessionStorage.removeItem('rb_t2')}catch(e){}if(was!==n)resetFilt();window.scrollTo(0,0);sbToggle(0);sbStat();var V={0:[0],1:[1],2:[1,2],3:[3],4:[4],5:[5],6:[6],7:[7]}[n]||[0];for(var i=0;i<=7;i++){var se=$('s'+i),nb=$('n'+i);if(se)se.classList.toggle('hide',V.indexOf(i)<0);if(nb)nb.classList.toggle('on',i===n||(n===6&&i===5))}
 $('edw').classList.toggle('two',n===2);document.body.classList.toggle('ed',n===2);setEdv(edv);if(n===0)rhome();if(n===1||n===2)render();if(n===2){rdeck();edBtn()}if(n===2&&was!==2)setCat(legOf()?'M':'L');if(n===5)rsaved();if(n===6)rview();if(n===7)rrec()}
 function setEdv(v){edv=v;var w=$('edw');w.classList.toggle('vc',v==='c');w.classList.toggle('vd',v==='d');$('edc').classList.toggle('on',v==='c');$('edd').classList.toggle('on',v==='d')}
 function dTab(k){$('dp1').classList.toggle('hide',k!==1);$('dp2').classList.toggle('hide',k!==2);$('dt1').classList.toggle('on',k===1);$('dt2').classList.toggle('on',k===2)}
@@ -889,6 +889,8 @@ try{if('serviceWorker' in navigator){var had=!!navigator.serviceWorker.controlle
 sig().then(function(v){SIG0=v});
 document.addEventListener('visibilitychange',function(){if(!document.hidden)chkUpdate()});setInterval(chkUpdate,300000);
 fill();render();cnt();rhome();loadPublic();
+window.addEventListener('beforeunload',function(e){try{if(curTab===2&&(anyCards()||champ||$('dn').value.trim()||ld('rb_edn',''))){e.preventDefault();e.returnValue='';return ''}}catch(x){}});
+try{if(sessionStorage.getItem('rb_t2')&&(anyCards()||champ||ld('rb_edn','')))tab(2)}catch(e){}
 </script>
 </body>
 </html>
