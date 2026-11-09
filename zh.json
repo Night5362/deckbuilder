@@ -3,15 +3,15 @@
   "_imgext": ".webp",
   "_icons": {
     "0": "images/icons/0.svg",
-	"1": "images/icons/1.svg",
+    "1": "images/icons/1.svg",
     "2": "images/icons/2.svg",
-	"3": "images/icons/3.svg",
+    "3": "images/icons/3.svg",
     "4": "images/icons/4.svg",
-	"5": "images/icons/5.svg",
+    "5": "images/icons/5.svg",
     "6": "images/icons/6.svg",
-	"7": "images/icons/7.svg",
+    "7": "images/icons/7.svg",
     "8": "images/icons/8.svg",
-	"9": "images/icons/9.svg",
+    "9": "images/icons/9.svg",
     "fury": "images/icons/Fury2.svg",
     "狂怒": "images/icons/Fury2.svg",
     "calm": "images/icons/Calm2.svg",
@@ -28,27 +28,10 @@
     "A": "images/icons/RainbowRune.png",
     "rune": "images/icons/rune.svg",
     "TAP": "images/icons/Tap.svg",
-	"E": "images/icons/Tap.svg",
+    "E": "images/icons/Tap.svg",
     "might": "images/icons/might.svg",
     "M": "images/icons/might.svg"
   },
-  "_iconflip": [
-    "might",
-    "M",
-	"0",
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
-	"TAP",
-	"E"
-	
-  ],
   "_kwcolors": {
     "加速": "#127463",
     "ACCELERATE": "#127463",
@@ -56,18 +39,33 @@
     "REACTION": "#127462",
     "強襲": "#cf2e6f",
     "ASSAULT": "#cf2e6f",
-	"堅守": "#cf2e6f",
-    "SHIELD": "#cf2e6f",
-	"坦克": "#cf2e6f",
+    "堅守": "#cf2e6f",
+    "SHIELD": "#96b52a",
+    "坦克": "#cf2e6f",
     "TANK": "#cf2e6f",
     "法盾": "#96b52a",
-    "SHIELD": "#96b52a",
-	"遊走": "#96b52a",
+    "遊走": "#96b52a",
     "GANKING": "#96b52a",
     "增添": "#727171",
     "ADD": "#727171",
-	"強大": "#727171",
+    "強大": "#727171",
     "MIGHTY": "#727171"
+  },
+  "_kwgray": "#7f7f87",
+  "_kwgrayList": [
+    "Empower",
+    "賦能",
+    "Equip",
+    "裝配"
+  ],
+  "_typeicons": {
+    "main": "images/icons/Main.svg",
+    "legend": "images/icons/Legend.svg",
+    "battlefield": "images/icons/Battlefield.svg",
+    "unit": "images/icons/Unit.svg",
+    "spell": "images/icons/Spell.svg",
+    "gear": "images/icons/Gear.svg",
+    "rune": "images/icons/Rune.svg"
   },
   "blazing scorcher": {
     "en": "Blazing Scorcher",
@@ -391,37 +389,37 @@
     "en": "Sunlit Guardian",
     "name": "日輝守衛",
     "en_text": "[Shield] (+1 [Might] while I'm a defender.)\n[Tank] (I must be assigned combat damage first.)",
-    "text": ""
+    "text": "[堅守](我為防守方時+1[M])\n[坦克](戰鬥傷害必須優先分配給我)"
   },
   "wielder of water": {
     "en": "Wielder of Water",
-    "name": "",
+    "name": "御水者",
     "en_text": "While I'm attacking or defending alone, I have +2 [Might].",
-    "text": ""
+    "text": "我單獨進攻或防守時，獲得+2[M]。"
   },
   "adaptatron": {
     "en": "Adaptatron",
-    "name": "",
+    "name": "適應器",
     "en_text": "When I conquer, you may kill a gear. If you do, buff me. (If I don't have a buff, I get a +1 [Might] buff.)",
-    "text": ""
+    "text": "當我征服一處戰場，你可以摧毀一件裝備。若你這麼做，強化我(若我上無增一，則獲得+1[M]增益)。"
   },
   "block": {
     "en": "Block",
-    "name": "",
+    "name": "格擋",
     "en_text": "[HIDDEN]  (Hide now for [Rune] to react with later for [0].)\n[ACTION] (Play on your turn or in showdowns.)\n\nGive a unit [SHIELD 3] and [TANK] this turn. (+3 [Might] while it's a defender. It must be assigned combat damage first.)",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n[行動](可在你的回合或法術對決時打出)\n本回合給予1個單位[堅守 3]和[坦克](作為防守方時+3[M]。戰鬥傷害必須優先分配給此牌)。)"
   },
   "discipline": {
     "en": "Discipline",
-    "name": "",
+    "name": "紀律",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\n\nGive a unit +2 [Might] this turn. Draw 1.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n本回合給予1個單位+2[M]。\n抽1張卡牌。"
   },
   "eclipse herald": {
     "en": "Eclipse Herald",
-    "name": "",
+    "name": "日蝕使者",
     "en_text": "When you stun an enemy unit, ready me and give me +1 [Might] this turn.",
-    "text": ""
+    "text": "當你暈眩1個敵方單位，活化我必在本回合給予我+1[M]"
   },
   "mask of foresight": {
     "en": "Mask of Foresight",
@@ -1517,9 +1515,9 @@
   },
   "baited hook": {
     "en": "Baited Hook",
-    "name": "",
+    "name": "誘餌鉤",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[1] [order], [tap]: Kill a friendly unit. Look at the top 5 cards of\nyour Main Deck. You may banish a unit from among them\nthat has Might up to 1 more than the killed unit and play it,\nignoring its cost. Then recycle the rest.",
-    "text": ""
+    "text": "[1][Order]、[E]：擊殺1個友方單位。查看你的主牌堆最上方的5張卡牌。你可以放逐其中1個戰力比被擊殺單位高最多1點的單位，無視費用將其直接打出，然後回收其餘卡牌。"
   },
   "darius, executioner": {
     "en": "Darius, Executioner",
@@ -1547,63 +1545,63 @@
   },
   "kai'sa, daughter of the void": {
     "en": "Kai'Sa, Daughter of the Void",
-    "name": "",
+    "name": "凱莎-虛空之女",
     "en_text": "[Tap]: [REACTION] – [ADD] [Rune]. Use only to play spells. (Abilities that add resources can't be reacted to.)",
-    "text": ""
+    "text": "[E]：[反應]－[增添][A]限用於打出法術(增添資源的技能無法被反應)。"
   },
   "icathian rain": {
     "en": "Icathian Rain",
-    "name": "",
+    "name": "伊卡西亞魔雨",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗦𝗽𝗶𝗿𝗶𝘁𝗳𝗼𝗿𝗴𝗲𝗱 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nDeal 2 to a unit.\nDeal 2 to a unit.\nDeal 2 to a unit.\nDeal 2 to a unit.\nDeal 2 to a unit.\nDeal 2 to a unit.",
-    "text": ""
+    "text": "對1個單位造成2點傷害。\n對1個單位造成2點傷害。\n對1個單位造成2點傷害。\n對1個單位造成2點傷害。\n對1個單位造成2點傷害。\n對1個單位造成2點傷害。"
   },
   "volibear, relentless storm": {
     "en": "Volibear, Relentless Storm",
-    "name": "",
+    "name": "弗力貝爾-無情風暴",
     "en_text": "When you play a [MIGHTY] unit, you may exhaust me to channel 1 rune exhausted. (A unit is Mighty while it has 5+ [Might]",
-    "text": ""
+    "text": "當你打出1個[強大]單位，你可以休眠我來招喚1枚休眠狀態的符文(擁有+5[M]即為強大單位)。"
   },
   "stormbringer": {
     "en": "Stormbringer",
-    "name": "",
+    "name": "風暴使者",
     "en_text": "Choose a friendly unit in your base. Deal damage equal to its Might to all enemy units at a battlefield, then move your unit there.",
-    "text": ""
+    "text": "選擇你的基地的1個友方單位。對1個戰場上的所有敵方單位造成等同該單位戰力的傷害，然後將其移動至該戰場。"
   },
   "jinx, loose cannon": {
     "en": "Jinx, Loose Cannon",
-    "name": "",
+    "name": "吉茵珂絲-暴走重砲",
     "en_text": "At start of your Beginning Phase, draw 1 if you have 1 or fewer cards in your hand.",
-    "text": ""
+    "text": "你的起始階段開始時，若你的手牌不超過1張，抽1張卡牌。"
   },
   "super mega death rocket!": {
     "en": "Super Mega Death Rocket!",
-    "name": "",
+    "name": "超威能死亡火箭！",
     "en_text": "Deal 5 to a unit.\nWhen you conquer, you may discard 1 to return this from your trash to your hand.",
-    "text": ""
+    "text": "對1個單位造成5點傷害。當你征服一處戰場，你可以棄置1張卡牌，將此牌從你的棄牌堆返回你的手牌。"
   },
   "darius, hand of noxus": {
     "en": "Darius, Hand of Noxus",
-    "name": "",
+    "name": "達瑞斯-諾克薩斯之力",
     "en_text": "[Tap] [REACTION], [LEGION] – [ADD] [1] (Abilities that add resources can't be reacted to. Get the effect if you've played a card this turn.)",
-    "text": ""
+    "text": "[E]：[反應]、[軍團]－[增添][1](增添資源的技能無法成為反應目標。若你在本回合打出過卡牌，獲得此效果)。)"
   },
   "noxian guillotine": {
     "en": "Noxian Guillotine",
-    "name": "",
+    "name": "諾克薩斯斷頭台",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\nChoose a unit. Kill it the next time it takes damage this turn.\n[LEGION] – Kill it now instead. (Get the effect if you've played another card this turn.)",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n選擇1個單位。本回合該單位下次受到傷害時，將其擊殺。\n[軍團]－改為立刻擊殺該單位(若你在本回合打出過其他卡牌，獲得此效果)。"
   },
   "ahri, nine-tailed fox": {
     "en": "Ahri, Nine-Tailed Fox",
-    "name": "",
+    "name": "阿璃-九尾妖狐",
     "en_text": "When an enemy unit attacks a battlefield you control, give it -1 [Might] this turn, to a minimum of 1 [Might].",
-    "text": ""
+    "text": "當敵方單位進攻你控制的戰場，本回合給予該單位-1[M]，最低降至1[M]。"
   },
   "fox-fire": {
     "en": "Fox-Fire",
-    "name": "",
+    "name": "魅火",
     "en_text": "[HIDDEN] (Hide now for [Rune] to react with later for [0].)\n[ACTION] (Play on your turn or in showdowns.)\nKill any number of units at a battlefield with total Might 4 or less.",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n[行動](可在你的回合或法術對決時打出)\n在一處戰場上擊殺任意數量的單位，總戰力為4以下"
   },
   "lee sin, blind monk": {
     "en": "Lee Sin, Blind Monk",
@@ -3203,9 +3201,9 @@
   },
   "fiora, grand duelist": {
     "en": "Fiora, Grand Duelist",
-    "name": "",
+    "name": "菲歐拉-孤高劍客",
     "en_text": "When one of your units becomes [Mighty], you may exhaust me to channel 1 rune exhausted. (A unit is Mighty while it has 5+ [Might].)",
-    "text": ""
+    "text": "當你的1個單位變成[強大]，你可以休眠我來召喚1枚休眠狀態的符文(擁有+5[M]即為強大單位)。"
   },
   "riposte": {
     "en": "Riposte",
@@ -6615,6 +6613,22 @@
     "en_text": "When you conquer here, you may discard 1 and channel 1 rune exhausted.",
     "text": ""
   },
+  "_iconflip": [
+    "might",
+    "M",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "TAP",
+    "E"
+  ],
   "fury rune (alternate art)": {
     "en": "Fury Rune (Alternate Art)",
     "name": "狂怒符文(異畫)",
