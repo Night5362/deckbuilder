@@ -371,11 +371,11 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function pick(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(v!=null&&v!=='')return v}return ''}
 function arr(v){return Array.isArray(v)?v:(v?[v]:[])}
 function normP(c){var k=c.card||{},cols=(k.colors||[]).map(function(x){return x.name});if(c.showInLibrary===false)return{id:'',name:''};
-return{id:String(c.variantNumber).toLowerCase(),name:k.name||'',type:k.type||(k.types&&k.types[0])||'',sup:k.super||'',dom:cols.length?cols:['Colorless'],cost:k.energy==null?'':k.energy,might:k.might==null?'':k.might,power:k.power==null?'':k.power,text:pick(k.description,k.effect),img:c.imageUrl||'',set:(c.set&&c.set.prefix)||'',sig:k.super==='Signature',v:c.variantLabel||c.variantType||''}}
+return{id:String(c.variantNumber).toLowerCase(),name:k.name||'',type:k.type||(k.types&&k.types[0])||'',sup:k.super||'',dom:cols.length?cols:['Colorless'],cost:k.energy==null?'':k.energy,might:k.might==null?'':k.might,power:k.power==null?'':k.power,text:pick(k.description,k.effect),img:c.imageUrl||'',set:(c.set&&c.set.prefix)||'',sig:k.super==='Signature',tags:arr(k.tags||c.tags),v:c.variantLabel||c.variantType||''}}
 function norm(c){if(c&&c.card&&c.variantNumber)return normP(c);var cl=c.classification||{},at=c.attributes||{},tx=c.text||{},md=c.media||{},me=c.metadata||{};
 return{id:pick(c.riftbound_id,c.public_code,c.id,c.name),name:pick(c.name),type:pick(cl.type,c.type),sup:pick(cl.supertype),
 dom:arr(cl.domain||c.domain),cost:pick(at.energy,c.cost),might:pick(at.might),power:pick(at.power),
-text:pick(tx.plain,typeof c.text==='string'?c.text:''),img:pick(md.image_url,c.img),set:pick(c.set&&c.set.set_id),sig:!!me.signature}}
+text:pick(tx.plain,typeof c.text==='string'?c.text:''),img:pick(md.image_url,c.img),set:pick(c.set&&c.set.set_id),sig:!!me.signature,tags:arr(c.tags)}}
 function merge(a){var map={};cards.forEach(function(c){map[c.id]=c});a.forEach(function(x){var n=norm(x);if(n.name)map[n.id]=n});
 cards=Object.keys(map).map(function(k){return map[k]});sv('rb_cards',cards);fill();render()}
 function doImport(s){try{var j=JSON.parse(s),a=Array.isArray(j)?j:(j.items||j.data||[]);if(!a.length){msg('找不到卡片資料，請確認貼上完整 JSON。');return}
@@ -704,7 +704,11 @@ var over=Object.keys(cp).filter(function(n){return cp[n]>3});a2(!over.length,ove
 if(leg&&leg.dom.length){for(k in deck){c=nm(k);if(sec(c)==='M'||sec(c)==='R')chk(c)}for(k in side)chk(nm(k));
 a2(!bad.length,bad.length?'超出傳奇領域：'+bad.join('、'):'所有卡片都符合傳奇領域（'+leg.dom.join('/')+'）')}else a2(false,'尚未加入傳奇，無法檢查領域');
 return out}
-function domBad(c){var l=legOf();if(!l||!l.dom||!l.dom.length)return false;var x=sec(c);if(x==='L'||x==='B')return false;return c.dom.some(function(d){return d!=='Colorless'&&l.dom.indexOf(d)<0})}
+function isSig(c){return String(c.sup).toLowerCase().indexOf('signature')>-1}
+var _lt={k:'',m:{}};
+function legTags(l){var key=cards.length+'|'+l.id;if(_lt.k!==cards.length){_lt={k:cards.length,m:{}}}if(_lt.m[l.id])return _lt.m[l.id];var all=(l.tags||[]).map(function(x){return String(x).toLowerCase()}),oth={};cards.forEach(function(x){if(sec(x)==='L'&&x.name!==l.name)(x.tags||[]).forEach(function(t){oth[String(t).toLowerCase()]=1})});var sp=all.filter(function(t){return!oth[t]});return _lt.m[l.id]=sp.length?sp:all}
+function sigBad(c,l){if(!isSig(c)||!l)return false;var m=zh._sigmap||{},id=String(c.id).toLowerCase(),lk=String(l.id).toLowerCase(),inMap=false,ok=false;for(var k in m){var a=(m[k]||[]).map(function(x){return String(x).toLowerCase()});if(a.indexOf(id)>-1){inMap=true;if(String(k).toLowerCase()===lk)ok=true}}if(inMap)return!ok;var ct=(c.tags||[]).map(function(x){return String(x).toLowerCase()}),lt=legTags(l);if(!ct.length||!lt.length)return false;return!ct.some(function(t){return lt.indexOf(t)>-1})}
+function domBad(c){var l=legOf();if(l&&sigBad(c,l))return true;if(!l||!l.dom||!l.dom.length)return false;var x=sec(c);if(x==='L'||x==='B')return false;return c.dom.some(function(d){return d!=='Colorless'&&l.dom.indexOf(d)<0})}
 function mvTo(id,from){id=decodeURIComponent(id);if(from==='m'){if(!(deck[id]>0))return;if(sideN()>=SIDEMAX){alert('備牌最多 '+SIDEMAX+' 張');return}deck[id]--;if(deck[id]<=0)delete deck[id];side[id]=(side[id]||0)+1}
 else{if(!(side[id]>0))return;if(mainN()>=40){alert('主牌組已滿 40 張');return}side[id]--;if(side[id]<=0)delete side[id];deck[id]=(deck[id]||0)+1}
 sv('rb_deck',deck);sv('rb_side',side);rdeck()}
@@ -853,7 +857,7 @@ var ADMIN=false;try{if(location.hash==='#admin')localStorage.setItem('rb_admin',
 window.addEventListener('hashchange',function(){location.reload()});
 if(ADMIN)$('n3').classList.remove('hide');
 function dl(n,o,pp){var b=new Blob([pp?JSON.stringify(o,null,2):JSON.stringify(o)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove()}
-function tplZh(){var o={_imgdir:zh._imgdir||'images/zh/',_imgext:zh._imgext||'.webp',_icons:zh._icons||{fury:'images/icons/fury.webp',calm:'images/icons/calm.webp',chaos:'images/icons/chaos.webp',order:'images/icons/order.webp',mind:'images/icons/mind.webp',body:'images/icons/body.webp',rune:'images/icons/rune.webp','1':'images/icons/1.webp','2':'images/icons/2.webp'}},seen={},ids={};o._kwcolors=zh._kwcolors||{};o._kwgray=zh._kwgray||'#7f7f87';o._kwgrayList=Array.isArray(zh._kwgrayList)?zh._kwgrayList:['Empower','賦能','Equip','裝配'];o._typeicons=zh._typeicons||{main:'images/icons/Main.svg',legend:'images/icons/Legend.svg',battlefield:'images/icons/Battlefield.svg',unit:'images/icons/Unit.svg',spell:'images/icons/Spell.svg',gear:'images/icons/Gear.svg',rune:'images/icons/Rune.svg'};if(zh._bfrot!=null)o._bfrot=zh._bfrot;
+function tplZh(){var o={_imgdir:zh._imgdir||'images/zh/',_imgext:zh._imgext||'.webp',_icons:zh._icons||{fury:'images/icons/fury.webp',calm:'images/icons/calm.webp',chaos:'images/icons/chaos.webp',order:'images/icons/order.webp',mind:'images/icons/mind.webp',body:'images/icons/body.webp',rune:'images/icons/rune.webp','1':'images/icons/1.webp','2':'images/icons/2.webp'}},seen={},ids={};o._kwcolors=zh._kwcolors||{};o._kwgray=zh._kwgray||'#7f7f87';o._sigmap=zh._sigmap||{};o._kwgrayList=Array.isArray(zh._kwgrayList)?zh._kwgrayList:['Empower','賦能','Equip','裝配'];o._typeicons=zh._typeicons||{main:'images/icons/Main.svg',legend:'images/icons/Legend.svg',battlefield:'images/icons/Battlefield.svg',unit:'images/icons/Unit.svg',spell:'images/icons/Spell.svg',gear:'images/icons/Gear.svg',rune:'images/icons/Rune.svg'};if(zh._bfrot!=null)o._bfrot=zh._bfrot;
 cards.forEach(function(c){ids[String(c.id).toLowerCase()]=1});
 cards.filter(vis).slice().sort(function(a,b){return setCmp(setOf(a),setOf(b))||(a.id<b.id?-1:a.id>b.id?1:0)}).forEach(function(c){var k=c.name.toLowerCase();if(seen[k]||!k)return;seen[k]=1;
 var ex=zh[k]||zh[String(c.id).toLowerCase()]||{},e={en:c.name,name:ex.name||'',en_text:c.text||'',text:ex.text||''};if(ex.img)e.img=ex.img;o[k]=e});
