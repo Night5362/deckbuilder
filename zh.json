@@ -49,7 +49,11 @@
     "增添": "#727171",
     "ADD": "#727171",
     "強大": "#727171",
-    "MIGHTY": "#727171"
+    "MIGHTY": "#727171",
+	"Temporary": "#96b52a",
+	"瞬息": "#96b52a"
+	"Deathknell": "#96b52a",
+	"喪鐘": "#96b52a"
   },
   "_kwgray": "#7f7f87",
   "_kwgrayList": [
@@ -419,185 +423,185 @@
     "en": "Eclipse Herald",
     "name": "日蝕使者",
     "en_text": "When you stun an enemy unit, ready me and give me +1 [Might] this turn.",
-    "text": "當你暈眩1個敵方單位，活化我必在本回合給予我+1[M]"
+    "text": "當你暈眩1個敵方單位，活化我必在本回合給予我+1[M]。"
   },
   "mask of foresight": {
     "en": "Mask of Foresight",
-    "name": "",
+    "name": "洞察面具",
     "en_text": "When a friendly unit attacks or defends alone, give it +1 [Might] this turn.",
-    "text": ""
+    "text": "當1個友方單位獨自進攻或防守，本回合給予其+1[M]。"
   },
   "poro herder": {
     "en": "Poro Herder",
-    "name": "",
+    "name": "普羅牧人",
     "en_text": "When you play me, if you control a Poro, buff me and draw 1. (if I don't have a buff, I get a +1 [Might] buff.)",
-    "text": ""
+    "text": "當你打出我，若你控制1張普羅，強化我並抽1張卡牌(若我尚無增一，則獲得+1[M]增益)。"
   },
   "reinforce": {
     "en": "Reinforce",
-    "name": "",
+    "name": "增援",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗦𝗽𝗶𝗿𝗶𝘁𝗳𝗼𝗿𝗴𝗲𝗱 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nLook at the top 5 cards of your Main Deck. You may banish a unit from among them, then play it, reducing its cost by [5]. Recycle the remaining cards.",
-    "text": ""
+    "text": "查看你的主牌堆最上方的5張卡牌。你可以放逐其中1個單位，再打出他，費用減[5]。回收其餘卡牌。"
   },
   "spirit's refuge": {
     "en": "Spirit's Refuge",
-    "name": "",
+    "name": "靈氣庇護",
     "en_text": "When you play this, buff a friendly unit. (If it doesn't have a buff, it gets a +1 [Might] buff.)\nFriendly buffed units have [DEFLECT] if they didn't already. (Opponents must pay [Rune] to choose those units with a spell or ability.)",
-    "text": ""
+    "text": "當你打出此牌，強化1個友方單位(若該當為尚無增一，則獲得+1[M]增益)。\n被強化的友方單位若無法盾，則獲得[法盾](對手必須支付[A]才能選擇這些單位為法術或效果的目標)。"
   },
   "wind wall": {
     "en": "Wind Wall",
-    "name": "",
+    "name": "風牆鐵壁",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\nCounter a spell.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n反制1個法術。"
   },
   "wizened elder": {
     "en": "Wizened Elder",
-    "name": "",
+    "name": "睿智長者",
     "en_text": "While I'm buffed, I have an additional +1 [Might].",
-    "text": ""
+    "text": "我被強化後，可額外獲得+1[M]"
   },
   "ahri, alluring": {
     "en": "Ahri, Alluring",
-    "name": "",
+    "name": "阿璃-誘人",
     "en_text": "When I hold, you score 1 point.",
-    "text": ""
+    "text": "當我據守此處，你獲得1分。"
   },
   "blitzcrank, impassive": {
     "en": "Blitzcrank, Impassive",
-    "name": "",
+    "name": "布里茨-漠然",
     "en_text": "[Tank] (I must be assigned combat damage first.)\nWhen you play me to a battlefield, you may move an enemy unit to here.\nWhen I hold, return me to my owner's hand.",
-    "text": ""
+    "text": "[坦克](戰鬥傷害必須優先分配給我)\n當你在戰場上打出我，你可以移動1個敵方單位至此處。當我據守此處，將我返回擁有者的手牌。"
   },
   "caitlyn, patrolling": {
     "en": "Caitlyn, Patrolling",
-    "name": "",
+    "name": "凱特琳-巡邏",
     "en_text": "I must be assigned combat damage last.\n[Tap]: Deal damage equal to my Might to a unit at a battlefield. Use this ability only while I'm at a battlefield.",
-    "text": ""
+    "text": "戰鬥傷害必須最後分配給我。\n[E]：對一處戰場上的1個單位造成傷害，數值等同於我的戰力。僅當此牌在戰場上才能使用此技能。"
   },
   "last stand": {
     "en": "Last Stand",
-    "name": "",
+    "name": "背水一戰",
     "en_text": "[Action] (Play on your turn or in showdowns.)\nDouble a friendly unit's Might this turn. Give it [Temporary]. Kill it at the start of its controller's Beginning Phase, before scoring.)",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n本回合使1個友方單位戰力加倍。給予其[瞬息](在其控制者的下個起始階段，計分之前將其摧毀)。"
   },
   "mageseeker warden": {
     "en": "Mageseeker Warden",
-    "name": "",
+    "name": "狙魔衛士",
     "en_text": "While I'm at a battlefield, opponents can only play units to their base.\nWhile I'm at a battlefield, spells and abilities can't ready enemy units and gear.",
-    "text": ""
+    "text": "我在戰場上時，對手僅能在其基地打出單位。\n我在戰場上時，法術和技能無法活化敵方單位和裝備。"
   },
   "party favors": {
     "en": "Party Favors",
-    "name": "",
+    "name": "派對禮物",
     "en_text": "Each other player chooses Cards or Runes.\nFor each player that chooses Cards, you and that player each draw 1.\nFor each player that chooses Runes, you and that player each channel 1 rune exhausted.",
-    "text": ""
+    "text": "其他每位玩家選擇卡牌或符文。每有一位玩家選擇卡牌，你與該玩家各抽1張卡牌。每有一位玩家選擇符文，你與該玩家各自召喚1枚休眠狀態的符文。"
   },
   "solari shrine": {
     "en": "Solari Shrine",
-    "name": "",
+    "name": "日輪神殿",
     "en_text": "When you kill a stunned enemy unit, you may exhaust this to draw 1.",
-    "text": ""
+    "text": "當你擊殺1個暈眩的敵方單位，你可以休眠此牌來抽1張卡牌。"
   },
   "sona, harmonious": {
     "en": "Sona, Harmonious",
-    "name": "",
+    "name": "索娜-和諧",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nAt the end of your turn, if I'm at a battlefield, ready up to 4\nfriendly runes.",
-    "text": ""
+    "text": "你的回合結束時，若我位於戰場，活化最多4枚友方符文。"
   },
   "taric, protector": {
     "en": "Taric, Protector",
-    "name": "",
+    "name": "塔里克-保護者",
     "en_text": "[Shield] (+1 [Might] while I'm a defender.)\n[Tank] (I must be assigned combat damage first.)\nOther friendly units here have [Shield].",
-    "text": ""
+    "text": "[堅守](我為防守方時+1[M])\n[坦克](戰鬥傷害必須優先分配給我)\n此處的其他友方單位獲得[堅守]。"
   },
   "tasty faefolk": {
     "en": "Tasty Faefolk",
-    "name": "",
+    "name": "美味茄妖",
     "en_text": "[Accelerate] (You may play [1] [Calm] as an additional cost to have me enter ready.)\n[Deathknell] – Channel 2 runes exhausted and draw 1. (When I die, get the effect.)",
-    "text": ""
+    "text": "[加速](你可以支付[1][calm]作為額外費用，讓我以活化狀態進場)\n[喪鐘]－召喚2枚休眠狀態的符文並抽1張卡牌(當我陣亡，獲得此效果)。"
   },
   "yasuo, remorseful": {
     "en": "Yasuo, Remorseful",
-    "name": "",
+    "name": "犽宿-悔恨",
     "en_text": "When I attack, deal damage equal to my Might to an enemy unit here.",
-    "text": ""
+    "text": "當我進攻，對此處的1個敵方單位造成傷害，數值等同於我的戰力。"
   },
   "zhonya's hourglass": {
     "en": "Zhonya's Hourglass",
-    "name": "",
+    "name": "中婭沙漏",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[Hidden] (Hide now for [Rune] to react with later for [0].)\nIf a friendly unit would die, kill this instead. Heal that unit,\nexhaust it, and recall it. (Send it to base. This isn't a move.)",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n友方單位即將陣亡時，改為擊殺此牌，並治療、休眠並召回該單位(將其送至基地，此舉不視為移動)。"
   },
   "lee sin, ascetic": {
     "en": "Lee Sin, Ascetic",
-    "name": "",
+    "name": "李星-苦行僧",
     "en_text": "[SHIELD] (+1 [Might] while I'm a defender.)\n[Tap]: Buff me. (I get a +1 [Might] buff.) \nI can have any number of buffs.",
-    "text": ""
+    "text": "[堅守](我為防守方時+1[M])\n[E]：強化我(我獲得+1[M]增益)。\n我能獲得任意數量的增益。"
   },
   "leona, zealot": {
     "en": "Leona, Zealot",
-    "name": "",
+    "name": "雷歐娜-狂信者",
     "en_text": "If an opponent's score is within 3 points of the Victory Score, I enter ready.\nStunned enemy units here have -8 [Might], to a minimum of 1 [Might].",
-    "text": ""
+    "text": "若一位對手距離勝利分數僅在3分內，我進場時為活化狀態。\n此處被暈眩的敵方單位獲得-8[M]，最低降至1[M]。"
   },
   "mystic reversal": {
     "en": "Mystic Reversal",
-    "name": "",
+    "name": "逆轉祕術",
     "en_text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nGain control of a spell. You may make new choices for it.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n獲得1個法術的控制權。你可以為其重新做出選擇。"
   },
   "seal of focus": {
     "en": "Seal of Focus",
-    "name": "",
+    "name": "專注之印",
     "en_text": "[Tap]: [REACTION] – [ADD] [Calm]. (Abilities that add resources can't be reacted to.)",
-    "text": ""
+    "text": "[E]：[反應]－[增添][calm](增添資源的技能無法成為反應目標)。"
   },
   "whiteflame protector": {
     "en": "Whiteflame Protector",
-    "name": "",
+    "name": "白燄衛龍",
     "en_text": "When you play me, give a unit +8 [Might] this turn.",
-    "text": ""
+    "text": "當你打出我，本回合給予1個單位+8[M]。"
   },
   "consult the past": {
     "en": "Consult the Past",
-    "name": "",
+    "name": "追憶過往",
     "en_text": "[Hidden] (Hide now for [Rune] to react with later for [0].)\n[Reaction] (Play any time, even before spells and abilities resolve.)\nDraw 2.",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n抽2張卡牌。"
   },
   "eager apprentice": {
     "en": "Eager Apprentice",
-    "name": "",
+    "name": "勤奮的學徒",
     "en_text": "While I'm at a battlefield, the Energy costs for spells you play is reduced by [1], to a minimum of [1].",
-    "text": ""
+    "text": "我在戰場上時，你打出法術牌的能量費用減[1]，最低降至[1]。"
   },
   "falling comet": {
     "en": "Falling Comet",
-    "name": "",
+    "name": "彗星墜擊",
     "en_text": "[Action] (play on your turn or in showdowns.)\n\nDeal 6 to a unit at a battlefield.",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n對一處戰場上的1的單位造成6點傷害。"
   },
   "jeweled colossus": {
     "en": "Jeweled Colossus",
-    "name": "",
+    "name": "寶飾巨像",
     "en_text": "[Vision] (When you play me, look at the top card of your Main Deck. You may recycle it.)\n[Shield] (+1 [Might] while I'm a defender.)",
-    "text": ""
+    "text": "[預示](當你打出我，查看你的主牌堆最上方的卡牌，你可以將其回收)\n[堅守](我為防守方時+1[M])"
   },
   "lecturing yordle": {
     "en": "Lecturing Yordle",
-    "name": "",
+    "name": "約德爾說教魔人",
     "en_text": "[Tank] (I must be assigned combat damage first.)\n\nWhen you play me, draw 1.",
-    "text": ""
+    "text": "[坦克](戰鬥傷害必須優先分配給我)\n當你打出我，抽1張卡牌。"
   },
   "mega-mech": {
     "en": "Mega-Mech",
-    "name": "",
+    "name": "超能機甲",
     "en_text": ".",
     "text": ""
   },
   "mind rune": {
     "en": "Mind Rune",
-    "name": "",
+    "name": "心智符文",
     "en_text": "",
     "text": ""
   },
