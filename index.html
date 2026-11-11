@@ -1049,7 +1049,7 @@ function dcParseId(id){var m=String(id).match(/^([A-Za-z]+)-(\d+)([a-z*]?)$/);if
 function dcEncode(u){var o=[0x13],bad=[];
 function grp(map,max){for(var c=max;c>=1;c--){var L={};for(var id in map){if(map[id]!==c)continue;var p=dcParseId(id);if(!p){bad.push(id);continue}var k=p.s+'_'+p.v;(L[k]=L[k]||{s:p.s,v:p.v,n:[]}).n.push(p.n)}
 var ks=Object.keys(L).sort(function(a,b){return L[a].s-L[b].s||L[a].v-L[b].v});dcVarE(o,ks.length);ks.forEach(function(k){var g=L[k];g.n.sort(function(a,b){return a-b});dcVarE(o,g.n.length);dcVarE(o,g.s);dcVarE(o,g.v);g.n.forEach(function(n){dcVarE(o,n)})})}}
-var main={},side={};for(var k in u.main)if(u.main[k]>0)main[k]=Math.min(12,u.main[k]);for(k in u.side)if(u.side[k]>0)side[k]=Math.min(3,u.side[k]);
+function bz(id){var c=nm(id);return c&&sec(c)==='R'?String(id).replace(/[a-z*]+$/i,''):id}var main={},side={},b;for(var k in u.main)if(u.main[k]>0){b=bz(k);main[b]=Math.min(12,(main[b]||0)+u.main[k])}for(k in u.side)if(u.side[k]>0){b=bz(k);side[b]=Math.min(3,(side[b]||0)+u.side[k])}
 grp(main,12);grp(side,3);var cp=u.champ&&dcParseId(u.champ);if(cp){dcVarE(o,1);dcVarE(o,cp.s);dcVarE(o,cp.v);dcVarE(o,cp.n)}else dcVarE(o,0);
 return{code:dcB32E(o),bad:bad}}
 function dcText(u){var g={L:[],B:[],R:[],M:[]},ch=u.champ&&nm(u.champ),k,c;for(k in u.main){c=nm(k);if(!c)continue;var x=sec(c),n=u.main[k];if(k===u.champ)n--;if(n<=0)continue;(g[x==='L'||x==='B'||x==='R'?x:'M']).push([n,c])}
