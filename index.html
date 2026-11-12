@@ -448,7 +448,7 @@ else o+='<span class="kwx">'+tk+'</span>';return x});
 return o+'</span>'});
 return s.replace(/\[([^\[\]\n]{1,24})\]/g,function(a,k){var u=m[k.toLowerCase()];return u?'<img class="ic'+(fl[k.toLowerCase()]?' flip':'')+'" src="'+esc(u)+'" alt="'+a+'" onerror="this.replaceWith(document.createTextNode(this.alt))">':(/^\d+$|^x$/i.test(k.trim())?a:'<span class="kw"'+kwc(k.trim())+'>'+esc(k.trim())+'</span>')})}
 function mAdd(e,sd){if(sd)addS(e);else add(e);if(!$('s2').classList.contains('hide'))rdeck();updBtns();var bx=$('mbd');if(bx)bx.innerHTML=badge(nm(decodeURIComponent(e)))}
-function closeCard(pop){var o=$('cm');if(!o)return;o.remove();document.body.style.overflow='';if(!pop&&history.state&&history.state.rbm)history.back()}
+function closeCard(pop){var o=$('cm');if(!o)return;o.remove();document.body.style.overflow='';if(!pop&&history.state&&history.state.rbm){_cmBack=1;history.back()}}
 function openCard(e,re){var c=nm(decodeURIComponent(e)),o=$('cm'),u=pic(c);
 var R=[['類型',tlab(c.type)],['領域',c.dom.map(function(d){return lab(DOMN,d)}).join(' / ')],['法力費用',c.cost],['符能費用',c.power],['戰力',c.might],['彈數',lab(SETN,setOf(c))],['版本',lab(VARN,vOf(c))],['編號',c.id]].filter(function(r){return r[1]!==''&&r[1]!=null&&r[1]!=='undefined'});
 var VL=vers(c),B=sec(c)==='B',chips=[R[0],R[1],R[4],R[5]].filter(Boolean).filter(function(r){return r[0]==='類型'||r[0]==='領域'||r[0]==='彈數'||r[0]==='版本'}),
@@ -460,10 +460,10 @@ h='<div class="mg'+(B?' bf':'')+'"><button class="btn" style="position:absolute;
 +'<div class="tx t">'+(X(c)?rt(X(c)):'')+'</div>'
 +(isBan(c)?'<div class="bnb">⛔ 此卡目前為禁用卡，不能加入牌組。</div>':'')+'<div class="row bt">'+(sec(c)==='M'?ctl(c,'m')+ctl(c,'s'):'<button class="btn p ab" data-k="'+e+'" data-w="m"'+(canAdd(c,'m')?'':' disabled')+' onclick="mAdd(\''+e+'\')">加入牌組</button>')+'</div></div>';
 if(!o){o=document.createElement('div');o.id='cm';o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.72);overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));z-index:70';
-o.onclick=function(ev){if(ev.target===o)closeCard()};document.body.appendChild(o);document.body.style.overflow='hidden';if(!re){try{history.pushState({rbm:1},'',c&&c.id?'#/card/'+encodeURIComponent(c.id):undefined)}catch(x){}}}
+o.onclick=function(ev){if(ev.target===o)closeCard()};document.body.appendChild(o);document.body.style.overflow='hidden';if(!re){try{history.pushState({rbm:1},'')}catch(x){}}}
 o.innerHTML=h}
 var _pp=0;
-window.addEventListener('popstate',function(e){if($('cm')){closeCard(true);return}var tw=$('tsw');if(tw&&tw.className==='open'){closeTS();try{history.pushState({t:curTab,i:vi},'')}catch(x){}return}var s=e.state;if(s&&s.t===6&&/^#\/(public|tour)\//.test(location.hash)){_pp=1;rtGo(location.hash).then(function(){_pp=0},function(){_pp=0});return}if(s&&s.t!=null&&(s.t!==curTab||s.t===6)){_pp=1;if(s.t===6){vi=s.i;VSRC=null}var b4=curTab;try{tab(s.t)}finally{_pp=0}if(curTab===b4){try{history.pushState({t:curTab,i:vi},'')}catch(x){}}}});
+var _cmBack=0;window.addEventListener('popstate',function(e){if(_cmBack){_cmBack=0;return}if($('cm')){closeCard(true);return}var tw=$('tsw');if(tw&&tw.className==='open'){closeTS();try{history.pushState({t:curTab,i:vi},'')}catch(x){}return}var s=e.state;if(s&&s.t===6&&/^#\/(public|tour)\//.test(location.hash)){_pp=1;rtGo(location.hash).then(function(){_pp=0},function(){_pp=0});return}if(s&&s.t!=null&&(s.t!==curTab||s.t===6)){_pp=1;if(s.t===6){vi=s.i;VSRC=null}var b4=curTab;try{tab(s.t)}finally{_pp=0}if(curTab===b4){try{history.pushState({t:curTab,i:vi},'')}catch(x){}}}});
 document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeCard()});
 function N(c){return L==='zh'&&Z(c).name?Z(c).name:c.name}
 function X(c){return L==='zh'&&Z(c).text?Z(c).text:c.text}
@@ -1147,7 +1147,7 @@ var f=function(x){if(x&&x.id===id){x.hidden=h;if(clr){x.reports=0;x.reasons=[]}}
 if(MODL)MODL=MODL.filter(function(x){return x.hidden||x.reports>0});uiMsg(h?'已隱藏':'已恢復顯示',h?'已隱藏這副牌組。':clr?'已恢復顯示並清除檢舉。':'已恢復顯示。');PUB=[];if(curTab===8){rmod();pubLoad()}else if(curTab===6)rview()}
 async function modDel(id){if(!ISADM||!sb)return;var d=(MODL||[]).concat(PUB).filter(function(x){return x.id===id})[0]||(VSRC&&VSRC.pub);var rs=await uiDlg({title:'刪除公開牌組',msg:'要永久刪除「'+(d?d.name:'')+'」嗎？\n留言、按讚和檢舉紀錄會一起刪除，無法復原。',input:true,label:'刪除原因（會通知分享者）',ok:'刪除',danger:true});if(rs===null)return;
 var r=await sb.rpc('admin_delete_deck',{did:id,reason:rs});if(r.error){uiMsg('刪除失敗',r.error.message);return}if(MODL)MODL=MODL.filter(function(x){return x.id!==id});PUB=PUB.filter(function(x){return x.id!==id});uiMsg('已刪除','已刪除這副公開牌組，並通知分享者。');if(curTab===6){VSRC=null;tab(8)}else{rmod();rpub()}}
-function modBtns(pb){if(!ISADM||!pb)return'';var B='style="flex:none;width:auto;padding:8px 14px"';return(pb.hidden?'<button class="btn" '+B+' onclick="modSet(VSRC.pub.id,false,true)">恢復顯示</button>':'<button class="btn" '+B+' onclick="modSet(VSRC.pub.id,true,false)">管理：隱藏</button>')+'<button class="btn" style="flex:none;width:auto;padding:8px 14px;color:var(--no)" onclick="modDel(VSRC.pub.id)">管理：刪除</button>'}
+function modBtns(pb){if(!ISADM||!pb||(user&&pb.user_id===user.id))return'';var B='style="flex:none;width:auto;padding:8px 14px"';return(pb.hidden?'<button class="btn" '+B+' onclick="modSet(VSRC.pub.id,false,true)">恢復顯示</button>':'<button class="btn" '+B+' onclick="modSet(VSRC.pub.id,true,false)">管理：隱藏</button>')+'<button class="btn" style="flex:none;width:auto;padding:8px 14px;color:var(--no)" onclick="modDel(VSRC.pub.id)">管理：刪除</button>'}
 var NTF=[],NUN=0,_ntI=0;
 function ntErr(e){var m=e&&e.message||String(e||'');if(/notifications|relation|does not exist|schema cache/i.test(m))return'通知功能尚未啟用（資料表不存在）。';return m}
 async function ntCount(){if(!sb||!user){NUN=0;ntBadge();return}try{var r=await sb.from('notifications').select('id',{count:'exact',head:true}).eq('user_id',user.id).eq('read',false);if(!r.error)NUN=r.count||0}catch(e){}ntBadge()}
