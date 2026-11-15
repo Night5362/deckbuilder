@@ -1301,7 +1301,7 @@ function exportDeck(){function ls(o,f){return Object.keys(o).filter(function(k){
 var P=[['傳奇',ls(deck,'L')],['指定英雄',champ?[nm(champ).name]:[]],['主牌組',ls(deck,'M')],['符文',ls(deck,'R')],['戰場',ls(deck,'B')],['備牌',ls(side)]],
 t=P.filter(function(x){return x[1].length}).map(function(x){return x[0]+'：\n'+x[1].join('\n')}).join('\n\n'),e=$('ex');e.value=t;e.classList.remove('hide');e.select()}
 var SB_URL='https://mibivznenhauezbjotjm.supabase.co',SB_KEY='sb_publishable_5sMXvITqcu55oqQbrEIo1w_LJe09-1Y',sb=null,user=null;
-try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}
+try{sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:'pkce',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}})}catch(e){}
 function am(t){$('am').textContent=t}
 function uname(u){var m=u&&u.user_metadata||{};var n=m.name||m.full_name;return n||(u&&u.email?u.email.split('@')[0]:'')}
 async function saveName(){var n=$('un2').value.trim();if(!n){am('請輸入使用者名稱。');return}if(!sb)return;var r=await sb.auth.updateUser({data:{name:n}});if(r.error){am('修改失敗：'+r.error.message);return}if(r.data&&r.data.user)user=r.data.user;uiAcc();am('已更新使用者名稱。')}
@@ -1311,7 +1311,7 @@ function svLock(){var b=$('svb'),h=$('svh');if(b)b.disabled=!user;if(h)h.style.d
 function uiAcc(){svLock();sbUser();$('ast').textContent=user?'已登入：'+uname(user):'尚未登入';if(user){$('aem').textContent=user.email||'';if(document.activeElement!==$('un2'))$('un2').value=uname(user)}$('lf').classList.toggle('hide',!!user);$('lo').classList.toggle('hide',!user)}
 async function signUp(){if(!sb){am('無法連線帳號服務。');return}var un=$('un').value.trim();if(!un){am('請先輸入使用者名稱。');return}var r=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value,options:{emailRedirectTo:location.origin+location.pathname,data:{name:un}}});am(r.error?(/rate limit/i.test(r.error.message)?'寄信次數已達上限，請約 1 小時後再試（若已註冊過，可直接登入）。':/already registered/i.test(r.error.message)?'這個電子郵件已註冊，請直接登入。':'註冊失敗：'+r.error.message):'註冊成功，請到信箱點確認連結後再回來登入。')}
 async function signIn(){if(!sb){am('無法連線帳號服務。');return}var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});am(r.error?'登入失敗：'+r.error.message:'')}
-async function googleIn(){if(!sb){am('無法連線帳號服務。');return}am('');var r=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname+location.hash}});if(r&&r.error)am('Google 登入失敗：'+r.error.message)}
+async function googleIn(){if(!sb){am('無法連線帳號服務。');return}am('');var r=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(r&&r.error)am('Google 登入失敗：'+r.error.message)}
 async function signOut(){if(sb)await sb.auth.signOut()}
 var cloudSt=null;function setCloud(v){cloudSt=v;if(curTab===5)rsaved()}
 async function sync(){if(!sb||!user)return;setCloud(null);var r=await sb.from('decks').select('name,deck');if(r.error){am('同步失敗：'+r.error.message);setCloud(false);return}
