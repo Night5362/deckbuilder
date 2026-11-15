@@ -1,6 +1,18 @@
 {
   "_imgdir": "images/zh/",
+
   "_imgext": ".webp",
+
+  "_imgsets": ["ogn", "ogs", "sfd"],
+
+  "_banned_tw": ["ogn-284","ogn-285","ogn-292","ogn-182","sfd-122","ogn-168"],
+
+  "_banned_intl": ["ogn-284","ogn-285","ogn-292","ogn-182","sfd-122","ogn-168","sfd-048","ogn-177","rad-043","ogn-195","ogn-194","ogn-110","sfd-020","ogn-026","ogn-183","ogn-077","ogn-160","ogn-242","ogn-290","unl-215","sfd-207","ogn-276"],
+
+  "_unique": ["sfd-190", "sfd-191", "sfd-192"],
+
+  "_sigmap": {},
+
   "_icons": {
     "0": "images/icons/0.svg",
     "1": "images/icons/1.svg",
@@ -32,6 +44,19 @@
     "might": "images/icons/might.svg",
     "M": "images/icons/might.svg"
   },
+
+  "_iconflip": ["might", "M", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "TAP", "E"],
+
+  "_typeicons": {
+    "main": "images/icons/Main.svg",
+    "legend": "images/icons/Legend.svg",
+    "battlefield": "images/icons/Battlefield.svg",
+    "unit": "images/icons/Unit.svg",
+    "spell": "images/icons/Spell.svg",
+    "gear": "images/icons/Gear.svg",
+    "rune": "images/icons/Rune.svg"
+  },
+
   "_kwcolors": {
     "加速": "#127463",
     "ACCELERATE": "#127463",
@@ -50,27 +75,16 @@
     "ADD": "#727171",
     "強大": "#727171",
     "MIGHTY": "#727171",
-	"Temporary": "#96b52a",
-	"瞬息": "#96b52a",
-	"Deathknell": "#96b52a",
-	"喪鐘": "#96b52a"
+    "Temporary": "#96b52a",
+    "瞬息": "#96b52a",
+    "Deathknell": "#96b52a",
+    "喪鐘": "#96b52a"
   },
+
   "_kwgray": "#7f7f87",
-  "_kwgrayList": [
-    "Empower",
-    "賦能",
-    "Equip",
-    "裝配"
-  ],
-  "_typeicons": {
-    "main": "images/icons/Main.svg",
-    "legend": "images/icons/Legend.svg",
-    "battlefield": "images/icons/Battlefield.svg",
-    "unit": "images/icons/Unit.svg",
-    "spell": "images/icons/Spell.svg",
-    "gear": "images/icons/Gear.svg",
-    "rune": "images/icons/Rune.svg"
-  },
+
+  "_kwgrayList": ["Empower", "賦能", "Equip", "裝配"],
+
   "blazing scorcher": {
     "en": "Blazing Scorcher",
     "name": "烈焰灼魂者",
@@ -229,13 +243,13 @@
   },
   "darius, trifarian": {
     "en": "Darius, Trifarian",
-    "name": "達瑞斯-特菲利安",
+    "name": "達瑞斯 特菲利安",
     "en_text": "When you play your second card in a turn, give me +2 [Might] this turn and ready me.",
     "text": "當你在1個回合中打出第2張牌，該回合給予此牌+2[M]並活化我"
   },
   "draven, showboat": {
     "en": "Draven, Showboat",
-    "name": "達瑞文-炫技",
+    "name": "達瑞文 炫技",
     "en_text": "My might is increased by your points.",
     "text": "我的戰力隨著你的分數增加"
   },
@@ -247,7 +261,7 @@
   },
   "jinx, demolitionist": {
     "en": "Jinx, Demolitionist",
-    "name": "吉茵珂絲-爆破專家",
+    "name": "吉茵珂絲 爆破專家",
     "en_text": "[ACCELERATE] (You may pay [1] [Fury] as an additional cost to have me enter ready.)\n[ASSAULT 2] (+2 [Might] while I'm an attacker.)\nWhen you play me, discard 2.",
     "text": "[加速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)\n[強襲 2](我為進攻方時+2[M])\n當你打出我時，棄置2張牌。)"
   },
@@ -271,19 +285,19 @@
   },
   "tryndamere, barbarian": {
     "en": "Tryndamere, Barbarian",
-    "name": "泰達米爾-野蠻人",
+    "name": "泰達米爾 野蠻人",
     "en_text": "When I conquer after an attack, if you assigned 5 or more excess damage to enemy units, you score 1 Point.",
     "text": "當我進攻後征服一處戰場，若你對敵方單位成5點以上額外傷害，你獲得1分。"
   },
   "vayne, hunter": {
     "en": "Vayne, Hunter",
-    "name": "汎-獵人",
+    "name": "汎 獵人",
     "en_text": "[ASSAULT 3] (+3 [Might] while I'm an attacker.)\nIf an opponent controls a battlefield, I enter ready.\nWhen I conquer, you may pay [1] to return me to my owner's hand.",
     "text": "[強襲 3](我為進攻方時+3[M])\n若對手控制一處戰場，我進場時為活化狀態。\n當我征服一處戰場，你可以支付[1]將我返回擁有者的手牌。"
   },
   "vi, destructive": {
     "en": "Vi, Destructive",
-    "name": "菲艾-破壞",
+    "name": "菲艾 破壞",
     "en_text": "[GANKING] (I can move from battlefield to battlefield.)\nRecycle 1 from your trash: Give me +1 [Might] this turn.",
     "text": "[遊走](我能夠在戰場之間移動)\n從你的棄牌堆回收1張卡片：本回合給予我+1[M]。"
   },
@@ -301,7 +315,7 @@
   },
   "kai'sa, survivor": {
     "en": "Kai'Sa, Survivor",
-    "name": "凱莎-生還者",
+    "name": "凱莎 生還者",
     "en_text": "[ACCELERATE] (You may pay [1] [FURY] as an additional cost to have me enter ready.)\nWhen I conquer, draw 1.",
     "text": "[加速](你可以支付[1][Fury]作為額外費用，讓我以活化狀態進場)\n當我征服一處戰場，抽1張卡牌。"
   },
@@ -313,7 +327,7 @@
   },
   "volibear, furious": {
     "en": "Volibear, Furious",
-    "name": "弗力貝爾-狂怒",
+    "name": "弗力貝爾 狂怒",
     "en_text": "[DEFLECT 2] (Opponents must play [Rune][Rune] to choose me with a spell or effect.)\nWhen I attack, deal 5 damage split among any number of enemy units here.",
     "text": "[法盾 2](對手必須支付[A][A]才能將我選定為法術或技能的目標)\n當我進攻，將5點傷害分配給此處任意數量的敵方單位。"
   },
@@ -463,19 +477,19 @@
   },
   "ahri, alluring": {
     "en": "Ahri, Alluring",
-    "name": "阿璃-誘人",
+    "name": "阿璃 誘人",
     "en_text": "When I hold, you score 1 point.",
     "text": "當我據守此處，你獲得1分。"
   },
   "blitzcrank, impassive": {
     "en": "Blitzcrank, Impassive",
-    "name": "布里茨-漠然",
+    "name": "布里茨 漠然",
     "en_text": "[Tank] (I must be assigned combat damage first.)\nWhen you play me to a battlefield, you may move an enemy unit to here.\nWhen I hold, return me to my owner's hand.",
     "text": "[坦克](戰鬥傷害必須優先分配給我)\n當你在戰場上打出我，你可以移動1個敵方單位至此處。當我據守此處，將我返回擁有者的手牌。"
   },
   "caitlyn, patrolling": {
     "en": "Caitlyn, Patrolling",
-    "name": "凱特琳-巡邏",
+    "name": "凱特琳 巡邏",
     "en_text": "I must be assigned combat damage last.\n[Tap]: Deal damage equal to my Might to a unit at a battlefield. Use this ability only while I'm at a battlefield.",
     "text": "戰鬥傷害必須最後分配給我。\n[E]：對一處戰場上的1個單位造成傷害，數值等同於我的戰力。僅當此牌在戰場上才能使用此技能。"
   },
@@ -505,13 +519,13 @@
   },
   "sona, harmonious": {
     "en": "Sona, Harmonious",
-    "name": "索娜-和諧",
+    "name": "索娜 和諧",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nAt the end of your turn, if I'm at a battlefield, ready up to 4\nfriendly runes.",
     "text": "你的回合結束時，若我位於戰場，活化最多4枚友方符文。"
   },
   "taric, protector": {
     "en": "Taric, Protector",
-    "name": "塔里克-保護者",
+    "name": "塔里克 保護者",
     "en_text": "[Shield] (+1 [Might] while I'm a defender.)\n[Tank] (I must be assigned combat damage first.)\nOther friendly units here have [Shield].",
     "text": "[堅守](我為防守方時+1[M])\n[坦克](戰鬥傷害必須優先分配給我)\n此處的其他友方單位獲得[堅守]。"
   },
@@ -523,7 +537,7 @@
   },
   "yasuo, remorseful": {
     "en": "Yasuo, Remorseful",
-    "name": "犽宿-悔恨",
+    "name": "犽宿 悔恨",
     "en_text": "When I attack, deal damage equal to my Might to an enemy unit here.",
     "text": "當我進攻，對此處的1個敵方單位造成傷害，數值等同於我的戰力。"
   },
@@ -535,13 +549,13 @@
   },
   "lee sin, ascetic": {
     "en": "Lee Sin, Ascetic",
-    "name": "李星-苦行僧",
+    "name": "李星 苦行僧",
     "en_text": "[SHIELD] (+1 [Might] while I'm a defender.)\n[Tap]: Buff me. (I get a +1 [Might] buff.) \nI can have any number of buffs.",
     "text": "[堅守](我為防守方時+1[M])\n[E]：強化我(我獲得+1[M]增益)。\n我能獲得任意數量的增益。"
   },
   "leona, zealot": {
     "en": "Leona, Zealot",
-    "name": "雷歐娜-狂信者",
+    "name": "雷歐娜 狂信者",
     "en_text": "If an opponent's score is within 3 points of the Victory Score, I enter ready.\nStunned enemy units here have -8 [Might], to a minimum of 1 [Might].",
     "text": "若一位對手距離勝利分數僅在3分內，我進場時為活化狀態。\n此處被暈眩的敵方單位獲得-8[M]，最低降至1[M]。"
   },
@@ -585,7 +599,7 @@
     "en": "Jeweled Colossus",
     "name": "寶飾巨像",
     "en_text": "[Vision] (When you play me, look at the top card of your Main Deck. You may recycle it.)\n[Shield] (+1 [Might] while I'm a defender.)",
-    "text": "[預示](當你打出我，查看你的主牌堆最上方的卡牌，你可以將其回收)\n[堅守](我為防守方時+1[M])"
+    "text": "[預視](當你打出我，查看你的主牌堆最上方的卡牌，你可以將其回收)\n[堅守](我為防守方時+1[M])"
   },
   "lecturing yordle": {
     "en": "Lecturing Yordle",
@@ -607,411 +621,411 @@
   },
   "orb of regret": {
     "en": "Orb of Regret",
-    "name": "",
+    "name": "悔恨之珠",
     "en_text": "[Tap]: Give a unit -1 [Might] this turn, to a minimum of 1 [Might].",
-    "text": ""
+    "text": "[E]：本回合給予1個單位-1[M]，最低降至1[M]。"
   },
   "pit crew": {
     "en": "Pit Crew",
-    "name": "",
+    "name": "鬥坑小隊",
     "en_text": "When you play a gear, ready me.",
-    "text": ""
+    "text": "當你打出1件裝備，活化我。"
   },
   "riptide rex": {
     "en": "Riptide Rex",
-    "name": "",
+    "name": "怒濤狂鯊砲",
     "en_text": "When you play me, deal 6 to an enemy unit at a battlefield.",
-    "text": ""
+    "text": "當你打出我，對一處戰場上的1個敵方單位造成6點傷害。"
   },
   "smoke screen": {
     "en": "Smoke Screen",
-    "name": "",
+    "name": "隻手遮天",
     "en_text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nGive a unit -4 [Might] this turn, to a minimum of 1 [Might].",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n本回合給予1個單位-4[M]，最低降至1[M]。"
   },
   "sprite call": {
     "en": "Sprite Call",
-    "name": "",
+    "name": "精靈召喚",
     "en_text": "[HIDDEN] (Hide now for [Rune] to react with later for [0].)\n[ACTION] (Play on your turn or in showdowns.)\n\nPlay a ready 3 [Might] Sprite unit token with [TEMPORARY]. (Kill it at the start of its controller's Beginning Phase, before scoring.)",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n[行動](可在你的回合或法術對決時打出)\n打出一位活化狀態帶有[瞬息]的3[M]＂精靈＂(在其控制者的下個起始階段，計分之前將其摧毀)。"
   },
   "stupefy": {
     "en": "Stupefy",
-    "name": "",
+    "name": "頭暈腦脹",
     "en_text": "[REACTION] (Play any time, even before spells and abilities resolve.)\nGive a unit -1 [Might] this turn, to a minimum of 1 [Might]. Draw 1.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n本回合給予1個單位-1[M]，最低降至1[M]。\n抽1張卡牌。"
   },
   "watchful sentry": {
     "en": "Watchful Sentry",
-    "name": "",
+    "name": "警戒哨兵",
     "en_text": "[DEATHKNELL] – Draw 1. (When I die, get the effect.)",
-    "text": ""
+    "text": "[喪鐘]－抽1張卡牌(當我陣亡，獲得此效果)。"
   },
   "blastcone fae": {
     "en": "Blastcone Fae",
-    "name": "",
+    "name": "爆破毯果妖精",
     "en_text": "[HIDDEN] (Hide now for [Rune] to react with later for [0].)\nWhen you play me, give a unit -2 [Might] this turn, to a minimum of 1 [Might].",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n當你打出我，本回合給予1個單位-2[M]，最低降至1[M]。"
   },
   "energy conduit": {
     "en": "Energy Conduit",
-    "name": "",
+    "name": "能量引導",
     "en_text": "[Tap]: [Reaction] – [Add] [1]. (Abilities that add resources can't be reacted to.)",
-    "text": ""
+    "text": "[E]：[反應]－[增添][1](增添資源的技能無法成為反應目標)"
   },
   "garbage grabber": {
     "en": "Garbage Grabber",
-    "name": "",
+    "name": "垃圾收集器",
     "en_text": "Recycle 3 from your trash, [1], [Tap]: Draw 1.",
-    "text": ""
+    "text": "從你的棄牌堆回收3張卡牌、[1]、[M]：抽1張卡牌。"
   },
   "gemcraft seer": {
     "en": "Gemcraft Seer",
-    "name": "",
+    "name": "寶鑄先知",
     "en_text": "[VISION] (When you play me, look at the top card of your Main Deck. You may recycle it.) \nOther friendly units have [VISION].",
-    "text": ""
+    "text": "[預視](當你打出我，查看你的主牌堆最上方的卡牌，你可以將其回收)\n其他友方單位擁有[預視]。"
   },
   "mushroom pouch": {
     "en": "Mushroom Pouch",
-    "name": "",
+    "name": "蘑菇袋",
     "en_text": "At the start of your Beginning Phase, if you control a facedown card at a battlefield, draw 1.",
-    "text": ""
+    "text": "你的起始階段開始時，若你在戰場上控制1張牌面朝下的卡牌，抽1張卡牌。"
   },
   "portal rescue": {
     "en": "Portal Rescue",
-    "name": "",
+    "name": "傳送救援",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[ACTION] (Play on your turn or in showdowns.) \n\nBanish a friendly unit, then its owner plays it to their base,\nignoring its cost.",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n放逐1個友方單位，然後其擁有者無視費用將其打到基地。"
   },
   "ravenbloom student": {
     "en": "Ravenbloom Student",
-    "name": "",
+    "name": "雷文布魯學徒",
     "en_text": "When you play a spell, give me +1 [Might] this turn.",
-    "text": ""
+    "text": "當你打出1個法術，本回合給予我+1[M]。"
   },
   "retreat": {
     "en": "Retreat",
-    "name": "",
+    "name": "撤退",
     "en_text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nReturn a friendly unit to its owner's hand. Its owner channels 1 rune exhausted.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n將1個友方單位返回擁有者手牌。其擁有者召喚1枚休眠狀態的符文。"
   },
   "singularity": {
     "en": "Singularity",
-    "name": "",
+    "name": "宇宙奇點",
     "en_text": "Deal 6 to each of up to two units.",
-    "text": ""
+    "text": "對最多2個單位各造成6點傷害。"
   },
   "sprite mother": {
     "en": "Sprite Mother",
-    "name": "",
+    "name": "精靈之母",
     "en_text": "When you play me, play a ready 3 [Might] Sprite unit token with [Temporary] here. (Kill it at the start of its controller's Beginning Phase, before scoring.)",
-    "text": ""
+  "text": "當你打出我，在此處打出一位活化狀態帶有[瞬息]的3[M]＂精靈＂(在其控制者的下個起始階段，計分之前將其摧毀)。"
   },
   "ava achiever": {
     "en": "Ava Achiever",
-    "name": "",
+    "name": "優等生艾娃",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nWhen I attack, you may pay [Mind] to play a card with [Hidden]\nfrom your hand, ignoring its cost. If it’s a unit, play it here.",
-    "text": ""
+    "text": "當我攻擊，你可以支付[mind]，從手牌打出1張帶有[待命]的卡牌，無視其費用。若該牌是單位，則在此處打出它。"
   },
   "convergent mutation": {
     "en": "Convergent Mutation",
-    "name": "",
+    "name": "趨同變異",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[Reaction] (Play any time, even before spells and abilities\nresolve.)\nChoose a friendly unit. This turn, increase its Might to the\nMight of another friendly unit.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n選擇1個友方單位。本回合讓其戰力提高至與另一個友方單位的戰力相同。"
   },
   "dr. mundo, expert": {
     "en": "Dr. Mundo, Expert",
-    "name": "",
+    "name": "蒙多醫生 專家",
     "en_text": "My Might is increased by the number of cards on your trash.\nAt the start of your Beginning Phase, recycle 3 from your trash.",
-    "text": ""
+    "text": "我的戰力會隨著棄牌堆的卡牌數量增加。\n你的起始階段開始時，從你的棄牌堆回收3張卡牌。"
   },
   "ekko, recurrent": {
     "en": "Ekko, Recurrent",
-    "name": "",
+    "name": "艾克 回溯",
     "en_text": "[ACCELERATE] (You may pay [1] [Mind] as an additional cost to have me enter ready.)\n[DEATHKNELL] – Recycle me to ready your runes. (When I die, get the effect.)",
-    "text": ""
+    "text": "[加速](你可以支付[1][mind]作為額外費用，讓我以活化狀態進場)\n[喪鐘]－回收我來活化你符文(當我陣亡，獲得此效果)。"
   },
   "heimerdinger, inventor": {
     "en": "Heimerdinger, Inventor",
-    "name": "",
+    "name": "漢默丁格 發明家",
     "en_text": "I have all [Tap] abilities of all friendly legends, units and gear.",
-    "text": ""
+    "text": "我具有所有友方傳奇、單位與裝備的所有[E]技能。"
   },
   "kai'sa, evolutionary": {
     "en": "Kai'Sa, Evolutionary",
-    "name": "",
+    "name": "凱莎 進化",
     "en_text": "[GANKING] (I can move from battlefield to battlefield.)\n\nWhen I conquer, you may play a spell from your trash with Energy cost less than your points without paying its Energy cost. Then recycle it. (You must still pay its Power cost.)",
-    "text": ""
+    "text": "[遊走](我能夠在戰場之間移動)\n當我征服一處戰場，你可以從你的棄牌堆中打出1個能量費用低於你目前分數的法術，且無視其能量費用。然後將其回收(仍需支付其符能費用)。"
   },
   "malzahar, fanatic": {
     "en": "Malzahar, Fanatic",
-    "name": "",
+    "name": "馬爾札哈 狂熱者",
     "en_text": "Kill a friendly unit or gear, [tap] : [action] – [add] [rune] [rune]. (Use on your turn or in showdowns. Abilities that add resources can't be reacted to.)",
-    "text": ""
+    "text": "擊殺1個友方單位或裝備，[E]：[行動]－[增添][A][A](只能在你回合或法術對決中打出。增添資源的技能無法成為反應目標)。"
   },
   "progress day": {
     "en": "Progress Day",
-    "name": "",
+    "name": "進步日",
     "en_text": "Draw 4.",
-    "text": ""
+    "text": "抽4張卡牌。"
   },
   "promising future": {
     "en": "Promising Future",
-    "name": "",
+    "name": "光明未來",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nEach player looks at the top 5 cards of their Main Deck,\nbanishes one of them, then recycles the rest. Starting with the next\nplayer, each player plays those cards, ignoring Energy\ncosts. (They must still pay Power costs.)",
-    "text": ""
+    "text": "每位玩家查看其主牌堆最上方5張卡牌，放逐其中1張後回收其餘卡牌。從下一位玩家開始，各個玩家無視能量費用打出這些卡牌(仍需支付符能費用)。"
   },
   "thousand-tailed watcher": {
     "en": "Thousand-Tailed Watcher",
-    "name": "",
+    "name": "千尾守望者",
     "en_text": "[Accelerate] (You may pay [1] [Mind] as an additional cost to have me enter ready.)\nWhen you play me, give enemy units -3 [Might] this turn, to a minimum of 1 [Might].",
-    "text": ""
+    "text": "[加速](你可以支付[1][mind]作為額外費用，讓我以活化狀態進場)\n當你打出我，本回合給予敵方單位-3[M]，最低降至1[M]。"
   },
   "viktor, innovator": {
     "en": "Viktor, Innovator",
-    "name": "",
+    "name": "維克特 創新者",
     "en_text": "When you play a card on an opponent's turn, play a 1 [Might] Recruit unit token in your base.",
-    "text": ""
+    "text": "當你在對手的回合打出1張卡牌，在你的基地打出一名1[M]＂侍從＂。"
   },
   "wraith of echoes": {
     "en": "Wraith of Echoes",
-    "name": "",
+    "name": "回音幽靈",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗥𝗶𝗼𝘁 𝗙𝗔𝗤 𝗮𝗻𝗱 𝗥𝘂𝗹𝗲𝘀 𝗨𝗽𝗱𝗮𝘁𝗲\nThe first time another friendly unit dies each turn, draw 1",
-    "text": ""
+    "text": "你每回合首次有友方單位陣亡時，抽1張卡牌。"
   },
   "ahri, inquisitive": {
     "en": "Ahri, Inquisitive",
-    "name": "",
+    "name": "阿璃 好奇",
     "en_text": "When I attack or defend, give an enemy unit here -2 [Might] this turn, to a minimum of 1 [Might].",
-    "text": ""
+    "text": "當你攻擊或防守，本回合給予1個敵方單位-2[M]，最低降至1[M]。"
   },
   "seal of insight": {
     "en": "Seal of Insight",
-    "name": "",
+    "name": "洞察之印",
     "en_text": "[Tap]: [REACTION] – [ADD] [Mind]. (Abilities that add resources can't be reacted to.)",
-    "text": ""
+    "text": "[E]：[反應]－[增添][mind](增添資源的技能無法成為反應目標)"
   },
   "teemo, strategist": {
     "en": "Teemo, Strategist",
-    "name": "",
+    "name": "提摩 戰略家",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\n[Hidden] (Hide now for [Rune] to react with later for [0].)\nWhen I defend, choose an enemy unit here and reveal the\ntop 5 cards of your Main Deck. Deal 1 to that unit for each\ncard with [Hidden] revealed this way, then recycle the\nrevealed cards.",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)\n當我防守或從[待命]狀態被打出，揭示你的主牌堆最上方5張卡牌。每有1張帶有[待命]的卡牌，對此處1個敵方單位造成1點傷害，然後回收這些卡牌。"
   },
   "time warp": {
     "en": "Time Warp",
-    "name": "",
+    "name": "時空扭曲",
     "en_text": "Take a turn after this one. Banish this.",
-    "text": ""
+    "text": "本回合後再進行一個回合。放逐此牌。"
   },
   "unchecked power": {
     "en": "Unchecked Power",
-    "name": "",
+    "name": "無制之力",
     "en_text": "Exhaust all friendly units, then deal 12 to all units at battlefields.",
-    "text": ""
+    "text": "休眠所有友方單位，然後對戰場上所有單位造成12點傷害。"
   },
   "arena bar": {
     "en": "Arena Bar",
-    "name": "",
+    "name": "競技場酒吧",
     "en_text": "[Tap]: Buff an exhausted friendly unit. (if it doesn't have a buff, it gets a +1 [Might] buff.)",
-    "text": ""
+    "text": "[E]：強化1個休眠狀態的友方單位(若該單位尚無增益，則獲得+1[M]增益)。"
   },
   "bilgewater bully": {
     "en": "Bilgewater Bully",
-    "name": "",
+    "name": "比爾吉沃特惡霸",
     "en_text": "While I'm buffed, I have [GANKING]. (I can move from battlefield to battlefield.)",
-    "text": ""
+    "text": "我被強化後，獲得[遊走](我能夠在戰場之間移動)。"
   },
   "body rune": {
     "en": "Body Rune",
-    "name": "",
+    "name": "身軀符文",
     "en_text": "",
     "text": ""
   },
   "cannon barrage": {
     "en": "Cannon Barrage",
-    "name": "",
+    "name": "砲火彈幕",
     "en_text": "[Reaction] (Play any time, even before spells and abilities resolve.)\n\nDeal 2 to all enemy units in combat.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n對戰鬥中所有敵方單位造成2點傷害。"
   },
   "challenge": {
     "en": "Challenge",
-    "name": "",
+    "name": "挑戰",
     "en_text": "[ACTION] (Play on your turn or in showdowns.)\nChoose a friendly unit and an enemy unit. They deal damage equal to their Mights to each other.",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n選擇1個友方單位和1個敵方單位，雙方對彼此造成等同於自身戰力的傷害。"
   },
   "confront": {
     "en": "Confront",
-    "name": "",
+    "name": "迎敵之息",
     "en_text": "[Action] (Play on your turn or in showdowns.)\n\nUnits you play this turn enter ready.\nDraw 1.",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n你在本回合打出的單位進場時為活化狀態。\n抽1張卡牌。"
   },
   "crackshot corsair": {
     "en": "Crackshot Corsair",
-    "name": "",
+    "name": "神射海盜",
     "en_text": "When I attack, deal 1 to an enemy unit here.",
-    "text": ""
+    "text": "當我攻擊，對此處的1個敵方單位造成1點傷害。"
   },
   "dune drake": {
     "en": "Dune Drake",
-    "name": "",
+    "name": "沙丘飛龍",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nWhen I attack, give me +2 [Might] this turn if there is a ready\nenemy unit here.",
-    "text": ""
+    "text": "當我攻擊，若此處有活化狀態的敵方單位，則本回合給予我+2[M]。"
   },
   "first mate": {
     "en": "First Mate",
-    "name": "",
+    "name": "大副",
     "en_text": "When you play me, ready another unit.",
-    "text": ""
+    "text": "當你打出我，活化另外1個單位。"
   },
   "flurry of blades": {
     "en": "Flurry of Blades",
-    "name": "",
+    "name": "刀光亂舞",
     "en_text": "[Reaction] (Play any time, even before spells and abilities resolve.)\n\nDeal 1 to all units at battlefields.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n對戰場上所有單位造成1點傷害。"
   },
   "mobilize": {
     "en": "Mobilize",
-    "name": "",
+    "name": "組織動員",
     "en_text": "Channel 1 rune exhausted. If you can't, draw 1.",
-    "text": ""
+    "text": "召喚1枚休眠狀態的符文。若你無法這麼做，抽1張卡牌。"
   },
   "pakaa cub": {
     "en": "Pakaa Cub",
-    "name": "",
+    "name": "帕卡幼豹",
     "en_text": "[Hidden] (Hide now for [Rune] to react with later for [0].)",
-    "text": ""
+    "text": "[待命](支付[A]覆蓋此牌，之後可支付[0]使其重新成為反應牌)"
   },
   "pit rookie": {
     "en": "Pit Rookie",
-    "name": "",
+    "name": "鬥坑新秀",
     "en_text": "When you play me, buff another friendly unit. (If it doesn't have a buff, it gets +1 [might] buff.)",
-    "text": ""
+    "text": "當你打出我，強化另一個友方單位(若該單位尚無增益，則獲得+1[M]增益)。"
   },
   "stormclaw ursine": {
     "en": "Stormclaw Ursine",
-    "name": "",
+    "name": "雷爪巨熊",
     "en_text": "[TANK] (I must be assigned combat damage first.)\nWhen you play me, channel 1 rune exhausted.",
-    "text": ""
+    "text": "[坦克](戰鬥傷害必須優先分配給我)\n當你打出我，召喚1枚休眠狀態的符文。"
   },
   "catalyst of aeons": {
     "en": "Catalyst of Aeons",
-    "name": "",
+    "name": "永恆催化",
     "en_text": "Channel 2 runes exhausted. If you couldn't channel 2 runes this way, draw 1.",
-    "text": ""
+    "text": "召喚2枚休眠狀態的符文。若你無法這麼做，抽1張卡牌。"
   },
   "cithria of cloudfield": {
     "en": "Cithria of Cloudfield",
-    "name": "",
+    "name": "雲之地的希莉亞",
     "en_text": "When you play another unit, buff me. (If I don't have a buff, I get a +1 [Might] buff.)",
-    "text": ""
+    "text": "當你打出另外1個單位，強化我(若我尚無增益，則獲得+1[M]增益)。"
   },
   "herald of scales": {
     "en": "Herald of Scales",
-    "name": "",
+    "name": "鱗之使者",
     "en_text": "Your Dragons' Energy costs are reduced by [2], to a minimum of [1].",
-    "text": ""
+    "text": "你的龍族能量費用減[2]，最低降至[1]。"
   },
   "kinkou monk": {
     "en": "Kinkou Monk",
-    "name": "",
+    "name": "均衡派僧侶",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗢𝗿𝗶𝗴𝗶𝗻𝘀 𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮:\nWhen you play me, buff up to two other friendly units.\n(Each one that doesn't have a buff gets a +1 [Might] buff.)",
-    "text": ""
+    "text": "當你打出我，強化最多另外2個友方單位(每個尚無增益的單位都獲得+1[M]增益)。"
   },
   "mountain drake": {
     "en": "Mountain Drake",
-    "name": "",
+    "name": "裂地飛龍",
     "en_text": ".",
     "text": ""
   },
   "pirate's haven": {
     "en": "Pirate's Haven",
-    "name": "",
+    "name": "海盜避風港",
     "en_text": "When you ready a friendly unit, give it +1 [Might] this turn.",
-    "text": ""
+    "text": "當你活化1個友方單位，本回合給予其+1[M]。"
   },
   "spoils of war": {
     "en": "Spoils of War",
-    "name": "",
+    "name": "戰利品",
     "en_text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nIf an enemy unit has died this turn, this costs [2] less.\nDraw 2.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n若本回合有敵方單位陣亡，此牌的費用減[2]。\n抽2張卡牌。"
   },
   "unyielding spirit": {
     "en": "Unyielding Spirit",
-    "name": "",
+    "name": "不滅之靈",
     "en_text": "𝗖𝗮𝗿𝗱 𝗘𝗿𝗿𝗮𝘁𝗮 𝗧𝗲𝘅𝘁 – 𝗙𝗿𝗼𝗺 𝗥𝗶𝗼𝘁 𝗙𝗔𝗤 𝗮𝗻𝗱 𝗥𝘂𝗹𝗲𝘀 𝗨𝗽𝗱𝗮𝘁𝗲\n[Reaction] Prevent all damage that would be dealt this turn by spells\nand abilities.",
-    "text": ""
+    "text": "[反應](可在任何時間打出，甚至可先於法術和技能的結算)\n本回合不受任何法術和技能傷害。"
   },
   "wallop": {
     "en": "Wallop",
-    "name": "",
+    "name": "原始衝撞",
     "en_text": "[Action] (Play on your turn or in showdowns.)\nAs you play this, you may spend a buff as an additional cost. If you do, ignore this spell's cost. Ready a unit.",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n活化1個單位。"
   },
   "wildclaw shaman": {
     "en": "Wildclaw Shaman",
-    "name": "",
+    "name": "狂爪薩滿",
     "en_text": "When you play me, you may spend a buff to buff me and ready me. (If I don't have a buff, I get a +1 [Might] buff.)",
-    "text": ""
+    "text": "當你打出我，你可以消耗1個增益來強化並活化我(若我尚無增益，則獲得+1[M]增益)。"
   },
   "anivia, primal": {
     "en": "Anivia, Primal",
-    "name": "",
+    "name": "艾妮維亞 原始",
     "en_text": "When I attack, deal 3 to all enemy units here.",
-    "text": ""
+    "text": "當我攻擊，對此處所有敵方單位造成3點傷害。"
   },
   "carnivorous snapvine": {
     "en": "Carnivorous Snapvine",
-    "name": "",
+    "name": "食人蔓藤",
     "en_text": "When you play me, choose an enemy unit at a battlefield. We deal damage equal to our Mights to each other.",
-    "text": ""
+    "text": "當你打出我，選擇一處戰場上的1個敵方單位。雙方對彼此造成等同於自身戰力的傷害。"
   },
   "kraken hunter": {
     "en": "Kraken Hunter",
-    "name": "",
+    "name": "海怪獵人",
     "en_text": "[Accelerate] (You may pay [1] [body] as an additional cost to have me enter ready.)\n[Assault] (+1 [might] while i'm an attacker.)\n\nAs you play me, you may spend any number of buffs as an additional cost. Reduce my cost by [body] for each buff you spend.",
-    "text": ""
+    "text": "[加速](你可以支付[1][body]作為額外費用，讓我以活化狀態進場)\n[強襲](我為進攻方時+1[M])\n你打出我的同時，你可以花費任意數量的增益作為額外費用。每花費1個增益，我的費用減[body]。"
   },
   "lee sin, centered": {
     "en": "Lee Sin, Centered",
-    "name": "",
+    "name": "李星 沉穩",
     "en_text": "[Accelerate] (You may pay [1][Body] as an additional cost to have me enter ready.)\nOther buffed friendly units at my battlefield have +2 [Might].",
-    "text": ""
+    "text": "[加速](你可以支付[1][body]作為額外費用，讓我以活化狀態進場)\n我所在的戰場上，其他被強化的友方單位獲得+2[M]。"
   },
   "mistfall": {
     "en": "Mistfall",
-    "name": "",
+    "name": "霧瀑",
     "en_text": "When you buff a friendly unit, you may pay [Body] and exhaust this to ready it.",
-    "text": ""
+    "text": "當你強化1個友方單位，你可以支付[body]來休眠此牌，使該單位活化。"
   },
   "overt operation": {
     "en": "Overt Operation",
-    "name": "",
+    "name": "公開行動",
     "en_text": "[Action] (play on your turn or in showdowns.)\n\nFor each friendly unit, you may spend its buff to ready it. Then buff all friendly units. (Each one that doesn't have a buff gets a +1 [might] buff.)",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n你可以消耗任何友方單位的增益使其活化，然後強化所有友方單位(所有不具備增益的單位都獲得+1[M]增益)。"
   },
   "primal strength": {
     "en": "Primal Strength",
-    "name": "",
+    "name": "原初力量",
     "en_text": "[Action] (Play on your turn or in showdowns.)\nGive a unit +7 [Might] this turn.",
-    "text": ""
+    "text": "[行動](可在你的回合或法術對決時打出)\n本回合給予1個單位+7[M]。"
   },
   "qiyana, victorious": {
     "en": "Qiyana, Victorious",
-    "name": "",
+    "name": "姬亞娜 勝利",
     "en_text": "[Deflect] (Opponents must pay [power] to choose me with a spell or ability.)\nWhen I conquer, draw 1 or channel 1 rune exhausted.",
-    "text": ""
+    "text": "[法盾](對手必須支付[A]才能將我選定為法術或效果的目標)\n當我征服一處戰場，抽1張卡牌或召喚1枚休眠狀態的符文。"
   },
   "sabotage": {
     "en": "Sabotage",
-    "name": "",
+    "name": "破壞行動",
     "en_text": "Choose an opponent. They reveal their hand. Choose a non–unit card from it, and recycle that card.",
-    "text": ""
+    "text": "選擇一位對手，使其揭示其手牌。選擇其中1張非單位卡牌將其回收。"
   },
   "udyr, wildman": {
     "en": "Udyr, Wildman",
-    "name": "",
+    "name": "烏迪爾 野人",
     "en_text": "Spend my buff: Choose one you've not chosen turn –\n\nDeal 2 to a unit at a battlefield.\nStun a unit at a battlefield\nReady me.\nGive me [GANKING] this turn.",
-    "text": ""
+    "text": "消耗我的增益：選擇1個你在本回合尚未選過的效果－\n\u2027對一處戰場上的1個單位造成2點傷害。\n\u2027暈眩一處戰場上的1個單位。\n\u2027活化我。\n\u2027本回合給予我[遊走]。"
   },
   "volibear, imposing": {
     "en": "Volibear, Imposing",
@@ -6617,22 +6631,6 @@
     "en_text": "When you conquer here, you may discard 1 and channel 1 rune exhausted.",
     "text": ""
   },
-  "_iconflip": [
-    "might",
-    "M",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "TAP",
-    "E"
-  ],
   "fury rune (alternate art)": {
     "en": "Fury Rune (Alternate Art)",
     "name": "狂怒符文(異畫)",
