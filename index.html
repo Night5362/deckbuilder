@@ -228,6 +228,12 @@ body:not(.ed) .ctl,body:not(.ed) button.ab,body:not(.ed) .bd,body:not(.ed) .mg .
 .vcd.phd .phl{color:#9ff0b8}
 .vcd .phc{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);display:flex;gap:2px;padding:1px 3px;border-radius:10px;background:rgba(10,10,10,.8)}
 .vcd .phc button{border:0;background:transparent;color:#fff;font-size:16px;line-height:22px;width:26px;padding:0;cursor:pointer}
+.vcb{position:relative}
+.vcb.phg img{filter:grayscale(1);opacity:.55}
+.vcb .phl{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000;pointer-events:none;z-index:3}
+.vcb.phd .phl{color:#9ff0b8}
+.vcb .phc{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);display:flex;gap:2px;padding:1px 3px;border-radius:10px;background:rgba(10,10,10,.8);z-index:3}
+.vcb .phc button{border:0;background:transparent;color:#fff;font-size:16px;line-height:22px;width:26px;padding:0;cursor:pointer}
 
 .shr img{width:56px}.shn{width:44px;text-align:center;border:0;background:transparent;color:var(--tx);font:inherit;font-weight:700;padding:0;-moz-appearance:textfield}.shn::-webkit-outer-spin-button,.shn::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 #shl{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin-top:12px}#shl>.c{margin-bottom:0}#shl>.cd{overflow:hidden}
@@ -396,6 +402,7 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 #catB{gap:8px;margin:0 0 10px}
 #catB button{padding:9px 16px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;white-space:nowrap}
 #catB button.on{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}
+@media (min-width:900px){#edw.two #listB{grid-template-columns:repeat(6,minmax(0,1fr))}#edw.two #listB.bfc{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
@@ -878,7 +885,7 @@ function phOn(){return PHON&&!VSRC}
 function phCls(id,n){return phOn()?(phNeed(id,n)>0?' phg':' phd'):''}
 function phLab(need){return need>0?'還缺 '+need+' 張':'已完成'}
 function phTile(id,n){if(!phOn())return'';return'<span class="phl">'+phLab(phNeed(id,n))+'</span><div class="phc"><button onclick="event.stopPropagation();phStep(this,-1)" aria-label="還原一張">−</button><button onclick="event.stopPropagation();phStep(this,1)" aria-label="已有一張">＋</button></div>'}
-function phStep(b,d){var t=b.closest('.vcd'),id=t.getAttribute('data-ph'),n=+t.getAttribute('data-n'),k=phKey(),o=PH[k]||(PH[k]={}),h=Math.max(0,Math.min(n,(o[id]||0)+d));if(h)o[id]=h;else delete o[id];if(!Object.keys(o).length)delete PH[k];try{localStorage.setItem('rb_ph',JSON.stringify(PH))}catch(e){}
+function phStep(b,d){var t=b.closest('[data-ph]'),id=t.getAttribute('data-ph'),n=+t.getAttribute('data-n'),k=phKey(),o=PH[k]||(PH[k]={}),h=Math.max(0,Math.min(n,(o[id]||0)+d));if(h)o[id]=h;else delete o[id];if(!Object.keys(o).length)delete PH[k];try{localStorage.setItem('rb_ph',JSON.stringify(PH))}catch(e){}
 var need=n-h;t.classList.toggle('phg',need>0);t.classList.toggle('phd',need<=0);var l=t.querySelector('.phl');if(l)l.textContent=phLab(need)}
 function phToggle(){PHON=!PHON;rview()}
 function phClear(){var k=phKey();delete PH[k];try{localStorage.setItem('rb_ph',JSON.stringify(PH))}catch(e){}rview()}
@@ -1006,7 +1013,7 @@ var bCat=null,bIn=0,v0=vis;vis=function(c){return v0(c)&&(!bIn||sec(c)===bCat)};
 function bCats(){if(!bCat)bCat=legOf()?'M':'L';var e=$('catB');if(!e)return;e.innerHTML=[['L','傳奇'],['M','主牌組'],['B','戰場'],['R','符文']].map(function(c){return'<button class="'+(c[0]===bCat?'on':'')+'" onclick="setCat(\''+c[0]+'\')">'+c[1]+'</button>'}).join('')}
 var sc0=setCat;setCat=function(k){if(curTab!==2)return sc0.apply(this,arguments);bCat=k||'L';sel.ft={};pg=1;fill();render()};
 var f0=fill;fill=function(){if(curTab!==2)return f0.apply(this,arguments);if(!bCat)bCat=legOf()?'M':'L';bIn=1;try{return f0.apply(this,arguments)}finally{bIn=0}};
-var r0=render;render=function(){var tb=curTab===2;if(tb){if(!bCat)bCat=legOf()?'M':'L';bIn=1}var r;try{r=r0.apply(this,arguments)}finally{bIn=0}try{if(tb){bCats();bTiles()}}catch(e){}return r};
+var r0=render;render=function(){var tb=curTab===2;if(tb){if(!bCat)bCat=legOf()?'M':'L';bIn=1}var r;try{r=r0.apply(this,arguments)}finally{bIn=0}try{if(tb){bCats();bTiles();var L=$('listB');if(L)L.classList.toggle('bfc',bCat==='B')}}catch(e){}return r};
 var u0=updBtns;updBtns=function(){var r=u0.apply(this,arguments);try{if(curTab===2)bPills()}catch(e){}return r};var a0=addLegend;addLegend=function(){var r=a0.apply(this,arguments);try{if(curTab===2){bCat='M';sel.ft={};rr()}}catch(e){}return r}})();
 var vi=-1;
 function viewDeck(i){VSRC=null;vi=i;tab(6)}
@@ -1028,7 +1035,7 @@ var ld=leg?leg.dom.filter(function(x){return x!=='Colorless'}):doms;
 var L1='<div class="vhd"><div><button class="btn" style="flex:none;width:auto;padding:5px 12px;margin-bottom:10px" onclick="tab('+(VSRC?(VSRC.tour?9:8):5)+')">'+(VSRC?(VSRC.tour?'← 賽場牌組':'← 公開牌組'):'← 我的牌組')+'</button><div class="vnm"><h2 class="vtt">'+esc(d.name)+'</h2>'+sl.map(function(x){return'<span class="chp">'+esc(x)+'</span>'}).join('')+'</div><div class="vmeta">'+ld.map(function(g){return'<span class="vdm">'+domIc(g)+esc(lab(DOMN,g))+'</span>'}).join('')+(pb?'<span class="m">分享者：'+esc(pb.author||'匿名')+' · 轉存 '+(pb.saves||0)+' 次</span>':'')+(VSRC&&VSRC.tour?tourMeta(VSRC.tour):'<span class="m">'+(ago(u.t)||'')+'</span>')+(isp?'<span class="chp pubchp">已公開</span>':'')+'</div></div><div class="vbt"><button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="openExp()">匯出</button>'+(VSRC?'':'<button class="btn'+(PHON?' p':'')+'" style="flex:none;width:auto;padding:8px 14px" onclick="phToggle()">實卡組牌</button>'+(PHON&&PH[phKey()]?'<button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="phClear()">重設進度</button>':''))+''+(VSRC?'<button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="cpLink(this)">複製連結</button>':'')+(VSRC&&VSRC.tour?tourBtns():VSRC?'<button class="btn plk'+(pb&&MYLK[pb.id]?' on':'')+'" style="flex:none;width:auto;padding:8px 14px" onclick="pubLike()" aria-pressed="'+(pb&&MYLK[pb.id]?'true':'false')+'">'+(pb&&MYLK[pb.id]?'♥':'♡')+' '+(pb&&pb.likes||0)+'</button><button class="btn p" style="flex:none;width:auto;padding:8px 18px" onclick="pubSave()">轉存到我的牌組</button>'+(!own?'<button class="btn" style="flex:none;width:auto;padding:8px 14px;color:var(--mu)" onclick="pubReport()">檢舉</button>':'')+(own?'<button class="btn" style="flex:none;width:auto;padding:8px 14px;color:var(--no)" onclick="pubUnshare()">取消公開</button>':'')+modBtns(pb):'<button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="pubShare()">'+(isp?'更新公開版本':'公開分享')+'</button>'+(isp?'<button class="btn" style="flex:none;width:auto;padding:8px 14px" onclick="pubUnshare()">取消公開</button>':'')+'<button class="btn p" style="flex:none;width:auto;padding:8px 18px" onclick="loadDeck(vi)">編輯牌組</button><button class="btn" style="flex:none;width:auto;padding:8px 14px;color:var(--no)" onclick="delView()">刪除</button>')+'</div></div>';
 var main='<div class="vl">'
 +'<div class="vr"><div>'+sh('傳奇',leg?1:0,1,!!leg)+'<div class="vg1">'+(leg?vc(leg.id,1,false):'<div class="dph">無</div>')+'</div></div><div style="flex:1;min-width:0">'+sh('符文',rc,12,rc===12)+'<div class="vg2">'+rn.map(function(k){return vc(k,u.main[k])}).join('')+'</div></div></div>'
-+sh('戰場',bc,3,bc===3)+'<div class="vb">'+bf.map(function(k){var c=nm(k);return'<div class="vcb" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+img(c,' onload="bfFix(this)"')+'</div>'}).join('')+'</div>'
++sh('戰場',bc,3,bc===3)+'<div class="vb">'+bf.map(function(k){var c=nm(k),n=u.main[k]||1;return'<div class="vcb'+phCls(c.id,n)+'" data-ph="'+esc(c.id)+'" data-n="'+n+'" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+img(c,' onload="bfFix(this)"')+phTile(c.id,n)+'</div>'}).join('')+'</div>'
 +sh('主牌組',tot,40,tot===40)+'<div class="vg">'+mk.map(function(k){return vc(k,u.main[k],k===u.champ)}).join('')+'</div>'
 +(sk.length?sh('備牌',sn,SIDEMAX,false)+'<div class="vg">'+sk.map(function(k){return vc(k,u.side[k],0,1)}).join('')+'</div>':'')+'</div>';
 var mx=Math.max.apply(null,cu)||1,pm=Math.max.apply(null,pw)||1;
