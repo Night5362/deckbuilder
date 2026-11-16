@@ -224,13 +224,13 @@ body:not(.ed) .ctl,body:not(.ed) button.ab,body:not(.ed) .bd,body:not(.ed) .mg .
 .dcr{position:absolute;left:-8px;top:-10px;z-index:3;display:block;line-height:0;transform:rotate(-24deg);transform-origin:center;filter:drop-shadow(0 2px 2px rgba(0,0,0,.55));pointer-events:none}
 .vcd.phg img{filter:grayscale(1);opacity:.55}
 .vcd.phg .vp,.vcd.phd .vp{display:none}
-.vcd .phl{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000;pointer-events:none}
+.vcd .phl{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:15px;font-weight:800;line-height:1.25;padding:0 4px;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000;pointer-events:none}
 .vcd.phd .phl{color:#9ff0b8}
 .vcd .phc{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);display:flex;gap:2px;padding:1px 3px;border-radius:10px;background:rgba(10,10,10,.8)}
 .vcd .phc button{border:0;background:transparent;color:#fff;font-size:16px;line-height:22px;width:26px;padding:0;cursor:pointer}
 .vcb{position:relative}
 .vcb.phg img{filter:grayscale(1);opacity:.55}
-.vcb .phl{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000;pointer-events:none;z-index:3}
+.vcb .phl{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:15px;font-weight:800;line-height:1.25;padding:0 4px;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000;pointer-events:none;z-index:3}
 .vcb.phd .phl{color:#9ff0b8}
 .vcb .phc{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);display:flex;gap:2px;padding:1px 3px;border-radius:10px;background:rgba(10,10,10,.8);z-index:3}
 .vcb .phc button{border:0;background:transparent;color:#fff;font-size:16px;line-height:22px;width:26px;padding:0;cursor:pointer}
@@ -880,13 +880,14 @@ E.innerHTML=h}
 /* ===== 實卡組牌 ===== */
 var PHON=false,PH={};try{PH=JSON.parse(localStorage.getItem('rb_ph')||'{}')||{}}catch(e){}
 function phKey(){var d=vDeck();return d?String(d.id||d.name):''}
-function phNeed(id,n){var h=(PH[phKey()]||{})[id]||0;return Math.max(0,n-h)}
+function phHave(id,n){return Math.min(n,(PH[phKey()]||{})[id]||0)}
+function phNeed(id,n){return Math.max(0,n-phHave(id,n))}
 function phOn(){return PHON&&!VSRC}
 function phCls(id,n){return phOn()?(phNeed(id,n)>0?' phg':' phd'):''}
-function phLab(need){return need>0?'還缺 '+need+' 張':'已完成'}
-function phTile(id,n){if(!phOn())return'';return'<span class="phl">'+phLab(phNeed(id,n))+'</span><div class="phc"><button onclick="event.stopPropagation();phStep(this,-1)" aria-label="還原一張">−</button><button onclick="event.stopPropagation();phStep(this,1)" aria-label="已有一張">＋</button></div>'}
+function phLab(h,n){return h>=n?'已完成':h>0?'已加入 '+h+'/'+n+' 張':'還缺 '+n+' 張'}
+function phTile(id,n){if(!phOn())return'';return'<span class="phl">'+phLab(phHave(id,n),n)+'</span><div class="phc"><button onclick="event.stopPropagation();phStep(this,-1)" aria-label="還原一張">−</button><button onclick="event.stopPropagation();phStep(this,1)" aria-label="已有一張">＋</button></div>'}
 function phStep(b,d){var t=b.closest('[data-ph]'),id=t.getAttribute('data-ph'),n=+t.getAttribute('data-n'),k=phKey(),o=PH[k]||(PH[k]={}),h=Math.max(0,Math.min(n,(o[id]||0)+d));if(h)o[id]=h;else delete o[id];if(!Object.keys(o).length)delete PH[k];try{localStorage.setItem('rb_ph',JSON.stringify(PH))}catch(e){}
-var need=n-h;t.classList.toggle('phg',need>0);t.classList.toggle('phd',need<=0);var l=t.querySelector('.phl');if(l)l.textContent=phLab(need)}
+var need=n-h;t.classList.toggle('phg',need>0);t.classList.toggle('phd',need<=0);var l=t.querySelector('.phl');if(l)l.textContent=phLab(h,n)}
 function phToggle(){PHON=!PHON;rview()}
 function phClear(){var k=phKey();delete PH[k];try{localStorage.setItem('rb_ph',JSON.stringify(PH))}catch(e){}rview()}
 /* ===== 願望清單 ===== */
