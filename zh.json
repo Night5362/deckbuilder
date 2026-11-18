@@ -5,7 +5,7 @@
 
   "_imgsets": ["ogn", "ogs", "sfd"],
 
-  "_banned_tw": ["ogn-284","ogn-285","ogn-292","ogn-182","sfd-122","ogn-168"],
+  "_banned_tw": ["ogn-284","ogn-285","ogn-292","ogn-182","sfd-122","ogn-168","sfd-020"],
 
   "_banned_intl": ["ogn-284","ogn-285","ogn-292","ogn-182","sfd-122","ogn-168","sfd-048","ogn-177","rad-043","ogn-195","ogn-194","ogn-110","sfd-020","ogn-026","ogn-183","ogn-077","ogn-160","ogn-242","ogn-290","unl-215","sfd-207","ogn-276"],
 
