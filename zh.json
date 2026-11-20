@@ -1285,7 +1285,7 @@
     "en": "Twisted Fate, Gambler",
     "name": "「賭徒」逆命",
     "en_text": "When I attack, reveal the top rune of your rune deck, then recycle it. Do one of the following based on its domain:\n[Fury] – Deal 2 to an enemy unit here and 1 to all other enemy units here.\n[Mind] – Draw 1.\n[Order] – Stun an enemy unit.",
-    "text": "當我進攻，揭示你的符文牌堆最上方的符文，然後將其回收。依據所揭示的領域執行下列其中一項：\n[rage]－對此處的1個敵方單位造成2點傷害，並對此處所有其他敵方單位造成1點傷害。\n[mind]－抽1張卡牌。\n[order]－暈眩1個敵方單位。"
+    "text": "當我進攻，揭示你的符文牌堆最上方的符文，然後將其回收。依據所揭示的領域執行下列其中一項：\n[fury]－對此處的1個敵方單位造成2點傷害，並對此處所有其他敵方單位造成1點傷害。\n[mind]－抽1張卡牌。\n[order]－暈眩1個敵方單位。"
   },
   "invert timelines": {
     "en": "Invert Timelines",
