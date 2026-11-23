@@ -1347,7 +1347,8 @@ window.addEventListener("load",function(){/* ===== 牌組詳情升級 ===== */
 function hero(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd');if(!h||h.querySelector('.hbg'))return;
  var d;try{d=vDeck()}catch(e){}if(!d)return;var u=unpack(d.deck),leg=null,first=null,k;for(k in u.main){var c=nm(k);if(!c)continue;if(sec(c)==='L'){if(!leg)leg=c}else if(!first)first=c}
  var cv=leg||first;if(!cv)return;var im=pic(cv),dom=(cv.dom||[])[0],col=dom&&DCOL[String(dom).toLowerCase()];
- h.classList.add('hh');h.insertAdjacentHTML('afterbegin','<div class="hbg" style="background-image:url(&quot;'+esc(im)+'&quot;)"></div><div class="hov"></div><img class="hart" src="'+esc(im)+'" data-o="'+esc(cv.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">');
+ h.classList.add('hh');h.insertAdjacentHTML('afterbegin','<div class="hbg"></div><div class="hov"></div><img class="hart" src="'+esc(im)+'" data-o="'+esc(cv.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">');
+ var bg=h.querySelector('.hbg'),setBg=function(u){bg.style.backgroundImage='url("'+u+'")'},t1=new Image();t1.onload=function(){setBg(im)};t1.onerror=function(){if(cv.img&&cv.img!==im){var t2=new Image();t2.onload=function(){setBg(cv.img)};t2.src=cv.img}};t1.src=im;
  if(col)h.style.setProperty('--hg',col+'88')}
 function donuts(){[].forEach.call(document.querySelectorAll('#vw .vs .c'),function(c){var vb=c.querySelector(':scope>.vbar');if(!vb||c.querySelector('.dnw'))return;
  var seg=[].map.call(vb.children,function(i){return{f:parseFloat(i.style.flexGrow||i.style.flex)||0,c:i.style.background}}),t=seg.reduce(function(a,s){return a+s.f},0);if(!t)return;
