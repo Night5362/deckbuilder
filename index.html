@@ -377,6 +377,20 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .pthand{position:fixed}.ptht{position:relative}
 }
 
+.vhd.hg.hg{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;padding-left:14px!important}
+.vhd.hg.hg .hcv{position:relative;z-index:1;height:210px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 8px 26px rgba(0,0,0,.4)}
+.hcv .hcb{position:absolute;inset:0;background-size:cover;background-position:50% 14%;transform:scale(1.05)}
+.hcv .hcs{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.45) 100%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 55%)}
+.hcv .hf{position:absolute;bottom:-14px;width:96px;height:134px;object-fit:cover;border-radius:7px;border:1px solid rgba(255,255,255,.28);box-shadow:0 6px 18px rgba(0,0,0,.6);transition:transform .2s}
+.hcv .hf0{right:96px;z-index:3;transform:rotate(-3deg)}.hcv .hf1{right:14px;z-index:2;transform:rotate(8deg);bottom:-4px}.hcv .hf2{right:178px;z-index:1;transform:rotate(-12deg);bottom:-2px}
+.hcv:hover .hf0{transform:rotate(-3deg) translateY(-6px)}
+.hics{position:absolute;left:10px;top:10px;display:flex;gap:6px;z-index:4}
+.hic{width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}
+.vhd.hg.hg .hrt{position:relative;z-index:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.vhd.hg.hg .hrt .vtt{font-size:30px;line-height:1.2;font-family:var(--serif,inherit);letter-spacing:.03em}
+.vhd.hg.hg .hrt .vbt{margin:0}
+@media (max-width:760px){.vhd.hg.hg{grid-template-columns:1fr;gap:14px}.vhd.hg.hg .hcv{height:190px}.vhd.hg.hg .hrt .vtt{font-size:24px}.hcv .hf{width:78px;height:109px}.hcv .hf0{right:70px}.hcv .hf2{right:132px}}
+
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -1444,6 +1458,26 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
   var ctl=mull?'<div class="ptmu"><b>調度：</b>選擇最多 2 張要換掉的牌（已選 '+P.mul.length+'）<button class="btn p" onclick="ptMull(1)">'+(P.mul.length?'換掉 '+P.mul.length+' 張':'保留起手')+'</button></div>':'<div class="ptmu"><button class="btn p" onclick="ptNext()">下一回合（'+(P.turn+1)+'）</button><span class="ptlg">'+esc(P.log.slice(0,3).join('　·　'))+'</span></div>';
   var op=P.ho||mull||!!P.sel,an=P.anim?' anim':'';P.anim=0;
   o.innerHTML=top+'<div class="ptbody">'+side+main+'</div>'+ctl+'<div class="pthand'+(op?' open':'')+an+'" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="pth ptht" onclick="PT.ho=!PT.ho;PT.anim=1;ptRender()"><b>手牌</b><span>'+P.hand.length+'</span><i class="ptchv">'+(op?'▼':'▲')+'</i></div>'+ptActs()+'<div class="ptb">'+hand+'</div></div>'}
+/* ===== 牌組詳情：封面＋標題橫排 ===== */
+window.addEventListener('load',function(){
+function hcover(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd');if(!h||h.querySelector('.hcv'))return;
+ var d;try{d=vDeck()}catch(e){}if(!d)return;var u=unpack(d.deck),leg=null,mk=[],k,c;
+ for(k in u.main){c=nm(k);if(!c)continue;var x=sec(c);if(x==='L'){if(!leg)leg=c}else if(x==='M')mk.push({c:c,n:u.main[k]})}
+ mk.sort(function(a,b){return(b.n-a.n)||((Number(b.c.cost)||0)-(Number(a.c.cost)||0))});
+ var used={},fan=[],chc=u.champ&&nm(u.champ),sg=null;
+ mk.forEach(function(o){if(!sg){try{if(isSig(o.c))sg=o.c}catch(e){}}});
+ function add(c){if(c&&!used[c.id]&&fan.length<3){used[c.id]=1;fan.push(c)}}
+ add(chc);add(sg);mk.forEach(function(o){add(o.c)});if(!leg&&!fan.length)return;
+ var cv=leg||fan[0],im=pic(cv),doms=(cv.dom||[]).filter(function(g){return g!=='Colorless'}).slice(0,2);
+ var ic=doms.map(function(g){return'<span class="hic">'+domIc(g,20)+'</span>'}).join('');
+ var fh=fan.map(function(c,i){var q=pic(c);return q?'<img class="hf hf'+i+'" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':''}).join('');
+ var wrap=document.createElement('div');wrap.className='hcv';wrap.innerHTML='<div class="hcb" style="background-image:url(\''+esc(im)+'\')"></div><div class="hcs"></div>'+fh+'<div class="hics">'+ic+'</div>';
+ var old=h.querySelector('.hart');if(old)old.remove();
+ var kids=[].filter.call(h.children,function(e){return!e.classList.contains('hbg')&&!e.classList.contains('hov')});
+ var col=document.createElement('div');col.className='hrt';kids.forEach(function(e){col.appendChild(e)});
+ h.appendChild(wrap);h.appendChild(col);h.classList.add('hg')}
+var _r=rview;rview=function(){_r.apply(this,arguments);try{hcover()}catch(e){}};
+});
 var vi=-1;
 function viewDeck(i){VSRC=null;vi=i;tab(6)}
 async function shareView(){var d=vDeck();if(!d)return;var u=unpack(d.deck),sd=deck,ss=side,sc=champ,sn=$('dn').value;deck=JSON.parse(JSON.stringify(u.main));side=JSON.parse(JSON.stringify(u.side));champ=u.champ||'';$('dn').value=d.name;
