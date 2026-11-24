@@ -370,7 +370,7 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 @media (max-width:720px){
 .ptov{padding-bottom:56px}
 .pthand{position:fixed;left:0;right:0;bottom:0;z-index:3;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -8px 24px rgba(0,0,0,.45);padding:0 10px 10px;max-height:46px;overflow:hidden;background:var(--card)}
-.pthand.open{max-height:62vh;overflow:visible}.pthand.anim.open{animation:ptUp .22s ease-out}
+.pthand.open{max-height:62vh;overflow:visible}.ptov:has(.pthand.open){padding-bottom:58vh}.pthand.anim.open{animation:ptUp .22s ease-out}
 .pthand .ptht{height:46px;margin:0;align-items:center;cursor:pointer;font-size:13px}.ptchv{display:block}
 .pthand .pta{margin:0 0 6px}.pthand .ptb{padding-top:2px}
 .ptht::before{content:"";position:absolute;left:50%;top:6px;width:36px;height:4px;border-radius:2px;background:var(--bd);transform:translateX(-50%)}
@@ -383,8 +383,7 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .hcv .hca{position:absolute;left:0;top:0;width:58%;height:100%;object-fit:cover;object-position:50% 50%;transform:none;-webkit-mask-image:linear-gradient(90deg,#000 62%,transparent);mask-image:linear-gradient(90deg,#000 62%,transparent)}
 .hcv .hcs{position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,rgba(0,0,0,.28) 100%),linear-gradient(0deg,rgba(0,0,0,.4),transparent 45%)}
 .hcv .hf{position:absolute;bottom:-14px;width:96px;height:134px;object-fit:cover;border-radius:7px;border:1px solid rgba(255,255,255,.28);box-shadow:0 6px 18px rgba(0,0,0,.6);transition:transform .2s}
-.hcv .hf0{right:78px;z-index:3;transform:rotate(-3deg)}.hcv .hf1{right:8px;z-index:2;transform:rotate(8deg);bottom:-4px}.hcv .hf2{right:144px;z-index:1;transform:rotate(-6deg);bottom:10px;width:104px;height:145px}
-.hcv:hover .hf2{transform:rotate(-6deg) translateY(-6px)}
+.hcv .hf0{right:78px;z-index:3;transform:rotate(-3deg)}.hcv .hf1{right:8px;z-index:2;transform:rotate(8deg);bottom:-4px}.hcv .hf2{right:144px;z-index:1;transform:rotate(-6deg);bottom:-4px}
 .hcv:hover .hf0{transform:rotate(-3deg) translateY(-6px)}
 .hics{position:absolute;left:10px;top:10px;display:flex;gap:6px;z-index:4}
 .hic{width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}
@@ -1449,7 +1448,8 @@ function ptNext(){var P=PT;P.turn++;P.play.forEach(function(c){c.ex=false});P.rz
 function ptFind(z,u){var a=PT[z];for(var i=0;i<a.length;i++)if(a[i].u===u)return i;return -1}
 function ptMove(from,u,to,pos){var P=PT,i=ptFind(from,u);if(i<0)return;var c=P[from].splice(i,1)[0];
   if(to==='lib'){if(pos==='top')P.lib.unshift(c);else P.lib.push(c)}else if(to==='rd'){P.rd.push(c)}else P[to].push(c);c.ex=false;P.sel=null;ptRender()}
-function ptSel(z,u){var P=PT;if(P.phase==='mull'&&z==='hand'){var i=P.mul.indexOf(u);if(i>-1)P.mul.splice(i,1);else if(P.mul.length<2)P.mul.push(u);ptRender();return}
+function ptHT(){var P=PT,open=!P.hc&&(P.ho||P.sel||P.phase==='mull');if(open){P.ho=false;P.sel=null;P.hc=true}else{P.ho=true;P.hc=false}P.anim=1;ptRender()}
+function ptSel(z,u){var P=PT;P.hc=false;if(P.phase==='mull'&&z==='hand'){var i=P.mul.indexOf(u);if(i>-1)P.mul.splice(i,1);else if(P.mul.length<2)P.mul.push(u);ptRender();return}
   P.sel=(P.sel&&P.sel.u===u)?null:{z:z,u:u};ptRender()}
 function ptEx(z,u){var i=ptFind(z,u);if(i<0)return;PT[z][i].ex=!PT[z][i].ex;ptRender()}
 function ptCardH(c,z){var k=nm(c.k),P=PT,sel=P.sel&&P.sel.u===c.u,mm=P.mul.indexOf(c.u)>-1,q=pic(k),
@@ -1475,8 +1475,8 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
   var bfz=P.bf.length?'<div class="ptbf">'+P.bf.map(ptMini).join('')+'</div>':'';
   var main='<div class="ptmain">'+(mull?'':bfz)+ptZone('場上',"play",P.play.length,play||'<span class="ptq">拖曳或雙擊手牌打出</span>')+ptZone('符文區','rz',P.rz.length,rz||'<span class="ptq">按「下一回合」或點符文牌庫</span>')+ptZone('棄牌堆','trash',P.trash.length,tr||'<span class="ptq">空</span>')+'</div>';
   var ctl=mull?'<div class="ptmu"><b>調度：</b>選擇最多 2 張要換掉的牌（已選 '+P.mul.length+'）<button class="btn p" onclick="ptMull(1)">'+(P.mul.length?'換掉 '+P.mul.length+' 張':'保留起手')+'</button></div>':'<div class="ptmu"><button class="btn p" onclick="ptNext()">下一回合（'+(P.turn+1)+'）</button><span class="ptlg">'+esc(P.log.slice(0,3).join('　·　'))+'</span></div>';
-  var op=P.ho||mull||!!P.sel,an=P.anim?' anim':'';P.anim=0;
-  o.innerHTML=top+'<div class="ptbody">'+side+main+'</div>'+ctl+'<div class="pthand'+(op?' open':'')+an+'" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="pth ptht" onclick="PT.ho=!PT.ho;PT.anim=1;ptRender()"><b>手牌</b><span>'+P.hand.length+'</span><i class="ptchv">'+(op?'▼':'▲')+'</i></div>'+ptActs()+'<div class="ptb">'+hand+'</div></div>'}
+  var op=!P.hc&&(P.ho||mull||!!P.sel),an=P.anim?' anim':'';P.anim=0;
+  o.innerHTML=top+'<div class="ptbody">'+side+main+'</div>'+ctl+'<div class="pthand'+(op?' open':'')+an+'" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="pth ptht" onclick="ptHT()"><b>手牌</b><span>'+P.hand.length+'</span><i class="ptchv">'+(op?'▼':'▲')+'</i></div>'+ptActs()+'<div class="ptb">'+hand+'</div></div>'}
 /* ===== 牌組詳情：封面＋標題橫排 ===== */
 window.addEventListener('load',function(){
 function hcover(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd');if(!h||h.querySelector('.hcv'))return;
