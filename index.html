@@ -393,6 +393,18 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .vhd.hg.hg .hrt .vbt{margin:0}
 @media (max-width:760px){.vhd.hg.hg{grid-template-columns:1fr;gap:14px}.vhd.hg.hg .hcv{height:190px}.vhd.hg.hg .hrt .vtt{font-size:24px}.hcv .hf{width:78px;height:109px}.hcv .hf0{right:54px}.hcv .hf2{right:104px;width:88px;height:123px}}
 
+.hcv .hf2{cursor:pointer}
+.hcv .hf2:after{content:""}
+.hpo{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;padding:16px}
+.hpp{background:var(--card,#0A1428);border:1px solid var(--bd,#345);border-radius:14px;max-width:760px;width:100%;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+.hpt{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--bd,#345)}.hpt b{flex:1}
+.hpt button{background:transparent;border:1px solid var(--bd,#345);color:inherit;border-radius:8px;padding:6px 12px;cursor:pointer}
+.hpg{overflow:auto;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.hpi{cursor:pointer;border:2px solid transparent;border-radius:9px;padding:3px;text-align:center;font-size:11px}
+.hpi img{width:100%;aspect-ratio:5/7;object-fit:cover;border-radius:6px;display:block}
+.hpi span{display:block;margin-top:3px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.hpi:hover,.hpi.on{border-color:var(--ac,#D8B66A)}
+
 .hide{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
 .ok{color:var(--ok)}.no{color:var(--no)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -1474,7 +1486,10 @@ function hcover(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd
  var used={},fan=[],chc=u.champ&&nm(u.champ),sg=null;
  mk.forEach(function(o){if(!sg){try{if(isSig(o.c))sg=o.c}catch(e){}}});
  function add(c){if(c&&!used[c.id]&&fan.length<3){used[c.id]=1;fan.push(c)}}
- add(chc);add(sg);mk.forEach(function(o){add(o.c)});if(!leg&&!fan.length)return;
+ var KEY='rb_cv3',dk=(d.id!=null?'p'+d.id:(VSRC&&VSRC.id!=null?'p'+VSRC.id:'n'+(d.name||vi))),store={};
+ try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+ var pk=store[dk],pc=pk&&u.main[pk]?nm(pk):null;
+ add(chc);add(sg);if(pc&&sec(pc)==='M')add(pc);mk.forEach(function(o){add(o.c)});if(!leg&&!fan.length)return;
  var cv=leg||fan[0],im=pic(cv),doms=(cv.dom||[]).filter(function(g){return g!=='Colorless'}).slice(0,2);
  var ic=doms.map(function(g){return'<span class="hic">'+domIc(g,20)+'</span>'}).join('');
  var fh=fan.map(function(c,i){var q=pic(c);return q?'<img class="hf hf'+i+'" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':''}).join('');
@@ -1485,6 +1500,14 @@ function hcover(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd
    [ca,cb].forEach(function(k){k.width=w;k.height=hh;try{k.getContext('2d').drawImage(I,x,y,w,hh,0,0,w,hh)}catch(e){}})}
   I.onload=go;I.onerror=function(){if(!mode){mode=1;I.src=im}else if(!t&&cv.img){t=1;I.src=cv.img}};
   I.src='images/legend-art/'+String(cv.id).toLowerCase().replace(/\*/g,'star')+'.webp'})();
+ wrap.addEventListener('click',function(ev){var t=ev.target;if(!t.classList||!t.classList.contains('hf2'))return;ev.stopPropagation();
+  var ov=document.createElement('div');ov.className='hpo';
+  var cur=fan[2]&&fan[2].id;
+  ov.innerHTML='<div class="hpp"><div class="hpt"><b>選擇第三張展示卡</b><button class="hpa">自動</button><button class="hpx">✕</button></div><div class="hpg">'+mk.map(function(o){var q=pic(o.c);return'<div class="hpi'+(o.c.id===cur?' on':'')+'" data-i="'+esc(o.c.id)+'">'+(q?'<img src="'+esc(q)+'" alt="">':'')+'<span>'+esc(o.c.name||'')+'</span></div>'}).join('')+'</div></div>';
+  function done(v){try{if(v)store[dk]=v;else delete store[dk];localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}ov.remove();var o=h.querySelector('.hcv');rview()}
+  ov.addEventListener('click',function(e){var x=e.target;if(x===ov||x.classList.contains('hpx')){ov.remove();return}if(x.classList.contains('hpa')){done(null);return}var i=x.closest&&x.closest('.hpi');if(i)done(i.dataset.i)});
+  document.body.appendChild(ov)});
+ wrap.classList.add('hpk');
  var old=h.querySelector('.hart');if(old)old.remove();
  var kids=[].filter.call(h.children,function(e){return!e.classList.contains('hbg')&&!e.classList.contains('hov')});
  var col=document.createElement('div');col.className='hrt';kids.forEach(function(e){col.appendChild(e)});
