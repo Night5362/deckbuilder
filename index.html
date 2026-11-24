@@ -528,6 +528,8 @@ img.ic,.cd img.ic,.cd img.ic.big{height:var(--is,1em);width:auto;max-width:calc(
 #catB button.on{background:var(--gb);color:var(--gt);border-color:var(--ac);font-weight:600}
 @media (min-width:900px){#edw.two #listB{grid-template-columns:repeat(6,minmax(0,1fr))}#edw.two #listB.bfc{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
+#edw.two #listB>.cd .bfw img.rot{width:100cqh;height:100cqw;border-radius:8px}
+
 /* ===== 設定右側彈窗（手機） ===== */
 .sdh,.sdf,.sdm,.sdbar{display:none}
 @media (max-width:899px){
@@ -624,12 +626,12 @@ html.thx,html.thx *{transition:background-color .5s,color .5s,border-color .5s,b
 .vtiles{background:linear-gradient(180deg,var(--cardhi,var(--card)),var(--card))}
 .dnw{display:flex;align-items:center;gap:16px;margin-top:10px}
 .dnw .vbar{display:none}
-.dnr{--s:76px;width:var(--s);height:var(--s);border-radius:50%;flex:none;position:relative;animation:dnA .9s cubic-bezier(.3,.8,.2,1) both;box-shadow:0 2px 10px rgba(0,0,0,.3)}
-.dnr::after{content:"";position:absolute;inset:14px;border-radius:50%;background:var(--card);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
-.dnr b{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--tx)}
+.dnrg{--s:76px;width:var(--s);height:var(--s);border-radius:50%;flex:none;position:relative;animation:dnA .9s cubic-bezier(.3,.8,.2,1) both;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.dnrg::after{content:"";position:absolute;inset:14px;border-radius:50%;background:var(--card);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.dnrg b{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--tx)}
 @keyframes dnA{from{transform:rotate(-120deg) scale(.7);opacity:0}}
 .dnw .chips{margin:0;flex:1}
-@media (prefers-reduced-motion:reduce){.vbc i,.dnr{animation:none}}
+@media (prefers-reduced-motion:reduce){.vbc i,.dnrg{animation:none}}
 .vhd .vbt{flex-wrap:wrap;gap:8px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
@@ -1411,7 +1413,7 @@ function hero(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd')
 function donuts(){[].forEach.call(document.querySelectorAll('#vw .vs .c'),function(c){var vb=c.querySelector(':scope>.vbar');if(!vb||c.querySelector('.dnw'))return;
  var seg=[].map.call(vb.children,function(i){return{f:parseFloat(i.style.flexGrow||i.style.flex)||0,c:i.style.background}}),t=seg.reduce(function(a,s){return a+s.f},0);if(!t)return;
  var a=0,g=seg.map(function(s){var b=a;a+=s.f/t*100;return s.c+' '+b.toFixed(2)+'% '+a.toFixed(2)+'%'}).join(',');
- var ch=c.querySelector('.chips'),w=document.createElement('div');w.className='dnw';w.innerHTML='<div class="dnr" style="background:conic-gradient('+g+')"><b>'+t+'</b></div>';c.insertBefore(w,vb);w.appendChild(ch);w.appendChild(vb)})}
+ var ch=c.querySelector('.chips'),w=document.createElement('div');w.className='dnw';w.innerHTML='<div class="dnrg" style="background:conic-gradient('+g+')"><b>'+t+'</b></div>';c.insertBefore(w,vb);w.appendChild(ch);w.appendChild(vb)})}
 var _r=rview;rview=function(){_r.apply(this,arguments);try{hero();donuts()}catch(e){}};
 })();
 });window.thApply=function(v){setTheme(v)};try{var _th=document.getElementById("th");if(_th)_th.innerHTML=thRowHtml()}catch(e){}var PT=null,PTU=0;
