@@ -537,6 +537,17 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .ptov .ptrzr{flex-wrap:nowrap;align-items:flex-start;overflow-x:auto;overflow-y:hidden}
 .ptov .ptrzr .ptc{margin-left:calc(var(--cw)*-.7)}.ptov .ptrzr .ptc:first-of-type{margin-left:0}
 }
+@media (min-width:900px){
+.ptov .ptvw{left:50%;right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);width:min(600px,48vw);height:min(470px,62vh);box-shadow:0 0 0 100vmax rgba(2,6,18,.45),0 12px 50px rgba(0,0,0,.7)}
+}
+
+.ptqk{display:none}
+@media (min-width:900px){
+.ptov .ptqk{display:flex;position:absolute;left:4px;top:4px;z-index:4;width:max(20px,calc(var(--cw)*.27));height:max(20px,calc(var(--cw)*.27));border-radius:50%;align-items:center;justify-content:center;background:radial-gradient(circle at 35% 30%,#f3d58a,#b98a2e);color:#1a1204;border:1px solid rgba(0,0,0,.55);box-shadow:0 2px 6px rgba(0,0,0,.6);cursor:pointer}
+.ptov .ptqk svg{width:62%;height:62%}.ptov .ptqk:hover{filter:brightness(1.15);transform:scale(1.1)}
+.ptov .ptqk.eq{background:radial-gradient(circle at 35% 30%,#8fe3d6,#2b8f86)}
+.ptov .ptc.ex .ptqk{top:auto;bottom:4px;transform:rotate(-90deg)}.ptov .ptc.ex .ptqk:hover{transform:rotate(-90deg) scale(1.1)}
+}
 
 .vhd.hg.hg{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;padding-left:14px!important}
 .vhd.hg.hg .hcv{position:relative;z-index:1;height:210px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 8px 26px rgba(0,0,0,.4)}
@@ -1664,7 +1675,12 @@ function ptCtx(e,z,u){e.preventDefault();if(PT&&PT.eqSel)return false;if(PT&&PT.
 function ptCardH(c,z){var k=nm(c.k),P=PT,mm=P.mul.indexOf(c.u)>-1,q=pic(k),
   im=q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'';
   var at=(c.att||[]).map(function(g){var q2=pic(nm(g.k));return'<span class="ptag" ontouchstart="event.stopPropagation()" onclick="event.stopPropagation();ptAttMenu('+c.u+','+g.u+')">'+(q2?'<img draggable="false" src="'+esc(q2)+'" alt="">':'')+'</span>'}).join('');
-  return'<div class="ptc'+(mm?' mul':'')+(c.ex?' ex':'')+(ptCand(z,c)?' ptcand':'')+'" draggable="true" data-z="'+z+'" data-u="'+c.u+'" onclick="ptClk(\''+z+'\','+c.u+')" oncontextmenu="return ptCtx(event,\''+z+'\','+c.u+')" ondragstart="ptLE();ptDS(event)">'+im+'<span class="ptn">'+esc(N(k))+'</span>'+(mm?'<span class="ptm">換</span>':'')+(at?'<div class="ptatt">'+at+'</div>':'')+(c.cnt!=null?'<span class="ptcn'+(String(c.cnt).length>2?' l3':'')+'" data-cu="'+c.u+'" onclick="event.stopPropagation();ptCm(\''+z+'\','+c.u+')">'+c.cnt+'</span>':'')+'</div>'}
+  return'<div class="ptc'+(mm?' mul':'')+(c.ex?' ex':'')+(ptCand(z,c)?' ptcand':'')+'" draggable="true" data-z="'+z+'" data-u="'+c.u+'" onclick="ptClk(\''+z+'\','+c.u+')" oncontextmenu="return ptCtx(event,\''+z+'\','+c.u+')" ondragstart="ptLE();ptDS(event)">'+im+'<span class="ptn">'+esc(N(k))+'</span>'+(mm?'<span class="ptm">換</span>':'')+ptQk(c,z)+(at?'<div class="ptatt">'+at+'</div>':'')+(c.cnt!=null?'<span class="ptcn'+(String(c.cnt).length>2?' l3':'')+'" data-cu="'+c.u+'" onclick="event.stopPropagation();ptCm(\''+z+'\','+c.u+')">'+c.cnt+'</span>':'')+'</div>'}
+var PTI_PAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.2 2 4.5 13.4h6.2L9.8 22l9.7-12.1h-6.3z"/></svg>',PTI_EQ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
+function ptQk(c,z){var P=PT;if(P.phase!=='play'||P.eqSel)return'';
+  if(z==='hand'||z==='chz')return'<span class="ptqk" title="自動支付費用並打出" onmousedown="event.stopPropagation()" onclick="event.stopPropagation();ptPay('+c.u+',\''+z+'\')">'+PTI_PAY+'</span>';
+  if(z==='play'&&ptGear(c)&&ptHasEq(c.k))return'<span class="ptqk eq" title="裝配" onmousedown="event.stopPropagation()" onclick="event.stopPropagation();ptDo(\'equip\',\''+z+'\','+c.u+')">'+PTI_EQ+'</span>';
+  return''}
 function ptDS(e){if(window._ptPT&&window._ptPT!=='mouse'){e.preventDefault();return}var d=e.currentTarget.dataset;e.dataTransfer.setData('text/plain',d.z+':'+d.u);e.dataTransfer.effectAllowed='move'}
 function ptDO(e){e.preventDefault()}
 function ptDrop(e,to){e.preventDefault();e.stopPropagation();var t=(e.dataTransfer.getData('text/plain')||'').split(':');if(t.length<2)return;ptDropTo(t[0],+t[1],to)}
