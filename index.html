@@ -483,6 +483,61 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 
 .ptkg{gap:14px}.ptkc{display:flex;flex-direction:column;align-items:center;gap:6px;width:104px}.ptkn{font-size:11px;text-align:center;color:var(--mt);line-height:1.2}.ptkb{display:flex;flex-direction:column;gap:5px;width:100%}.ptkb .btn{padding:6px 4px;font-size:12px}
 
+.ptcc{display:none}
+@media (min-width:900px){
+.ptov{padding:0;gap:0;background:radial-gradient(ellipse at 50% 38%,#14305f 0,#0b1d44 52%,#060e24 100%)}
+.pttb{position:absolute;right:14px;top:14px;z-index:30;flex-direction:column;align-items:stretch;gap:6px;overflow:visible;width:112px;padding:10px;background:rgba(8,16,40,.72);border:1px solid var(--bd);border-radius:12px}
+.pttb .ptsp{display:none}.pttb b{text-align:center;font-size:15px}.pttb .ptnm{max-width:none;white-space:normal;text-align:center;line-height:1.3}.pttb .btn{padding:7px 6px;text-align:center}
+.ptov .ptbd{--cw:clamp(56px,min(5.4vw,10vh),96px);position:absolute;inset:0;border:0;border-radius:0;background:none!important;padding:18px 150px 14px 14px;overflow:hidden;display:grid;gap:12px 14px;
+ grid-template-columns:132px minmax(0,1fr) minmax(0,1fr) calc(var(--cw) + 6px) calc(var(--cw) + 6px);grid-template-rows:minmax(0,1.15fr) minmax(0,1fr) auto}
+.ptov .ptbfs,.ptov .ptrzr,.ptov .ptplay{border:1px solid rgba(130,170,240,.28);background:rgba(255,255,255,.03);border-radius:6px;padding-top:20px}
+.ptov .ptbfs{grid-column:2/4;grid-row:1;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;min-height:0;overflow:hidden}
+.ptov .ptbfs .ptbfc{grid-column:2;width:calc(var(--cw)*2.3)}
+.ptov .ptbfu{grid-column:3;min-height:0;align-content:center;padding-right:8px;overflow:auto;max-height:100%}
+.ptov .ptrzr{grid-column:2;grid-row:2;min-height:0;align-items:center}
+.ptov .ptrzr .ptc{margin-left:calc(var(--cw)*-.6)}.ptov .ptrzr .ptc:first-of-type{margin-left:0}
+.ptov .ptplay{grid-column:3;grid-row:2;min-height:0}
+.ptov .ptsc{grid-column:1;grid-row:1/4;flex-direction:column-reverse;justify-content:flex-start;align-items:center;gap:10px;padding:0 0 20px;align-self:end}
+.ptov .ptsn{width:46px;font-size:19px}.ptov .ptsn.win{width:54px}
+.ptov .ptsn:nth-child(odd){transform:translateX(-20px)}.ptov .ptsn:nth-child(even){transform:translateX(24px)}
+.ptov .ptdk{display:contents}
+.ptov .ptdk>:nth-child(1){grid-column:1;grid-row:3;justify-self:center;align-self:end}
+.ptov .ptdk>:nth-child(2){grid-column:4;grid-row:2;justify-self:center;align-self:start}
+.ptov .ptdk>:nth-child(3){grid-column:5;grid-row:2;justify-self:center;align-self:start}
+.ptov .ptdk>:nth-child(4){grid-column:5;grid-row:3;justify-self:center;align-self:end}
+.ptov .ptdk>:nth-child(5){grid-column:4;grid-row:3;justify-self:center;align-self:end}
+.ptov .ptdh{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);height:auto;width:auto;max-width:62vw;overflow:visible;background:none;z-index:8;display:flex;justify-content:center;align-items:flex-end;padding:0 10px}
+.ptov .ptdh .ptc{width:var(--cw,84px)}.ptov .ptdh .ptfan{display:flex;align-items:flex-end}
+.ptov .ptmu{position:absolute;right:14px;top:50%;transform:translateY(-10%);width:112px;flex-direction:column;align-items:stretch;gap:6px;z-index:30}
+.ptov .ptmu .btn{padding:12px 6px;text-align:center}.ptov .ptmu .ptlg{white-space:normal;text-align:center;line-height:1.35}
+.ptov .ptcc{display:block;position:absolute;right:8px;top:3px;font-size:11px;color:var(--mt);pointer-events:none}
+}
+@media (min-width:900px){.ptov{--cw:clamp(56px,min(5.4vw,10vh),96px)}.ptov .ptdh .ptc{margin-left:calc(var(--cw)*-.2)}.ptov .ptdh .ptc:first-child{margin-left:0}}
+@media (min-width:900px){.ptov .ptsc{grid-row:1/3;padding-bottom:4px}.ptov .ptbd{grid-template-rows:minmax(0,1.1fr) minmax(0,.9fr) auto}}
+@media (min-width:900px){
+.ptov .ptbd{grid-template-columns:132px minmax(0,.62fr) minmax(0,1.38fr) calc(var(--cw) + 6px) calc(var(--cw) + 6px);grid-template-rows:auto minmax(0,1fr) auto}
+.ptov .ptbfs{min-height:calc(var(--cw)*1.5 + 34px);overflow:visible}
+.ptov .ptbfs .ptbfc{width:calc(var(--cw)*1.9)}
+.ptov .ptrzr{align-self:start;min-height:calc(var(--cw)*1.4 + 34px);flex:none}
+.ptov .ptrzr .ptc{margin-left:calc(var(--cw)*-.68)}.ptov .ptrzr .ptc:first-of-type{margin-left:0}
+.ptov .ptsc{grid-row:1/3}
+}
+@media (min-width:900px){
+.ptov,.ptov .ptbd{--cw:clamp(64px,min(6.4vw,12vh),118px)}
+.ptov .ptbd{grid-template-columns:132px minmax(0,.9fr) minmax(0,1.1fr) calc(var(--cw) + 6px) calc(var(--cw) + 6px);grid-template-rows:minmax(0,1fr) minmax(0,1fr) auto}
+.ptov .ptbfs{min-height:0;overflow:hidden}
+.ptov .ptbfs .ptbfc{width:calc(var(--cw)*2.4)}
+.ptov .ptrzr{align-self:stretch;min-height:0;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;overflow:auto;gap:6px 0}
+.ptov .ptrzr .ptc{margin-left:calc(var(--cw)*-.55)}.ptov .ptrzr .ptc:first-of-type{margin-left:0}
+.ptov .ptdk>:nth-child(2),.ptov .ptdk>:nth-child(3){align-self:stretch;height:auto}
+}
+@media (min-width:900px){
+.ptov .ptdk>:nth-child(2),.ptov .ptdk>:nth-child(3){align-self:start;height:auto}
+.ptov .ptbd{grid-template-rows:minmax(0,.8fr) minmax(0,1.2fr) auto}
+.ptov .ptrzr{flex-wrap:nowrap;align-items:flex-start;overflow-x:auto;overflow-y:hidden}
+.ptov .ptrzr .ptc{margin-left:calc(var(--cw)*-.7)}.ptov .ptrzr .ptc:first-of-type{margin-left:0}
+}
+
 .vhd.hg.hg{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;padding-left:14px!important}
 .vhd.hg.hg .hcv{position:relative;z-index:1;height:210px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 8px 26px rgba(0,0,0,.4)}
 .hcv .hcb{position:absolute;inset:-14px;width:calc(100% + 28px);height:calc(100% + 28px);object-fit:cover;filter:blur(16px) saturate(1.25);opacity:.85}
@@ -1609,8 +1664,8 @@ function ptCtx(e,z,u){e.preventDefault();if(PT&&PT.eqSel)return false;if(PT&&PT.
 function ptCardH(c,z){var k=nm(c.k),P=PT,mm=P.mul.indexOf(c.u)>-1,q=pic(k),
   im=q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'';
   var at=(c.att||[]).map(function(g){var q2=pic(nm(g.k));return'<span class="ptag" ontouchstart="event.stopPropagation()" onclick="event.stopPropagation();ptAttMenu('+c.u+','+g.u+')">'+(q2?'<img draggable="false" src="'+esc(q2)+'" alt="">':'')+'</span>'}).join('');
-  return'<div class="ptc'+(mm?' mul':'')+(c.ex?' ex':'')+(ptCand(z,c)?' ptcand':'')+'" draggable="'+(ptTc?'false':'true')+'" data-z="'+z+'" data-u="'+c.u+'" onclick="ptClk(\''+z+'\','+c.u+')" oncontextmenu="return ptCtx(event,\''+z+'\','+c.u+')" ondragstart="ptLE();ptDS(event)">'+im+'<span class="ptn">'+esc(N(k))+'</span>'+(mm?'<span class="ptm">換</span>':'')+(at?'<div class="ptatt">'+at+'</div>':'')+(c.cnt!=null?'<span class="ptcn'+(String(c.cnt).length>2?' l3':'')+'" data-cu="'+c.u+'" onclick="event.stopPropagation();ptCm(\''+z+'\','+c.u+')">'+c.cnt+'</span>':'')+'</div>'}
-function ptDS(e){var d=e.currentTarget.dataset;e.dataTransfer.setData('text/plain',d.z+':'+d.u);e.dataTransfer.effectAllowed='move'}
+  return'<div class="ptc'+(mm?' mul':'')+(c.ex?' ex':'')+(ptCand(z,c)?' ptcand':'')+'" draggable="true" data-z="'+z+'" data-u="'+c.u+'" onclick="ptClk(\''+z+'\','+c.u+')" oncontextmenu="return ptCtx(event,\''+z+'\','+c.u+')" ondragstart="ptLE();ptDS(event)">'+im+'<span class="ptn">'+esc(N(k))+'</span>'+(mm?'<span class="ptm">換</span>':'')+(at?'<div class="ptatt">'+at+'</div>':'')+(c.cnt!=null?'<span class="ptcn'+(String(c.cnt).length>2?' l3':'')+'" data-cu="'+c.u+'" onclick="event.stopPropagation();ptCm(\''+z+'\','+c.u+')">'+c.cnt+'</span>':'')+'</div>'}
+function ptDS(e){if(window._ptPT&&window._ptPT!=='mouse'){e.preventDefault();return}var d=e.currentTarget.dataset;e.dataTransfer.setData('text/plain',d.z+':'+d.u);e.dataTransfer.effectAllowed='move'}
 function ptDO(e){e.preventDefault()}
 function ptDrop(e,to){e.preventDefault();e.stopPropagation();var t=(e.dataTransfer.getData('text/plain')||'').split(':');if(t.length<2)return;ptDropTo(t[0],+t[1],to)}
 function ptDropTo(z,u,to){if(!PT||PT.phase!=='play'||z===to)return;
@@ -1644,7 +1699,7 @@ function ptVA(u,a){var P=PT,v=P.view,i=ptFind('lib',u);if(i<0)return;var c=P.lib
   v.l=v.l.filter(function(x){return x!==u});ptRender()}
 function ptViewH(){var P=PT,v=P.view;if(!v)return'';var l=ptVL();
   return'<div class="ptvw"><div class="ptvh"><b>查看主牌堆</b><span>'+l.length+' 張卡牌</span><button class="ptvx" onclick="PT.view=null;ptRender()">✕</button></div><div class="ptvt"><button class="btn" onclick="ptViewMore()">查看牌庫頂一張</button><button class="btn" onclick="ptViewAll()"'+(l.length?'':' disabled')+'>全部回收</button></div>'+
-  (l.length?'<div class="ptvl">'+l.map(function(c,j){var k=nm(c.k),q=pic(k),B=function(a,t){return'<button class="btn" onclick="ptVA('+c.u+',\''+a+'\')">'+t+'</button>'};return'<div class="ptvc"><div class="ptc" style="width:84px">'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="">':'')+'<span class="ptn">'+(j+1)+'. '+esc(N(k))+'</span></div>'+
+  (l.length?'<div class="ptvl">'+l.map(function(c,j){var k=nm(c.k),q=pic(k),B=function(a,t){return'<button class="btn" onclick="ptVA('+c.u+',\''+a+'\')">'+t+'</button>'};return'<div class="ptvc"><div class="ptc" style="width:84px">'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<span class="ptn">'+(j+1)+'. '+esc(N(k))+'</span></div>'+
    (v.pp===c.u?'<div class="ptva pp"><span class="ptpq">在哪裡打出？</span><button class="btn p" onclick="ptVA('+c.u+',\'play\')">基地</button><button class="btn p" onclick="ptVA('+c.u+',\'bfu\')">戰場</button><button class="btn" onclick="ptVP(0)">取消</button></div>':'<div class="ptva">'+B('top','回到牌頂')+B('bot','回收')+B('hand','加入手牌')+'<button class="btn" onclick="ptVP('+c.u+')">打出</button>'+B('trash','棄置')+B('exile','放逐')+'</div>')+'</div>'}).join('')+'</div>':'<div class="ptve"><b>尚未查看任何卡牌</b></div>')+'</div>'}
 function ptActs(){return'<div class="ptq pthint"><b>電腦</b> 左鍵：手牌打出／基地、符文、傳奇 休眠或活化／符文牌庫召出休眠符文／主牌庫抽 1；右鍵：基地 送棄牌區／符文 回收／主牌庫 查看牌庫頂；拖曳卡牌到牌庫＝回收。<br><b>手機</b> 點擊同左鍵，右鍵功能改為長按目標，跳出選單。</div>'}
 function ptTile(n,lab,fn,ctx,drop,img,cls,ex){return'<div class="ptc ptpile'+(n?'':' emp')+(cls?' '+cls:'')+'" onclick="if(ptLPok()){'+fn+'}" oncontextmenu="'+(ctx?'PT.lpT=Date.now();'+ctx+';':'')+'return false" ontouchstart="'+(ctx?'var t=event.touches[0];ptXY=[t.clientX,t.clientY];clearTimeout(ptTm);ptTm=setTimeout(function(){PT.lpT=Date.now();'+ctx+'},480)':'')+'" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()" ondragover="ptDO(event)" ondrop="ptDrop(event,\''+drop+'\')" data-drop="'+drop+'">'+(img||'')+'<b class="ptcnt">'+n+'</b><span class="ptn">'+lab+'</span>'+(ex||'')+'</div>'}
@@ -1652,7 +1707,7 @@ function ptImg(k){var c=nm(k),q=pic(c);return q?'<img draggable="false" src="'+e
 function ptZV(t,z,f){var P=PT,a=P[z];return'<div class="ptvw"><div class="ptvh"><b>'+t+'</b><span>'+a.length+' 張卡牌</span><button class="ptvx" onclick="PT.'+f+'=0;ptRender()">✕</button></div>'+(a.length?'<div class="ptvg">'+a.map(function(c){return ptCardH(c,z)}).join('')+'</div>':'<div class="ptve"><b>'+t+'是空的</b></div>')+'</div>'}
 function ptCL(){return cards.filter(function(c){return sec(c)==='M'&&isCL(c)&&!HIDE.test(String(c.id))})}
 function ptTok(k,to){var P=PT;if(P.phase!=='play'||(to==='bfu'&&!P.bfk))return;var c=ptCard(k);c.tok=1;c.ex=ptEnter('lib',to,c);P[to].push(c);P.tk=0;P.log.unshift('打出無色卡：'+N(nm(k)));ptRender()}
-function ptKV(){if(!PT.tk)return'';var l=ptCL();return'<div class="ptvw"><div class="ptvh"><b>無色卡</b><span>'+l.length+' 張</span><button class="ptvx" onclick="PT.tk=0;ptRender()">✕</button></div><div class="ptvg ptkg">'+l.map(function(c){var q=pic(c),k=esc(c.id);return'<div class="ptkc"><div class="ptc" style="width:84px" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="">':'')+'</div><span class="ptkn">'+esc(N(c))+'</span><div class="ptkb"><button class="btn p" onclick="ptTok(\''+k+'\',\'play\')">打到基地</button>'+(PT.bfk?'<button class="btn p" onclick="ptTok(\''+k+'\',\'bfu\')">打到戰場</button>':'')+'</div></div>'}).join('')+'</div></div>'}
+function ptKV(){if(!PT.tk)return'';var l=ptCL();return'<div class="ptvw"><div class="ptvh"><b>無色卡</b><span>'+l.length+' 張</span><button class="ptvx" onclick="PT.tk=0;ptRender()">✕</button></div><div class="ptvg ptkg">'+l.map(function(c){var q=pic(c),k=esc(c.id);return'<div class="ptkc"><div class="ptc" style="width:84px" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'</div><span class="ptkn">'+esc(N(c))+'</span><div class="ptkb"><button class="btn p" onclick="ptTok(\''+k+'\',\'play\')">打到基地</button>'+(PT.bfk?'<button class="btn p" onclick="ptTok(\''+k+'\',\'bfu\')">打到戰場</button>':'')+'</div></div>'}).join('')+'</div></div>'}
 function ptTrashV(){return PT.tv?ptZV('棄牌區','trash','tv'):''}
 function ptExileV(){return PT.ev?ptZV('放逐區','exile','ev'):''}
 function ptScore(n){PT.score=n;ptRender()}
@@ -1673,9 +1728,9 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
   var top='<div class="pttb"><b>測牌</b><span class="ptnm">'+esc(P.name||'')+'</span><span class="ptsp"></span>'+(P.phase==='play'&&ptCL().length?'<button class="btn" onclick="PT.tk=1;ptRender()">無色卡</button>':'')+'<button class="btn'+(P.first?' p':'')+'" onclick="PT.first=true;ptReset();ptRender()">先攻</button><button class="btn'+(!P.first?' p':'')+'" onclick="PT.first=false;ptReset();ptRender()">後攻</button><button class="btn" onclick="ptReset();ptRender()">重洗</button><button class="btn" onclick="ptClose()">關閉</button></div>';
   var bfs=P.bfk?(function(){var c=nm(P.bfk),q=pic(c);return'<div class="ptbfs" data-zone="bfu" ondragover="ptDO(event)" ondrop="ptDrop(event,\'bfu\')"><span class="ptlab">戰場</span><div class="ptbfc" onclick="if(ptLPok())openCard(\''+encodeURIComponent(c.id)+'\')" oncontextmenu="ptBfD(\''+encodeURIComponent(c.id)+'\');return false" ontouchstart="ptBfT(event,\''+encodeURIComponent(c.id)+'\')" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div><div class="ptbfu">'+bfu+'</div></div>'})():'';
   var bfr='<div class="ptbfr">'+(P.bf.length?P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc" onclick="if(ptLPok())openCard(\''+encodeURIComponent(c.id)+'\')" oncontextmenu="ptBfD(\''+encodeURIComponent(c.id)+'\');return false" ontouchstart="ptBfT(event,\''+encodeURIComponent(c.id)+'\')" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join(''):'')+'</div>';
-  var pl='<div class="ptplay" data-zone="play"><span class="ptlab">基地</span>'+play+'</div>';
+  var pl='<div class="ptplay" data-zone="play"><span class="ptlab">基地</span><span class="ptcc">'+P.play.length+'</span>'+play+'</div>';
   var sc='<div class="ptsc">'+[0,1,2,3,4,5,6,7,8].map(function(n){return'<button class="ptsn'+(n===P.score?' on':'')+(n===8?' win':'')+'" onclick="ptScore('+n+')">'+n+'</button>'}).join('')+'</div>';
-  var rzr='<div class="ptrzr" data-zone="rz" ondragover="ptDO(event)" ondrop="ptDrop(event,\'rz\')"><span class="ptlab">符文</span>'+rz+'</div>';
+  var rzr='<div class="ptrzr" data-zone="rz" ondragover="ptDO(event)" ondrop="ptDrop(event,\'rz\')"><span class="ptlab">符文</span><span class="ptcc">'+P.rz.length+'</span>'+rz+'</div>';
   var dk='<div class="ptdk">'+ptTile(P.rd.length,'符文牌庫',"if(PT.rd.length){var c=PT.rd.shift();c.ex=true;PT.rz.push(c);PT.log.unshift('召出 1 枚休眠符文')}ptRender()",'','rd')
    +(P.leg?'<div class="ptc'+(P.legEx?' ex':'')+'" onclick="ptLegClk()" oncontextmenu="PT.lpT=Date.now();openCard(\''+encodeURIComponent(nm(P.leg).id)+'\');return false">'+ptImg(P.leg)+'<span class="ptn">'+esc(N(nm(P.leg)))+'</span></div>':'<div class="ptc emp"></div>')
    +(P.chz.length?ptCardH(P.chz[0],'chz'):'<div class="ptc emp"></div>')
@@ -1695,6 +1750,7 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
  function hv(x,y){var e=document.elementFromPoint(x,y),b=e&&e.closest&&e.closest('#ptmn .ptmb button');document.querySelectorAll('#ptmn .ptmb button.hv').forEach(function(k){if(k!==b)k.classList.remove('hv')});if(b)b.classList.add('hv');return b}
  function tgt(x,y){var e=document.elementFromPoint(x,y);if(!e)return null;
   var d=e.closest('[data-drop]');if(d)return d.dataset.drop;if(e.closest('.ptdh'))return'hand';if(e.closest('.ptbfs'))return'bfu';if(e.closest('.ptrzr'))return'rz';if(e.closest('.ptplay'))return'play';if(e.closest('.ptbd'))return'play';return null}
+ document.addEventListener('pointerdown',function(e){window._ptPT=e.pointerType},true);
  document.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'||!window.PT||!document.getElementById('ptov'))return;var c=e.target.closest&&e.target.closest('#ptov .ptc[data-z]');if(!c||e.target.closest('.ptag')||e.target.closest('.ptcn')||PT.eqSel){return}
   clr();var z=c.dataset.z,u=+c.dataset.u;st={x:e.clientX,y:e.clientY,z:z,u:u,c:c,g:null,id:e.pointerId};
   st.tm=setTimeout(function(){if(!st)return;var z=st.z,u=st.u;st.tm=0;PT.lpT=Date.now();if(PT.phase!=='mull'||z!=='hand')ptMenu(z,u);if(navigator.vibrate)try{navigator.vibrate(15)}catch(_){ }st.dead=1;st.moved=0;document.addEventListener('touchmove',nomv,{passive:false})},480)},true);
