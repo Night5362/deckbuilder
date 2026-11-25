@@ -465,6 +465,14 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .ptsn{width:34px}.ptsn.win{width:40px}
 }
 .ptdk .ptc[data-z]{touch-action:none}
+.ptcn{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:calc(var(--cw)*.34);height:calc(var(--cw)*.34);padding:.11em 0 0;white-space:nowrap;overflow:hidden;background:#fff;color:#000;font-weight:800;font-size:calc(var(--cw)*.24);line-height:1;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:3px;border:1px solid #000;box-shadow:0 2px 6px rgba(0,0,0,.6);z-index:3;cursor:pointer;box-sizing:border-box}
+.ptc.ex .ptcn{left:auto;bottom:auto;right:0;top:50%;transform:translateY(-50%) rotate(-90deg)}
+.ptcmb{position:fixed;inset:0;z-index:95}
+.ptcm{position:fixed;z-index:96;display:flex;align-items:center;gap:6px;background:rgba(10,20,45,.96);border:1px solid var(--bd);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.ptcm button{width:46px;height:46px;border-radius:10px;border:1px solid var(--bd);background:#16284f;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:0}
+.ptcm button.x{background:#5a2330;border-color:#8a3345}
+.ptcm b{min-width:34px;text-align:center;font-size:20px;color:#fff}
+.ptcn.l3{font-size:calc(var(--cw)*.16)}
 
 .vhd.hg.hg{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;padding-left:14px!important}
 .vhd.hg.hg .hcv{position:relative;z-index:1;height:210px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 8px 26px rgba(0,0,0,.4)}
@@ -1535,7 +1543,7 @@ function ptNext(){var P=PT;P.turn++;P.play.forEach(function(c){c.ex=false});P.bf
   for(var i=0;i<ch&&P.rd.length;i++){P.rz.push(P.rd.shift());g++}
   var dr=ptDraw(1,1);P.log.unshift('第 '+P.turn+' 回合：抽 '+dr+'、符文 +'+g);P.sel=null;ptRender()}
 function ptFind(z,u){var a=PT[z];for(var i=0;i<a.length;i++)if(a[i].u===u)return i;return -1}
-function ptMove(from,u,to,pos){var P=PT,i=ptFind(from,u);if(i<0)return;var c=P[from].splice(i,1)[0];if(c.att&&c.att.length&&to!=='play'&&to!=='bfu'){c.att.forEach(function(g){P.play.push(g)});c.att=[]}
+function ptMove(from,u,to,pos){var P=PT,i=ptFind(from,u);if(i<0)return;var c=P[from].splice(i,1)[0];if(to!=='play'&&to!=='bfu')delete c.cnt;if(c.att&&c.att.length&&to!=='play'&&to!=='bfu'){c.att.forEach(function(g){P.play.push(g)});c.att=[]}
   if(to==='lib'){if(pos==='top')P.lib.unshift(c);else P.lib.push(c)}else if(to==='rd'){P.rd.push(c)}else P[to].push(c);c.ex=ptEnter(from,to,c);P.sel=null;ptRender()}
 function ptGear(c){var k=nm(c.k),t=String(k.type||'').toLowerCase();return t.indexOf('gear')>-1||t.indexOf('equip')>-1||String(k.type||'').indexOf('裝備')>-1}
 function ptEnter(from,to,c){if(to==='play'||to==='bfu'){if(from==='play'||from==='bfu')return true;return !ptGear(c)}return false}
@@ -1566,6 +1574,12 @@ function ptAttMenu(tu,gu){ptMenuClose();var t=ptLoc(tu);if(!t)return;var g=(t.c.
     t.c.att=t.c.att.filter(function(x){return x.u!==gu});g.ex=false;
     if(a==='de')PT[t.z].push(g);else if(a==='dt')PT.trash.push(g);else PT.hand.push(g);ptRender()});
   document.getElementById('ptov').appendChild(m)}
+function ptCm(z,u){if(!ptLPok())return;PT.cm={z:z,u:u};ptRender()}
+function ptCmAdj(d){var P=PT,e=P.cm;if(!e)return;var i=ptFind(e.z,e.u);if(i<0){P.cm=null;ptRender();return}var c=P[e.z][i];if(d===0){delete c.cnt;P.cm=null}else c.cnt=Math.max(0,(c.cnt||0)+d);ptRender()}
+function ptCmShow(){var P=PT,o=document.getElementById('ptov');if(!P||!o||!P.cm)return;var b=o.querySelector('.ptcn[data-cu="'+P.cm.u+'"]');if(!b){P.cm=null;return}var r=b.getBoundingClientRect(),W=window.innerWidth;
+  var bk=document.createElement('div');bk.className='ptcmb';bk.onclick=function(){PT.cm=null;ptRender()};
+  var m=document.createElement('div');m.className='ptcm';m.innerHTML='<button onclick="ptCmAdj(-1)">−</button><b>'+b.textContent+'</b><button onclick="ptCmAdj(1)">＋</button><button class="x" onclick="ptCmAdj(0)">✕</button>';
+  o.appendChild(bk);o.appendChild(m);var w=m.offsetWidth,l=Math.min(Math.max(8,r.left+r.width/2-w/2),W-w-8),t=r.top-m.offsetHeight-8;if(t<8)t=r.bottom+8;m.style.left=l+'px';m.style.top=t+'px'}
 function ptPickBf(k){PT.bfk=k;PT.phase='mull';ptRender()}
 function ptRndBf(){var b=PT.bf;ptPickBf(b[Math.floor(Math.random()*b.length)])}
 function ptHT(){var P=PT,open=!P.hc&&(P.ho||P.sel||P.phase==='mull');if(open){P.ho=false;P.sel=null;P.hc=true}else{P.ho=true;P.hc=false}P.anim=1;ptRender()}
@@ -1584,7 +1598,7 @@ function ptCtx(e,z,u){e.preventDefault();if(PT&&PT.eqSel)return false;if(PT&&PT.
 function ptCardH(c,z){var k=nm(c.k),P=PT,mm=P.mul.indexOf(c.u)>-1,q=pic(k),
   im=q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'';
   var at=(c.att||[]).map(function(g){var q2=pic(nm(g.k));return'<span class="ptag" ontouchstart="event.stopPropagation()" onclick="event.stopPropagation();ptAttMenu('+c.u+','+g.u+')">'+(q2?'<img draggable="false" src="'+esc(q2)+'" alt="">':'')+'</span>'}).join('');
-  return'<div class="ptc'+(mm?' mul':'')+(c.ex?' ex':'')+(ptCand(z,c)?' ptcand':'')+'" draggable="'+(ptTc?'false':'true')+'" data-z="'+z+'" data-u="'+c.u+'" onclick="ptClk(\''+z+'\','+c.u+')" oncontextmenu="return ptCtx(event,\''+z+'\','+c.u+')" ondragstart="ptLE();ptDS(event)">'+im+'<span class="ptn">'+esc(N(k))+'</span>'+(mm?'<span class="ptm">換</span>':'')+(at?'<div class="ptatt">'+at+'</div>':'')+'</div>'}
+  return'<div class="ptc'+(mm?' mul':'')+(c.ex?' ex':'')+(ptCand(z,c)?' ptcand':'')+'" draggable="'+(ptTc?'false':'true')+'" data-z="'+z+'" data-u="'+c.u+'" onclick="ptClk(\''+z+'\','+c.u+')" oncontextmenu="return ptCtx(event,\''+z+'\','+c.u+')" ondragstart="ptLE();ptDS(event)">'+im+'<span class="ptn">'+esc(N(k))+'</span>'+(mm?'<span class="ptm">換</span>':'')+(at?'<div class="ptatt">'+at+'</div>':'')+(c.cnt!=null?'<span class="ptcn'+(String(c.cnt).length>2?' l3':'')+'" data-cu="'+c.u+'" onclick="event.stopPropagation();ptCm(\''+z+'\','+c.u+')">'+c.cnt+'</span>':'')+'</div>'}
 function ptDS(e){var d=e.currentTarget.dataset;e.dataTransfer.setData('text/plain',d.z+':'+d.u);e.dataTransfer.effectAllowed='move'}
 function ptDO(e){e.preventDefault()}
 function ptDrop(e,to){e.preventDefault();e.stopPropagation();var t=(e.dataTransfer.getData('text/plain')||'').split(':');if(t.length<2)return;ptDropTo(t[0],+t[1],to)}
@@ -1596,8 +1610,8 @@ function ptMini(k,leg,ex){var c=nm(k),q=pic(c),cl=leg?'ptLegClk()':"openCard('"+
 function ptMenuClose(){var m=document.getElementById('ptmn');if(m)m.remove()}
 function ptMenu(z,u){ptMenuClose();var P=PT,i=ptFind(z,u);if(i<0)return;var c=nm(P[z][i].k),q=pic(c),ex=P[z][i].ex;
   var A={chz:[['play','打出'],['pay','自動支付費用並打出']],hand:[['play','打出'],['pay','自動支付費用並打出'],['trash','棄牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
-   play:((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區']]).concat(P.bfk?[['bfu','移到戰場']]:[]).concat([['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
-   bfu:((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區'],['play','移回基地'],['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
+   play:(P[z][i].cnt==null?[['cnt','放置計數']]:[]).concat((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區']]).concat(P.bfk?[['bfu','移到戰場']]:[]).concat([['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
+   bfu:(P[z][i].cnt==null?[['cnt','放置計數']]:[]).concat((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區'],['play','移回基地'],['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
    trash:[['hand','回手牌'],['play','打出'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
    rz:[['ex',ex?'活化':'休眠'],['rd','回收']]}[z]||[];
   A=A.concat([['info','卡片詳情']]);
@@ -1606,7 +1620,7 @@ function ptMenu(z,u){ptMenuClose();var P=PT,i=ptFind(z,u);if(i<0)return;var c=nm
   m._t=Date.now();m.addEventListener('click',function(e){if(Date.now()-m._t<500)return;var b=e.target.closest&&e.target.closest('button');if(!b){ptMenuClose();return}ptMenuClose();ptDo(b.dataset.a,z,u)});
   document.getElementById('ptov').appendChild(m)}
 function ptDo(a,z,u){var P=PT;if(a==='info'){var i=ptFind(z,u);openCard(encodeURIComponent(nm(P[z][i].k).id));return}
-  if(a==='ex'){ptEx(z,u);return}if(a==='pay'){ptPay(u,z);return}if(a==='equip'){P.eqSel={z:z,u:u};ptRender();return}if(a==='top'||a==='bot'){ptMove(z,u,'lib',a);return}if(a==='rd'){ptMove(z,u,'rd');return}ptMove(z,u,a)}
+  if(a==='ex'){ptEx(z,u);return}if(a==='pay'){ptPay(u,z);return}if(a==='cnt'){var ci=ptFind(z,u);if(ci>-1){P[z][ci].cnt=1;P.cm={z:z,u:u};ptRender()}return}if(a==='equip'){P.eqSel={z:z,u:u};ptRender();return}if(a==='top'||a==='bot'){ptMove(z,u,'lib',a);return}if(a==='rd'){ptMove(z,u,'rd');return}ptMove(z,u,a)}
 /* ===== 查看牌庫上方 ===== */
 function ptViewOpen(){if(!PT.view)PT.view={n:0};ptRender()}
 function ptViewMore(n){var v=PT.view;v.n=Math.min(PT.lib.length,v.n+n);ptRender()}
@@ -1643,7 +1657,7 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
   if(bfph)selUI='<div class="ptsel"><div class="ptpill">選擇戰場</div><div class="ptsrow">'+P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc big" onclick="ptPickBf(\''+esc(k)+'\')">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join('')+'</div><button class="btn" onclick="ptRndBf()">隨機</button></div>';
   else if(mull)selUI='<div class="ptsel"><div class="ptpill">選擇要調度的卡牌</div><div class="ptpill sm">'+(P.first?'先手':'後手')+'</div><div class="ptmrow">'+hand+'</div><button class="btn p" onclick="ptMull(1)">'+(P.mul.length?'調度 '+P.mul.length+' 張':'保留手牌')+'</button></div>';
   var ctl2=(bfph||mull)?'':ctl;
-  o.innerHTML=top+'<div class="ptbd" ondragover="ptDO(event)" ondrop="ptDrop(event,\'play\')">'+(bfph||mull?'':bfs)+pl+sc+rzr+dk+selUI+(P.eqSel?'<div class="pteqb">選擇要裝配的友方單位<button class="btn" onclick="PT.eqSel=null;ptRender()">取消</button></div>':'')+'</div>'+((bfph||mull)?'':'<div class="ptdh" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="ptfan">'+hand+'</div></div>')+ctl2+ptViewH()+ptTrashV()}
+  o.innerHTML=top+'<div class="ptbd" ondragover="ptDO(event)" ondrop="ptDrop(event,\'play\')">'+(bfph||mull?'':bfs)+pl+sc+rzr+dk+selUI+(P.eqSel?'<div class="pteqb">選擇要裝配的友方單位<button class="btn" onclick="PT.eqSel=null;ptRender()">取消</button></div>':'')+'</div>'+((bfph||mull)?'':'<div class="ptdh" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="ptfan">'+hand+'</div></div>')+ctl2+ptViewH()+ptTrashV();ptCmShow()}
 
 /* ===== 觸控：長按選單 + 拖曳 ===== */
 (function(){if(window._ptPtr)return;window._ptPtr=1;var st=null;
@@ -1652,7 +1666,7 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
  function hv(x,y){var e=document.elementFromPoint(x,y),b=e&&e.closest&&e.closest('#ptmn .ptmb button');document.querySelectorAll('#ptmn .ptmb button.hv').forEach(function(k){if(k!==b)k.classList.remove('hv')});if(b)b.classList.add('hv');return b}
  function tgt(x,y){var e=document.elementFromPoint(x,y);if(!e)return null;
   var d=e.closest('[data-drop]');if(d)return d.dataset.drop;if(e.closest('.ptdh'))return'hand';if(e.closest('.ptbfs'))return'bfu';if(e.closest('.ptrzr'))return'rz';if(e.closest('.ptplay'))return'play';if(e.closest('.ptbd'))return'play';return null}
- document.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'||!window.PT||!document.getElementById('ptov'))return;var c=e.target.closest&&e.target.closest('#ptov .ptc[data-z]');if(!c||e.target.closest('.ptag')||PT.eqSel){return}
+ document.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'||!window.PT||!document.getElementById('ptov'))return;var c=e.target.closest&&e.target.closest('#ptov .ptc[data-z]');if(!c||e.target.closest('.ptag')||e.target.closest('.ptcn')||PT.eqSel){return}
   clr();var z=c.dataset.z,u=+c.dataset.u;st={x:e.clientX,y:e.clientY,z:z,u:u,c:c,g:null,id:e.pointerId};
   st.tm=setTimeout(function(){if(!st)return;var z=st.z,u=st.u;st.tm=0;PT.lpT=Date.now();if(PT.phase!=='mull'||z!=='hand')ptMenu(z,u);if(navigator.vibrate)try{navigator.vibrate(15)}catch(_){ }st.dead=1;st.moved=0;document.addEventListener('touchmove',nomv,{passive:false})},480)},true);
  document.addEventListener('pointermove',function(e){if(!st||e.pointerId!==st.id)return;if(st.dead){if(Math.abs(e.clientX-st.x)>12||Math.abs(e.clientY-st.y)>12)st.moved=1;if(st.moved)hv(e.clientX,e.clientY);return}
