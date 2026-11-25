@@ -464,6 +464,7 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .ptdh .ptc{width:clamp(46px,min(5vw,7.4vh),88px);margin-left:calc(clamp(46px,min(5vw,7.4vh),88px)*-.2)}
 .ptsn{width:34px}.ptsn.win{width:40px}
 }
+.ptdk .ptc[data-z]{touch-action:none}
 
 .vhd.hg.hg{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;padding-left:14px!important}
 .vhd.hg.hg .hcv{position:relative;z-index:1;height:210px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 8px 26px rgba(0,0,0,.4)}
@@ -1524,15 +1525,15 @@ function ptCard(k){return{k:k,u:++PTU,ex:false}}
 function ptOpen(){var d=vDeck();if(!d)return;var u=unpack(d.deck),lib=[],rn=[],bf=[],leg=null,ch=null;
   Object.keys(u.main).forEach(function(k){var c=nm(k);if(!c)return;var x=sec(c),n=u.main[k];if(x==='L'){if(!leg)leg=k}else if(x==='R'){for(var i=0;i<n;i++)rn.push(k)}else if(x==='B'){bf.push(k)}else{for(var i=0;i<n;i++)lib.push(k)}});
   if(u.champ){var ix=lib.indexOf(u.champ);if(ix>-1){lib.splice(ix,1);ch=u.champ}}
-  PT={name:d.name,src:lib,srcR:rn,leg:leg,champ:ch,bf:bf,first:true,skip:false,sel:null};ptReset();
+  PT={name:d.name,src:lib,srcR:rn,leg:leg,champ:ch,bf:bf,first:true,sel:null};ptReset();
   var o=document.createElement('div');o.className='ov ptov';o.id='ptov';document.body.appendChild(o);document.body.style.overflow='hidden';ptRender()}
 function ptClose(){var o=document.getElementById('ptov');if(o)o.remove();document.body.style.overflow='';PT=null}
-function ptReset(){var P=PT;P.lib=ptShuf(P.src.map(ptCard));P.rd=ptShuf(P.srcR.map(ptCard));P.hand=[];P.play=[];P.trash=[];P.rz=[];P.turn=0;P.sel=null;P.legEx=false;P.score=0;P.view=null;P.tv=0;P.bfu=[];P.bfk=null;P.mul=[];P.phase=P.bf.length?'bf':'mull';P.drawn=0;P.log=[];ptDraw(4,1)}
+function ptReset(){var P=PT;P.lib=ptShuf(P.src.map(ptCard));P.rd=ptShuf(P.srcR.map(ptCard));P.hand=[];P.play=[];P.trash=[];P.rz=[];P.turn=0;P.sel=null;P.legEx=false;P.chz=P.champ?[ptCard(P.champ)]:[];P.score=0;P.view=null;P.tv=0;P.bfu=[];P.bfk=null;P.mul=[];P.phase=P.bf.length?'bf':'mull';P.drawn=0;P.log=[];ptDraw(4,1)}
 function ptDraw(n,q){var P=PT,g=0;for(var i=0;i<n;i++){if(!P.lib.length)break;P.hand.push(P.lib.shift());g++}P.drawn+=g;if(!q)P.log.unshift('抽 '+g+' 張'+(g<n?'（牌庫已空）':''));return g}
-function ptMull(go){var P=PT;if(go&&P.mul.length){var out=[];P.hand=P.hand.filter(function(c){if(P.mul.indexOf(c.u)>-1){out.push(c);return false}return true});var n=out.length;ptDraw(n,1);out.forEach(function(c){P.lib.push(c)});P.log.unshift('調度 '+n+' 張')}else P.log.unshift('保留起手');P.mul=[];P.phase='play';ptRender()}
+function ptMull(go){var P=PT;if(go&&P.mul.length){var out=[];P.hand=P.hand.filter(function(c){if(P.mul.indexOf(c.u)>-1){out.push(c);return false}return true});var n=out.length;ptDraw(n,1);out.forEach(function(c){P.lib.push(c)});P.log.unshift('調度 '+n+' 張')}else P.log.unshift('保留起手');P.mul=[];P.phase='play';ptNext()}
 function ptNext(){var P=PT;P.turn++;P.play.forEach(function(c){c.ex=false});P.bfu.forEach(function(c){c.ex=false});P.rz.forEach(function(c){c.ex=false});P.legEx=false;var ch=2+((P.turn===1&&!P.first)?1:0),g=0;
   for(var i=0;i<ch&&P.rd.length;i++){P.rz.push(P.rd.shift());g++}
-  var dr=(P.turn===1&&P.skip)?0:ptDraw(1,1);P.log.unshift('第 '+P.turn+' 回合：抽 '+dr+'、符文 +'+g);P.sel=null;ptRender()}
+  var dr=ptDraw(1,1);P.log.unshift('第 '+P.turn+' 回合：抽 '+dr+'、符文 +'+g);P.sel=null;ptRender()}
 function ptFind(z,u){var a=PT[z];for(var i=0;i<a.length;i++)if(a[i].u===u)return i;return -1}
 function ptMove(from,u,to,pos){var P=PT,i=ptFind(from,u);if(i<0)return;var c=P[from].splice(i,1)[0];if(c.att&&c.att.length&&to!=='play'&&to!=='bfu'){c.att.forEach(function(g){P.play.push(g)});c.att=[]}
   if(to==='lib'){if(pos==='top')P.lib.unshift(c);else P.lib.push(c)}else if(to==='rd'){P.rd.push(c)}else P[to].push(c);c.ex=ptEnter(from,to,c);P.sel=null;ptRender()}
@@ -1540,7 +1541,7 @@ function ptGear(c){var k=nm(c.k),t=String(k.type||'').toLowerCase();return t.ind
 function ptEnter(from,to,c){if(to==='play'||to==='bfu'){if(from==='play'||from==='bfu')return true;return !ptGear(c)}return false}
 function ptToast(t){var o=document.getElementById('ptov');if(!o)return;var d=document.createElement('div');d.className='pttoast';d.textContent=t;o.appendChild(d);setTimeout(function(){d.remove()},2200)}
 function ptDoms(k){var c=nm(k),d=(c.dom||[]).map(function(x){return String(x).toLowerCase()}).filter(function(x){return x&&x!=='colorless'});return d}
-function ptPay(u){var P=PT,i=ptFind('hand',u);if(i<0)return;var c=nm(P.hand[i].k),cost=Number(c.cost)||0,pw=Number(c.power)||0,dm=ptDoms(P.hand[i].k),
+function ptPay(u,zz){zz=zz||'hand';var P=PT,i=ptFind(zz,u);if(i<0)return;var c=nm(P[zz][i].k),cost=Number(c.cost)||0,pw=Number(c.power)||0,dm=ptDoms(P[zz][i].k),
   act=P.rz.filter(function(r){return !r.ex});
   if(act.length<cost){ptToast('法力不足：需要 '+cost+'，活化符文只有 '+act.length);return}
   var match=function(r){return !dm.length||ptDoms(r.k).some(function(x){return dm.indexOf(x)>-1})},mt=P.rz.filter(match);
@@ -1551,7 +1552,7 @@ function ptPay(u){var P=PT,i=ptFind('hand',u);if(i<0)return;var c=nm(P.hand[i].k
   /* 再付符能：回收對應領域符文，優先休眠中的 */
   var cand=P.rz.filter(match).sort(function(a,b){return (b.ex?1:0)-(a.ex?1:0)}),rec=0;
   for(var j=0;j<pw;j++){var r=cand[j],ix=P.rz.indexOf(r);if(ix>-1){P.rz.splice(ix,1);r.ex=false;P.rd.push(r);rec++}}
-  P.log.unshift('支付 '+cost+(pw?'＋符能 '+pw+'（回收 '+rec+' 符文）':'')+' 並打出 '+N(c));ptMove('hand',u,'play')}
+  P.log.unshift('支付 '+cost+(pw?'＋符能 '+pw+'（回收 '+rec+' 符文）':'')+' 並打出 '+N(c));ptMove(zz,u,'play')}
 function ptHasEq(k){var c=nm(k),t=(c.text||'')+' '+((c.tags||[]).join(' '))+' '+(c.sup||'');return /裝配|equip/i.test(t)}
 function ptLoc(u){var z=['play','bfu'];for(var j=0;j<2;j++){var i=ptFind(z[j],u);if(i>-1)return{z:z[j],i:i,c:PT[z[j]][i]}}return null}
 function ptCand(z,c){var P=PT,e=P.eqSel;return !!e&&(z==='play'||z==='bfu')&&c.u!==e.u&&!ptGear(c)}
@@ -1572,7 +1573,7 @@ function ptSel(z,u){var P=PT;P.hc=false;if(P.phase==='mull'&&z==='hand'){var i=P
 function ptEx(z,u){var i=ptFind(z,u);if(i<0)return;PT[z][i].ex=!PT[z][i].ex;ptRender()}
 function ptLPok(){return !PT||!PT.lpT||Date.now()-PT.lpT>700}
 function ptClk(z,u){if(!ptLPok())return;var P=PT;if(P.eqSel){if(z==='play'||z==='bfu')ptAttach(z,u);return}if(P.phase==='bf')return;if(P.phase==='mull'){if(z==='hand')ptSel(z,u);return}
-  if(z==='hand')ptMove('hand',u,'play');else if(z==='play'||z==='rz'||z==='bfu')ptEx(z,u);else if(z==='trash')ptMenu(z,u)}
+  if(z==='hand')ptMove('hand',u,'play');else if(z==='chz')ptMove('chz',u,'play');else if(z==='play'||z==='rz'||z==='bfu')ptEx(z,u);else if(z==='trash')ptMenu(z,u)}
 function ptLegClk(){if(!ptLPok())return;PT.legEx=!PT.legEx;ptRender()}
 var ptTm=0;
 var ptXY=null,ptTc=('ontouchstart' in window)||(navigator.maxTouchPoints>0);
@@ -1594,7 +1595,7 @@ function ptPile(n,lab,fn,ctx,drop){return'<div class="ptp'+(n?'':' emp')+'" oncl
 function ptMini(k,leg,ex){var c=nm(k),q=pic(c),cl=leg?'ptLegClk()':"openCard('"+encodeURIComponent(c.id)+"')";return'<div class="ptc mini'+(ex?' ex':'')+'" onclick="'+cl+'"'+(leg?' oncontextmenu="PT.lpT=Date.now();openCard(\''+encodeURIComponent(c.id)+'\');return false"':'')+'>'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}
 function ptMenuClose(){var m=document.getElementById('ptmn');if(m)m.remove()}
 function ptMenu(z,u){ptMenuClose();var P=PT,i=ptFind(z,u);if(i<0)return;var c=nm(P[z][i].k),q=pic(c),ex=P[z][i].ex;
-  var A={hand:[['play','打出'],['pay','自動支付費用並打出'],['trash','棄牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
+  var A={chz:[['play','打出'],['pay','自動支付費用並打出']],hand:[['play','打出'],['pay','自動支付費用並打出'],['trash','棄牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
    play:((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區']]).concat(P.bfk?[['bfu','移到戰場']]:[]).concat([['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
    bfu:((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區'],['play','移回基地'],['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
    trash:[['hand','回手牌'],['play','打出'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
@@ -1605,7 +1606,7 @@ function ptMenu(z,u){ptMenuClose();var P=PT,i=ptFind(z,u);if(i<0)return;var c=nm
   m._t=Date.now();m.addEventListener('click',function(e){if(Date.now()-m._t<500)return;var b=e.target.closest&&e.target.closest('button');if(!b){ptMenuClose();return}ptMenuClose();ptDo(b.dataset.a,z,u)});
   document.getElementById('ptov').appendChild(m)}
 function ptDo(a,z,u){var P=PT;if(a==='info'){var i=ptFind(z,u);openCard(encodeURIComponent(nm(P[z][i].k).id));return}
-  if(a==='ex'){ptEx(z,u);return}if(a==='pay'){ptPay(u);return}if(a==='equip'){P.eqSel={z:z,u:u};ptRender();return}if(a==='top'||a==='bot'){ptMove(z,u,'lib',a);return}if(a==='rd'){ptMove(z,u,'rd');return}ptMove(z,u,a)}
+  if(a==='ex'){ptEx(z,u);return}if(a==='pay'){ptPay(u,z);return}if(a==='equip'){P.eqSel={z:z,u:u};ptRender();return}if(a==='top'||a==='bot'){ptMove(z,u,'lib',a);return}if(a==='rd'){ptMove(z,u,'rd');return}ptMove(z,u,a)}
 /* ===== 查看牌庫上方 ===== */
 function ptViewOpen(){if(!PT.view)PT.view={n:0};ptRender()}
 function ptViewMore(n){var v=PT.view;v.n=Math.min(PT.lib.length,v.n+n);ptRender()}
@@ -1626,7 +1627,7 @@ function ptHintTg(){PT.hint=!PT.hint;ptRender()}
 function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;var mull=P.phase==='mull',bfph=P.phase==='bf';
   var hand=P.hand.map(function(c){return ptCardH(c,'hand')}).join(''),bfu=P.bfu.map(function(c){return ptCardH(c,'bfu')}).join(''),play=P.play.map(function(c){return ptCardH(c,'play')}).join(''),rz=P.rz.map(function(c){return ptCardH(c,'rz')}).join('');
   var tl=P.trash.length?P.trash[P.trash.length-1]:null;
-  var top='<div class="pttb"><b>測牌</b><span class="ptnm">'+esc(P.name||'')+'</span><span class="ptsp"></span><button class="btn'+(P.first?' p':'')+'" onclick="PT.first=true;ptReset();ptRender()">先攻</button><button class="btn'+(!P.first?' p':'')+'" onclick="PT.first=false;ptReset();ptRender()">後攻</button><label class="ptck"><input type="checkbox"'+(P.skip?' checked':'')+' onchange="PT.skip=this.checked">首回合不抽</label><button class="btn" onclick="ptReset();ptRender()">重洗</button><button class="btn" onclick="ptClose()">關閉</button></div>';
+  var top='<div class="pttb"><b>測牌</b><span class="ptnm">'+esc(P.name||'')+'</span><span class="ptsp"></span><button class="btn'+(P.first?' p':'')+'" onclick="PT.first=true;ptReset();ptRender()">先攻</button><button class="btn'+(!P.first?' p':'')+'" onclick="PT.first=false;ptReset();ptRender()">後攻</button><button class="btn" onclick="ptReset();ptRender()">重洗</button><button class="btn" onclick="ptClose()">關閉</button></div>';
   var bfs=P.bfk?(function(){var c=nm(P.bfk),q=pic(c);return'<div class="ptbfs" data-zone="bfu" ondragover="ptDO(event)" ondrop="ptDrop(event,\'bfu\')"><span class="ptlab">戰場</span><div class="ptbfc" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div><div class="ptbfu">'+(bfu||'<span class="ptq">把卡牌拖曳到戰場格</span>')+'</div></div>'})():'';
   var bfr='<div class="ptbfr">'+(P.bf.length?P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join(''):'')+'</div>';
   var pl='<div class="ptplay" data-zone="play"><span class="ptlab">基地</span>'+(play||'<span class="ptq">點擊手牌打出　·　整個區域都可放置卡牌</span>')+'</div>';
@@ -1634,7 +1635,7 @@ function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;
   var rzr='<div class="ptrzr" data-zone="rz" ondragover="ptDO(event)" ondrop="ptDrop(event,\'rz\')"><span class="ptlab">符文</span>'+(rz||'<span class="ptq">點符文牌庫召出符文</span>')+'</div>';
   var dk='<div class="ptdk">'+ptTile(P.rd.length,'符文牌庫',"if(PT.rd.length){var c=PT.rd.shift();c.ex=true;PT.rz.push(c);PT.log.unshift('召出 1 枚休眠符文')}ptRender()",'','rd')
    +(P.leg?'<div class="ptc'+(P.legEx?' ex':'')+'" onclick="ptLegClk()" oncontextmenu="PT.lpT=Date.now();openCard(\''+encodeURIComponent(nm(P.leg).id)+'\');return false">'+ptImg(P.leg)+'<span class="ptn">'+esc(N(nm(P.leg)))+'</span></div>':'<div class="ptc emp"></div>')
-   +(P.champ?'<div class="ptc" onclick="openCard(\''+encodeURIComponent(nm(P.champ).id)+'\')">'+ptImg(P.champ)+'<span class="ptn">'+esc(N(nm(P.champ)))+'</span></div>':'<div class="ptc emp"></div>')
+   +(P.chz.length?ptCardH(P.chz[0],'chz'):'<div class="ptc emp"></div>')
    +ptTile(P.lib.length,'牌庫',"ptDraw(1);ptRender()","ptViewOpen()",'lib')
    +ptTile(P.trash.length,'廢棄區',"PT.tv=1;ptRender()",'','trash',tl?ptImg(tl.k):'')+'</div>';
   var ctl=mull?'<div class="ptmu"><b>調度</b><span>選最多 2 張要換掉（已選 '+P.mul.length+'）</span><button class="btn p" onclick="ptMull(1)">'+(P.mul.length?'換掉 '+P.mul.length+' 張':'保留起手')+'</button></div>':'<div class="ptmu"><button class="btn p" onclick="ptNext()">下一回合（'+(P.turn+1)+'）</button><span class="ptlg">回合 '+P.turn+'　已抽 '+P.drawn+'　'+esc(P.log.slice(0,1).join(''))+'</span></div>';
