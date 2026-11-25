@@ -1838,7 +1838,7 @@ function hcover(){var E=document.getElementById('vw'),h=E&&E.querySelector('.vhd
  wrap.addEventListener('click',function(ev){var t=ev.target;if(!t.classList||!t.classList.contains('hf2'))return;ev.stopPropagation();
   var ov=document.createElement('div');ov.className='hpo';
   var cur=fan[2]&&fan[2].id;
-  ov.innerHTML='<div class="hpp"><div class="hpt"><b>選擇第三張展示卡</b><button class="hpa">自動</button><button class="hpx">✕</button></div><div class="hpg">'+mk.map(function(o){var q=pic(o.c);return'<div class="hpi'+(o.c.id===cur?' on':'')+'" data-i="'+esc(o.c.id)+'">'+(q?'<img src="'+esc(q)+'" alt="">':'')+'<span>'+esc(o.c.name||'')+'</span></div>'}).join('')+'</div></div>';
+  ov.innerHTML='<div class="hpp"><div class="hpt"><b>選擇第三張展示卡</b><button class="hpa">自動</button><button class="hpx">✕</button></div><div class="hpg">'+mk.map(function(o){var q=pic(o.c);return'<div class="hpi'+(o.c.id===cur?' on':'')+'" data-i="'+esc(o.c.id)+'">'+(q?'<img src="'+esc(q)+'" data-o="'+esc(o.c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<span>'+esc(o.c.name||'')+'</span></div>'}).join('')+'</div></div>';
   function done(v){try{if(v)store[dk]=v;else delete store[dk];localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}ov.remove();var o=h.querySelector('.hcv');rview()}
   ov.addEventListener('click',function(e){var x=e.target;if(x===ov||x.classList.contains('hpx')){ov.remove();return}if(x.classList.contains('hpa')){done(null);return}var i=x.closest&&x.closest('.hpi');if(i)done(i.dataset.i)});
   document.body.appendChild(ov)});
