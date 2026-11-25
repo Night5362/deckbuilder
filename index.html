@@ -474,6 +474,13 @@ html:not(.tx0) *{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
 .ptcm b{min-width:34px;text-align:center;font-size:20px;color:#fff}
 .ptcn.l3{font-size:calc(var(--cw)*.16)}
 
+.ptex{position:absolute;left:0;right:0;bottom:0;z-index:2;background:#7b3fc4;color:#fff;font-size:max(9px,calc(var(--cw)*.17));font-weight:700;text-align:center;padding:3px 0;line-height:1.1;cursor:pointer}
+.ptpile.hasex .ptn{bottom:calc(max(9px,var(--cw)*.17)*1.1 + 6px)}
+.ptbfc,.ptbfc *{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}.ptbfc img{pointer-events:none}
+.ptva.pp{align-content:start}.ptpq{grid-column:1/-1;font-size:12px;color:var(--mt)}.ptva.pp .btn.p{text-align:center}
+
+.ptc:not(.ptpile) .ptn,.ptbfc .ptn{display:none}
+
 .vhd.hg.hg{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;padding-left:14px!important}
 .vhd.hg.hg .hcv{position:relative;z-index:1;height:210px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 8px 26px rgba(0,0,0,.4)}
 .hcv .hcb{position:absolute;inset:-14px;width:calc(100% + 28px);height:calc(100% + 28px);object-fit:cover;filter:blur(16px) saturate(1.25);opacity:.85}
@@ -1536,7 +1543,7 @@ function ptOpen(){var d=vDeck();if(!d)return;var u=unpack(d.deck),lib=[],rn=[],b
   PT={name:d.name,src:lib,srcR:rn,leg:leg,champ:ch,bf:bf,first:true,sel:null};ptReset();
   var o=document.createElement('div');o.className='ov ptov';o.id='ptov';document.body.appendChild(o);document.body.style.overflow='hidden';ptRender()}
 function ptClose(){var o=document.getElementById('ptov');if(o)o.remove();document.body.style.overflow='';PT=null}
-function ptReset(){var P=PT;P.lib=ptShuf(P.src.map(ptCard));P.rd=ptShuf(P.srcR.map(ptCard));P.hand=[];P.play=[];P.trash=[];P.rz=[];P.turn=0;P.sel=null;P.legEx=false;P.chz=P.champ?[ptCard(P.champ)]:[];P.score=0;P.view=null;P.tv=0;P.bfu=[];P.bfk=null;P.mul=[];P.phase=P.bf.length?'bf':'mull';P.drawn=0;P.log=[];ptDraw(4,1)}
+function ptReset(){var P=PT;P.lib=ptShuf(P.src.map(ptCard));P.rd=ptShuf(P.srcR.map(ptCard));P.hand=[];P.play=[];P.trash=[];P.exile=[];P.ev=0;P.view=null;P.rz=[];P.turn=0;P.sel=null;P.legEx=false;P.chz=P.champ?[ptCard(P.champ)]:[];P.score=0;P.view=null;P.tv=0;P.bfu=[];P.bfk=null;P.mul=[];P.phase=P.bf.length?'bf':'mull';P.drawn=0;P.log=[];ptDraw(4,1)}
 function ptDraw(n,q){var P=PT,g=0;for(var i=0;i<n;i++){if(!P.lib.length)break;P.hand.push(P.lib.shift());g++}P.drawn+=g;if(!q)P.log.unshift('抽 '+g+' 張'+(g<n?'（牌庫已空）':''));return g}
 function ptMull(go){var P=PT;if(go&&P.mul.length){var out=[];P.hand=P.hand.filter(function(c){if(P.mul.indexOf(c.u)>-1){out.push(c);return false}return true});var n=out.length;ptDraw(n,1);out.forEach(function(c){P.lib.push(c)});P.log.unshift('調度 '+n+' 張')}else P.log.unshift('保留起手');P.mul=[];P.phase='play';ptNext()}
 function ptNext(){var P=PT;P.turn++;P.play.forEach(function(c){c.ex=false});P.bfu.forEach(function(c){c.ex=false});P.rz.forEach(function(c){c.ex=false});P.legEx=false;var ch=2+((P.turn===1&&!P.first)?1:0),g=0;
@@ -1566,7 +1573,7 @@ function ptLoc(u){var z=['play','bfu'];for(var j=0;j<2;j++){var i=ptFind(z[j],u)
 function ptCand(z,c){var P=PT,e=P.eqSel;return !!e&&(z==='play'||z==='bfu')&&c.u!==e.u&&!ptGear(c)}
 function ptAttach(z,u){var P=PT,e=P.eqSel;if(!e)return;var t=ptLoc(u),i=ptFind(e.z,e.u);if(!t||i<0||!ptCand(z,t.c))return;var g=P[e.z].splice(i,1)[0];g.ex=false;(t.c.att=t.c.att||[]).push(g);P.eqSel=null;P.log.unshift(N(nm(g.k))+' 裝配到 '+N(nm(t.c.k)));ptRender()}
 function ptAttMenu(tu,gu){ptMenuClose();var t=ptLoc(tu);if(!t)return;var g=(t.c.att||[]).filter(function(x){return x.u===gu})[0];if(!g)return;var c=nm(g.k),q=pic(c);
-  var A=[['de','卸下（回到基地）'],['dt','送到廢棄區'],['dh','回手牌'],['info','卡片詳情']];
+  var A=[['de','卸下（回到基地）'],['dt','棄置'],['dh','回手牌'],['info','卡片詳情']];
   var m=document.createElement('div');m.className='ptmn';m.id='ptmn';
   m.innerHTML='<div class="ptmh">裝備：'+esc(N(c))+'</div>'+(q?'<img class="ptmi" src="'+esc(q)+'" alt="">':'')+'<div class="ptmb">'+A.map(function(a){return'<button class="btn" data-a="'+a[0]+'">'+a[1]+'</button>'}).join('')+'</div>';
   m._t=Date.now();m.addEventListener('click',function(e){if(Date.now()-m._t<500)return;var b=e.target.closest&&e.target.closest('button');ptMenuClose();if(!b)return;var a=b.dataset.a;
@@ -1574,6 +1581,8 @@ function ptAttMenu(tu,gu){ptMenuClose();var t=ptLoc(tu);if(!t)return;var g=(t.c.
     t.c.att=t.c.att.filter(function(x){return x.u!==gu});g.ex=false;
     if(a==='de')PT[t.z].push(g);else if(a==='dt')PT.trash.push(g);else PT.hand.push(g);ptRender()});
   document.getElementById('ptov').appendChild(m)}
+function ptBfD(id){if(Date.now()-(PT._bd||0)<900)return;PT._bd=Date.now();PT.lpT=Date.now();openCard(id)}
+function ptBfT(e,id){var t=e.touches[0];ptXY=[t.clientX,t.clientY];clearTimeout(ptTm);ptTm=setTimeout(function(){ptBfD(id)},480)}
 function ptCm(z,u){if(!ptLPok())return;PT.cm={z:z,u:u};ptRender()}
 function ptCmAdj(d){var P=PT,e=P.cm;if(!e)return;var i=ptFind(e.z,e.u);if(i<0){P.cm=null;ptRender();return}var c=P[e.z][i];if(d===0){delete c.cnt;P.cm=null}else c.cnt=Math.max(0,(c.cnt||0)+d);ptRender()}
 function ptCmShow(){var P=PT,o=document.getElementById('ptov');if(!P||!o||!P.cm)return;var b=o.querySelector('.ptcn[data-cu="'+P.cm.u+'"]');if(!b){P.cm=null;return}var r=b.getBoundingClientRect(),W=window.innerWidth;
@@ -1587,7 +1596,7 @@ function ptSel(z,u){var P=PT;P.hc=false;if(P.phase==='mull'&&z==='hand'){var i=P
 function ptEx(z,u){var i=ptFind(z,u);if(i<0)return;PT[z][i].ex=!PT[z][i].ex;ptRender()}
 function ptLPok(){return !PT||!PT.lpT||Date.now()-PT.lpT>700}
 function ptClk(z,u){if(!ptLPok())return;var P=PT;if(P.eqSel){if(z==='play'||z==='bfu')ptAttach(z,u);return}if(P.phase==='bf')return;if(P.phase==='mull'){if(z==='hand')ptSel(z,u);return}
-  if(z==='hand')ptMove('hand',u,'play');else if(z==='chz')ptMove('chz',u,'play');else if(z==='play'||z==='rz'||z==='bfu')ptEx(z,u);else if(z==='trash')ptMenu(z,u)}
+  if(z==='hand')ptMove('hand',u,'play');else if(z==='chz')ptMove('chz',u,'play');else if(z==='play'||z==='rz'||z==='bfu')ptEx(z,u);else if(z==='trash'||z==='exile')ptMenu(z,u)}
 function ptLegClk(){if(!ptLPok())return;PT.legEx=!PT.legEx;ptRender()}
 var ptTm=0;
 var ptXY=null,ptTc=('ontouchstart' in window)||(navigator.maxTouchPoints>0);
@@ -1609,10 +1618,11 @@ function ptPile(n,lab,fn,ctx,drop){return'<div class="ptp'+(n?'':' emp')+'" oncl
 function ptMini(k,leg,ex){var c=nm(k),q=pic(c),cl=leg?'ptLegClk()':"openCard('"+encodeURIComponent(c.id)+"')";return'<div class="ptc mini'+(ex?' ex':'')+'" onclick="'+cl+'"'+(leg?' oncontextmenu="PT.lpT=Date.now();openCard(\''+encodeURIComponent(c.id)+'\');return false"':'')+'>'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}
 function ptMenuClose(){var m=document.getElementById('ptmn');if(m)m.remove()}
 function ptMenu(z,u){ptMenuClose();var P=PT,i=ptFind(z,u);if(i<0)return;var c=nm(P[z][i].k),q=pic(c),ex=P[z][i].ex;
-  var A={chz:[['play','打出'],['pay','自動支付費用並打出']],hand:[['play','打出'],['pay','自動支付費用並打出'],['trash','棄牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
-   play:(P[z][i].cnt==null?[['cnt','放置計數']]:[]).concat((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區']]).concat(P.bfk?[['bfu','移到戰場']]:[]).concat([['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
-   bfu:(P[z][i].cnt==null?[['cnt','放置計數']]:[]).concat((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','送到廢棄區'],['play','移回基地'],['hand','回手牌'],['top','放牌庫頂'],['bot','放牌庫底（回收）']]),
-   trash:[['hand','回手牌'],['play','打出'],['top','放牌庫頂'],['bot','放牌庫底（回收）']],
+  var A={chz:[['play','打出'],['pay','自動支付費用並打出']],hand:[['play','打出'],['pay','自動支付費用並打出'],['trash','棄置'],['exile','放逐'],['top','放牌庫頂'],['bot','回收']],
+   play:(P[z][i].cnt==null?[['cnt','放置計數']]:[]).concat((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','棄置'],['exile','放逐']]).concat(P.bfk?[['bfu','移到戰場']]:[]).concat([['hand','回手牌'],['top','放牌庫頂'],['bot','回收']]),
+   bfu:(P[z][i].cnt==null?[['cnt','放置計數']]:[]).concat((ptGear(P[z][i])&&ptHasEq(P[z][i].k))?[['equip','裝配']]:[]).concat([['ex',ex?'活化':'休眠'],['trash','棄置'],['exile','放逐'],['play','移回基地'],['hand','回手牌'],['top','放牌庫頂'],['bot','回收']]),
+   trash:[['hand','回手牌'],['play','打出'],['top','放牌庫頂'],['bot','回收'],['exile','放逐']],
+   exile:[['hand','回手牌'],['play','打出'],['top','放牌庫頂'],['bot','回收'],['trash','棄置']],
    rz:[['ex',ex?'活化':'休眠'],['rd','回收']]}[z]||[];
   A=A.concat([['info','卡片詳情']]);
   var m=document.createElement('div');m.className='ptmn';m.id='ptmn';
@@ -1622,42 +1632,56 @@ function ptMenu(z,u){ptMenuClose();var P=PT,i=ptFind(z,u);if(i<0)return;var c=nm
 function ptDo(a,z,u){var P=PT;if(a==='info'){var i=ptFind(z,u);openCard(encodeURIComponent(nm(P[z][i].k).id));return}
   if(a==='ex'){ptEx(z,u);return}if(a==='pay'){ptPay(u,z);return}if(a==='cnt'){var ci=ptFind(z,u);if(ci>-1){P[z][ci].cnt=1;P.cm={z:z,u:u};ptRender()}return}if(a==='equip'){P.eqSel={z:z,u:u};ptRender();return}if(a==='top'||a==='bot'){ptMove(z,u,'lib',a);return}if(a==='rd'){ptMove(z,u,'rd');return}ptMove(z,u,a)}
 /* ===== 查看牌庫上方 ===== */
-function ptViewOpen(){if(!PT.view)PT.view={n:0};ptRender()}
-function ptViewMore(n){var v=PT.view;v.n=Math.min(PT.lib.length,v.n+n);ptRender()}
-function ptViewShuf(){var P=PT;ptShuf(P.lib);P.view.n=0;P.log.unshift('洗牌庫');ptRender()}
-function ptViewBot(){var P=PT,v=P.view;if(!P.lib.length)return;var c=P.lib.pop();P.lib.unshift(c);v.n=Math.min(P.lib.length,v.n+1);ptRender()}
-function ptVA(u,a){var P=PT,v=P.view,i=ptFind('lib',u);if(i<0)return;var c=P.lib.splice(i,1)[0];c.ex=false;
-  if(a==='hand')P.hand.push(c);else if(a==='trash')P.trash.push(c);else if(a==='bot')P.lib.push(c);else if(a==='top')P.lib.unshift(c);
-  if(a!=='top'&&i<v.n)v.n=Math.max(0,v.n-1);ptRender()}
-function ptViewH(){var P=PT,v=P.view;if(!v)return'';var l=P.lib.slice(0,v.n);
-  return'<div class="ptvw"><div class="ptvh"><b>查看主牌堆</b><span>'+v.n+' 張卡牌</span><button class="ptvx" onclick="PT.view=null;ptRender()">✕</button></div><div class="ptvt"><button class="btn" onclick="ptViewMore(1)">查看牌庫頂 1 張</button><button class="btn" onclick="ptViewMore(3)">頂 3 張</button><button class="btn" onclick="ptViewBot()">看牌庫底 1 張</button><button class="btn" onclick="ptViewShuf()">洗牌</button></div>'+
-  (l.length?'<div class="ptvl">'+l.map(function(c,j){var k=nm(c.k),q=pic(k);return'<div class="ptvc"><div class="ptc" style="width:84px">'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="">':'')+'<span class="ptn">'+(j+1)+'. '+esc(N(k))+'</span></div><div class="ptva"><button class="btn" onclick="ptVA('+c.u+',\'hand\')">加入手牌</button><button class="btn" onclick="ptVA('+c.u+',\'top\')">放回頂</button><button class="btn" onclick="ptVA('+c.u+',\'bot\')">放底</button><button class="btn" onclick="ptVA('+c.u+',\'trash\')">棄牌</button></div></div>'}).join('')+'</div>':'<div class="ptve"><b>尚未查看任何卡牌</b><span>點「查看牌庫頂」開始；也可以「看牌庫底」或「洗牌」。</span></div>')+'</div>'}
-function ptActs(){return'<div class="ptq pthint"><b>電腦</b> 左鍵：手牌打出／基地、符文、傳奇 休眠或活化／符文牌庫召出休眠符文／主牌庫抽 1；右鍵：基地 送廢棄區／符文 回收／主牌庫 查看牌庫頂；拖曳卡牌到牌庫＝回收。<br><b>手機</b> 點擊同左鍵，右鍵功能改為長按目標，跳出選單。</div>'}
-function ptTile(n,lab,fn,ctx,drop,img,cls){return'<div class="ptc ptpile'+(n?'':' emp')+(cls?' '+cls:'')+'" onclick="if(ptLPok()){'+fn+'}" oncontextmenu="'+(ctx?'PT.lpT=Date.now();'+ctx+';':'')+'return false" ontouchstart="'+(ctx?'var t=event.touches[0];ptXY=[t.clientX,t.clientY];clearTimeout(ptTm);ptTm=setTimeout(function(){PT.lpT=Date.now();'+ctx+'},480)':'')+'" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()" ondragover="ptDO(event)" ondrop="ptDrop(event,\''+drop+'\')" data-drop="'+drop+'">'+(img||'')+'<b class="ptcnt">'+n+'</b><span class="ptn">'+lab+'</span></div>'}
+function ptViewOpen(){if(!PT.view)PT.view={l:[],pp:null};ptRender()}
+function ptVL(){var P=PT,v=P.view,m={};P.lib.forEach(function(c){m[c.u]=c});v.l=v.l.filter(function(u){return m[u]});return v.l.map(function(u){return m[u]})}
+function ptViewMore(){var P=PT,v=P.view;ptVL();for(var i=0;i<P.lib.length;i++)if(v.l.indexOf(P.lib[i].u)<0){v.l.push(P.lib[i].u);break}v.pp=null;ptRender()}
+function ptViewAll(){var P=PT,v=P.view,l=ptVL();if(!l.length)return;var us=l.map(function(c){return c.u}),r=ptShuf(l.slice());P.lib=P.lib.filter(function(c){return us.indexOf(c.u)<0});r.forEach(function(c){c.ex=false;P.lib.push(c)});v.l=[];v.pp=null;P.log.unshift('全部回收 '+r.length+' 張');ptRender()}
+function ptVP(u){var v=PT.view;if(u&&!PT.bfk){ptVA(u,'play');return}v.pp=(u&&v.pp!==u)?u:null;ptRender()}
+function ptVA(u,a){var P=PT,v=P.view,i=ptFind('lib',u);if(i<0)return;var c=P.lib.splice(i,1)[0];c.ex=false;v.pp=null;
+  if(a==='top')P.lib.unshift(c);else if(a==='bot')P.lib.push(c);else if(a==='hand')P.hand.push(c);else if(a==='trash')P.trash.push(c);else if(a==='exile')P.exile.push(c);else if(a==='play'||a==='bfu'){c.ex=ptEnter('lib',a,c);P[a].push(c)}
+  v.l=v.l.filter(function(x){return x!==u});ptRender()}
+function ptViewH(){var P=PT,v=P.view;if(!v)return'';var l=ptVL();
+  return'<div class="ptvw"><div class="ptvh"><b>查看主牌堆</b><span>'+l.length+' 張卡牌</span><button class="ptvx" onclick="PT.view=null;ptRender()">✕</button></div><div class="ptvt"><button class="btn" onclick="ptViewMore()">查看牌庫頂一張</button><button class="btn" onclick="ptViewAll()"'+(l.length?'':' disabled')+'>全部回收</button></div>'+
+  (l.length?'<div class="ptvl">'+l.map(function(c,j){var k=nm(c.k),q=pic(k),B=function(a,t){return'<button class="btn" onclick="ptVA('+c.u+',\''+a+'\')">'+t+'</button>'};return'<div class="ptvc"><div class="ptc" style="width:84px">'+(q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(k.img)+'" alt="">':'')+'<span class="ptn">'+(j+1)+'. '+esc(N(k))+'</span></div>'+
+   (v.pp===c.u?'<div class="ptva pp"><span class="ptpq">在哪裡打出？</span><button class="btn p" onclick="ptVA('+c.u+',\'play\')">基地</button><button class="btn p" onclick="ptVA('+c.u+',\'bfu\')">戰場</button><button class="btn" onclick="ptVP(0)">取消</button></div>':'<div class="ptva">'+B('top','回到牌頂')+B('bot','回收')+B('hand','加入手牌')+'<button class="btn" onclick="ptVP('+c.u+')">打出</button>'+B('trash','棄置')+B('exile','放逐')+'</div>')+'</div>'}).join('')+'</div>':'<div class="ptve"><b>尚未查看任何卡牌</b></div>')+'</div>'}
+function ptActs(){return'<div class="ptq pthint"><b>電腦</b> 左鍵：手牌打出／基地、符文、傳奇 休眠或活化／符文牌庫召出休眠符文／主牌庫抽 1；右鍵：基地 送棄牌區／符文 回收／主牌庫 查看牌庫頂；拖曳卡牌到牌庫＝回收。<br><b>手機</b> 點擊同左鍵，右鍵功能改為長按目標，跳出選單。</div>'}
+function ptTile(n,lab,fn,ctx,drop,img,cls,ex){return'<div class="ptc ptpile'+(n?'':' emp')+(cls?' '+cls:'')+'" onclick="if(ptLPok()){'+fn+'}" oncontextmenu="'+(ctx?'PT.lpT=Date.now();'+ctx+';':'')+'return false" ontouchstart="'+(ctx?'var t=event.touches[0];ptXY=[t.clientX,t.clientY];clearTimeout(ptTm);ptTm=setTimeout(function(){PT.lpT=Date.now();'+ctx+'},480)':'')+'" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()" ondragover="ptDO(event)" ondrop="ptDrop(event,\''+drop+'\')" data-drop="'+drop+'">'+(img||'')+'<b class="ptcnt">'+n+'</b><span class="ptn">'+lab+'</span>'+(ex||'')+'</div>'}
 function ptImg(k){var c=nm(k),q=pic(c);return q?'<img draggable="false" src="'+esc(q)+'" data-o="'+esc(c.img)+'" alt="" onerror="if(this.dataset.f||!this.dataset.o){this.remove()}else{this.dataset.f=1;this.src=this.dataset.o}">':''}
-function ptTrashV(){var P=PT;if(!P.tv)return'';return'<div class="ptvw"><div class="ptvh"><b>廢棄區</b><span>'+P.trash.length+' 張卡牌</span><button class="ptvx" onclick="PT.tv=0;ptRender()">✕</button></div>'+(P.trash.length?'<div class="ptvg">'+P.trash.map(function(c){return ptCardH(c,'trash')}).join('')+'</div>':'<div class="ptve"><b>廢棄區是空的</b></div>')+'</div>'}
+function ptZV(t,z,f){var P=PT,a=P[z];return'<div class="ptvw"><div class="ptvh"><b>'+t+'</b><span>'+a.length+' 張卡牌</span><button class="ptvx" onclick="PT.'+f+'=0;ptRender()">✕</button></div>'+(a.length?'<div class="ptvg">'+a.map(function(c){return ptCardH(c,z)}).join('')+'</div>':'<div class="ptve"><b>'+t+'是空的</b></div>')+'</div>'}
+function ptTrashV(){return PT.tv?ptZV('棄牌區','trash','tv'):''}
+function ptExileV(){return PT.ev?ptZV('放逐區','exile','ev'):''}
 function ptScore(n){PT.score=n;ptRender()}
 function ptHintTg(){PT.hint=!PT.hint;ptRender()}
+function ptAttrs(x,y){var i,n;for(i=x.attributes.length-1;i>=0;i--){n=x.attributes[i].name;if(!y.hasAttribute(n))x.removeAttribute(n)}for(i=0;i<y.attributes.length;i++){n=y.attributes[i].name;var v=y.attributes[i].value;if(x.getAttribute(n)!==v)x.setAttribute(n,v)}}
+function ptMorph(a,b){var ac=a.childNodes,bc=b.childNodes,i=0;
+  for(;i<bc.length;i++){var x=ac[i],y=bc[i];
+    if(!x){a.appendChild(y.cloneNode(true));continue}
+    if(x.nodeType!==y.nodeType||x.nodeName!==y.nodeName){a.replaceChild(y.cloneNode(true),x);continue}
+    if(x.nodeType===3){if(x.nodeValue!==y.nodeValue)x.nodeValue=y.nodeValue;continue}
+    if(x.nodeType!==1)continue;
+    if(x.nodeName==='IMG'&&x.getAttribute('src')===y.getAttribute('src'))continue;
+    ptAttrs(x,y);ptMorph(x,y)}
+  while(ac.length>bc.length)a.removeChild(a.lastChild)}
 function ptRender(){var P=PT,o=document.getElementById('ptov');if(!P||!o)return;var mull=P.phase==='mull',bfph=P.phase==='bf';
   var hand=P.hand.map(function(c){return ptCardH(c,'hand')}).join(''),bfu=P.bfu.map(function(c){return ptCardH(c,'bfu')}).join(''),play=P.play.map(function(c){return ptCardH(c,'play')}).join(''),rz=P.rz.map(function(c){return ptCardH(c,'rz')}).join('');
   var tl=P.trash.length?P.trash[P.trash.length-1]:null;
   var top='<div class="pttb"><b>測牌</b><span class="ptnm">'+esc(P.name||'')+'</span><span class="ptsp"></span><button class="btn'+(P.first?' p':'')+'" onclick="PT.first=true;ptReset();ptRender()">先攻</button><button class="btn'+(!P.first?' p':'')+'" onclick="PT.first=false;ptReset();ptRender()">後攻</button><button class="btn" onclick="ptReset();ptRender()">重洗</button><button class="btn" onclick="ptClose()">關閉</button></div>';
-  var bfs=P.bfk?(function(){var c=nm(P.bfk),q=pic(c);return'<div class="ptbfs" data-zone="bfu" ondragover="ptDO(event)" ondrop="ptDrop(event,\'bfu\')"><span class="ptlab">戰場</span><div class="ptbfc" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div><div class="ptbfu">'+(bfu||'<span class="ptq">把卡牌拖曳到戰場格</span>')+'</div></div>'})():'';
-  var bfr='<div class="ptbfr">'+(P.bf.length?P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc" onclick="openCard(\''+encodeURIComponent(c.id)+'\')">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join(''):'')+'</div>';
-  var pl='<div class="ptplay" data-zone="play"><span class="ptlab">基地</span>'+(play||'<span class="ptq">點擊手牌打出　·　整個區域都可放置卡牌</span>')+'</div>';
+  var bfs=P.bfk?(function(){var c=nm(P.bfk),q=pic(c);return'<div class="ptbfs" data-zone="bfu" ondragover="ptDO(event)" ondrop="ptDrop(event,\'bfu\')"><span class="ptlab">戰場</span><div class="ptbfc" onclick="if(ptLPok())openCard(\''+encodeURIComponent(c.id)+'\')" oncontextmenu="ptBfD(\''+encodeURIComponent(c.id)+'\');return false" ontouchstart="ptBfT(event,\''+encodeURIComponent(c.id)+'\')" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div><div class="ptbfu">'+bfu+'</div></div>'})():'';
+  var bfr='<div class="ptbfr">'+(P.bf.length?P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc" onclick="if(ptLPok())openCard(\''+encodeURIComponent(c.id)+'\')" oncontextmenu="ptBfD(\''+encodeURIComponent(c.id)+'\');return false" ontouchstart="ptBfT(event,\''+encodeURIComponent(c.id)+'\')" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join(''):'')+'</div>';
+  var pl='<div class="ptplay" data-zone="play"><span class="ptlab">基地</span>'+play+'</div>';
   var sc='<div class="ptsc">'+[0,1,2,3,4,5,6,7,8].map(function(n){return'<button class="ptsn'+(n===P.score?' on':'')+(n===8?' win':'')+'" onclick="ptScore('+n+')">'+n+'</button>'}).join('')+'</div>';
-  var rzr='<div class="ptrzr" data-zone="rz" ondragover="ptDO(event)" ondrop="ptDrop(event,\'rz\')"><span class="ptlab">符文</span>'+(rz||'<span class="ptq">點符文牌庫召出符文</span>')+'</div>';
+  var rzr='<div class="ptrzr" data-zone="rz" ondragover="ptDO(event)" ondrop="ptDrop(event,\'rz\')"><span class="ptlab">符文</span>'+rz+'</div>';
   var dk='<div class="ptdk">'+ptTile(P.rd.length,'符文牌庫',"if(PT.rd.length){var c=PT.rd.shift();c.ex=true;PT.rz.push(c);PT.log.unshift('召出 1 枚休眠符文')}ptRender()",'','rd')
    +(P.leg?'<div class="ptc'+(P.legEx?' ex':'')+'" onclick="ptLegClk()" oncontextmenu="PT.lpT=Date.now();openCard(\''+encodeURIComponent(nm(P.leg).id)+'\');return false">'+ptImg(P.leg)+'<span class="ptn">'+esc(N(nm(P.leg)))+'</span></div>':'<div class="ptc emp"></div>')
    +(P.chz.length?ptCardH(P.chz[0],'chz'):'<div class="ptc emp"></div>')
    +ptTile(P.lib.length,'牌庫',"ptDraw(1);ptRender()","ptViewOpen()",'lib')
-   +ptTile(P.trash.length,'廢棄區',"PT.tv=1;ptRender()",'','trash',tl?ptImg(tl.k):'')+'</div>';
+   +ptTile(P.trash.length,'棄牌區',"PT.tv=1;ptRender()",'','trash',tl?ptImg(tl.k):'',P.exile.length?'hasex':'',P.exile.length?'<div class="ptex" onclick="event.stopPropagation();if(ptLPok()){PT.ev=1;ptRender()}">放逐：'+P.exile.length+'張</div>':'')+'</div>';
   var ctl=mull?'<div class="ptmu"><b>調度</b><span>選最多 2 張要換掉（已選 '+P.mul.length+'）</span><button class="btn p" onclick="ptMull(1)">'+(P.mul.length?'換掉 '+P.mul.length+' 張':'保留起手')+'</button></div>':'<div class="ptmu"><button class="btn p" onclick="ptNext()">下一回合（'+(P.turn+1)+'）</button><span class="ptlg">回合 '+P.turn+'　已抽 '+P.drawn+'　'+esc(P.log.slice(0,1).join(''))+'</span></div>';
   var selUI='';
-  if(bfph)selUI='<div class="ptsel"><div class="ptpill">選擇戰場</div><div class="ptsrow">'+P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc big" onclick="ptPickBf(\''+esc(k)+'\')">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join('')+'</div><button class="btn" onclick="ptRndBf()">隨機</button></div>';
+  if(bfph)selUI='<div class="ptsel"><div class="ptpill">選擇戰場</div><div class="ptsrow">'+P.bf.map(function(k){var c=nm(k),q=pic(c);return'<div class="ptbfc big" onclick="if(ptLPok())ptPickBf(\''+esc(k)+'\')" oncontextmenu="ptBfD(\''+encodeURIComponent(c.id)+'\');return false" ontouchstart="ptBfT(event,\''+encodeURIComponent(c.id)+'\')" ontouchmove="ptLM(event)" ontouchend="ptLE()" ontouchcancel="ptLE()">'+(q?'<img draggable="false" style="transform:translate(-50%,-50%) rotate('+bfAng()+'deg)" onload="if(this.naturalWidth>this.naturalHeight)this.style.cssText=\'position:static;width:100%;height:100%;transform:none;object-fit:cover\'" src="'+esc(q)+'" alt="">':'')+'<span class="ptn">'+esc(N(c))+'</span></div>'}).join('')+'</div><button class="btn" onclick="ptRndBf()">隨機</button></div>';
   else if(mull)selUI='<div class="ptsel"><div class="ptpill">選擇要調度的卡牌</div><div class="ptpill sm">'+(P.first?'先手':'後手')+'</div><div class="ptmrow">'+hand+'</div><button class="btn p" onclick="ptMull(1)">'+(P.mul.length?'調度 '+P.mul.length+' 張':'保留手牌')+'</button></div>';
   var ctl2=(bfph||mull)?'':ctl;
-  o.innerHTML=top+'<div class="ptbd" ondragover="ptDO(event)" ondrop="ptDrop(event,\'play\')">'+(bfph||mull?'':bfs)+pl+sc+rzr+dk+selUI+(P.eqSel?'<div class="pteqb">選擇要裝配的友方單位<button class="btn" onclick="PT.eqSel=null;ptRender()">取消</button></div>':'')+'</div>'+((bfph||mull)?'':'<div class="ptdh" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="ptfan">'+hand+'</div></div>')+ctl2+ptViewH()+ptTrashV();ptCmShow()}
+  var H=top+'<div class="ptbd" ondragover="ptDO(event)" ondrop="ptDrop(event,\'play\')">'+(bfph||mull?'':bfs)+pl+sc+rzr+dk+selUI+(P.eqSel?'<div class="pteqb">選擇要裝配的友方單位<button class="btn" onclick="PT.eqSel=null;ptRender()">取消</button></div>':'')+'</div>'+((bfph||mull)?'':'<div class="ptdh" ondragover="ptDO(event)" ondrop="ptDrop(event,\'hand\')"><div class="ptfan">'+hand+'</div></div>')+ctl2+ptViewH()+ptTrashV()+ptExileV();var T=document.createElement('div');T.innerHTML=H;ptMorph(o,T);ptCmShow()}
 
 /* ===== 觸控：長按選單 + 拖曳 ===== */
 (function(){if(window._ptPtr)return;window._ptPtr=1;var st=null;
